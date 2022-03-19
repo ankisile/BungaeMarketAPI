@@ -1,1 +1,5 @@
-# bunjang-test-server-nancy-astar
+### 번개장터 서버
+
+## 2022-3-19
+API설계 완료
+ERD설계 완료
