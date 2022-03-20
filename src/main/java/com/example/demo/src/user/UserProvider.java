@@ -89,4 +89,21 @@ public class UserProvider {
 
     }
 
+    public int checkUserStatusByUserId(int userId) throws BaseException {
+        try {
+            return userDao.checkUserStatusByUserId(userId);
+        } catch (Exception exception) {
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
+
+    public String getMainAddress(int userId) throws BaseException {
+        try {
+            return userDao.getMainAddress(userId);
+        } catch (Exception exception) {
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
+
+
 }

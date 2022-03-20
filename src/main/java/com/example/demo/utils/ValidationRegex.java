@@ -31,5 +31,11 @@ public class ValidationRegex {
         Matcher matcher = pattern.matcher(target);
         return matcher.find();
     }
+    public static boolean isRegexInteger(String target){
+        String regex = "^[0-9]*$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(target);
+        return matcher.find();
+    }
 }
 

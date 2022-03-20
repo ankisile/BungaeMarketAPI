@@ -18,12 +18,10 @@ public class ProductDao {
     }
 
     public int checkUserStatusByUserId(int userId) {
-        String checkUserStatusByUserIdQuery = "select exists(select * from Users where id = ? and status = 'ACTIVE')";
+        String checkUserStatusByUserIdQuery = "select exists(select * from Users where user_id = ? and status = 'ACTIVE')";
         int checkUserStatusByUserIdParams = userId;
         return this.jdbcTemplate.queryForObject(checkUserStatusByUserIdQuery, int.class, checkUserStatusByUserIdParams);
     }
-
-
 
     public int createProduct(int userId, PostProductReq postProductReq){
         String createProductQuery = "insert into Products(user_id, product_title,\n" +
@@ -52,6 +50,21 @@ public class ProductDao {
         String createProductTagQuery = "insert into Tag(product_id, tag_name) values(?,?)";
         Object[] createProductTagParams = new Object[]{productId, tagName};
         this.jdbcTemplate.update(createProductTagQuery, createProductTagParams);
+    }
+
+    public List<GetProductImgRes> getProductImages(int productId){
+        String getProductImagesQuery = "select product_image_url as productImgUrl from ProductImages where product_id = ? ";
+        int getProductImagesParams = productId;
+        return this.jdbcTemplate.query(getProductImagesQuery,
+                (rs, rowNum) -> new GetProductImgRes(
+                        rs.getString("productImgUrl")),
+                getProductImagesParams);
+    }
+
+    public int checkProductId(int productId) {
+        String checkProductIdQuery = "select(exists(select * from Products where product_id = ?))";
+        int checkProductIdParams = productId;
+        return this.jdbcTemplate.queryForObject(checkProductIdQuery, int.class, checkProductIdParams);
     }
 
 

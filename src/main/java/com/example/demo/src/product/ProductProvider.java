@@ -33,5 +33,22 @@ public class ProductProvider {
         }
     }
 
+    public List<GetProductImgRes> getProductImages(int productId) throws BaseException {
+        try {
+            return productDao.getProductImages(productId);
+        } catch (Exception exception) {
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
+
+    public int checkProductId(int productId) throws BaseException {
+        try {
+            return productDao.checkProductId(productId);
+        } catch (Exception exception) {
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
+
+
 
 }

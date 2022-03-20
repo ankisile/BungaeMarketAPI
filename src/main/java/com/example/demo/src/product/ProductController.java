@@ -31,8 +31,8 @@ public class ProductController {
     }
 
     /**
-     * 리뷰 작성 API
-     * [POST] /reviews
+     * 상품 등록 API
+     * [POST] /products
      * @return BaseResponse<String>
      */
     @ResponseBody
@@ -96,6 +96,54 @@ public class ProductController {
     }
 
 
+    /**
+     * 특정 상품 화면 - 이미지 API
+     * [GET] /products/:productId/images
+     * @return BaseResponse<List<ProductImage>>
+     */
+    @ResponseBody
+    @GetMapping("/{productId}/images")
+    public BaseResponse<List<GetProductImgRes>> getProductImages(@PathVariable(required = false) String productId) {
+        if(productId == null){
+            return new BaseResponse<>(EMPTY_PATH_VARIABLE);
+        }
+        try {
+            if(!isRegexInteger(productId)){
+                return new BaseResponse<>(INVAILD_PATH_VARIABLE);
+            }
+            int id = Integer.parseInt(productId);
+
+            return new BaseResponse<>(productProvider.getProductImages(id));
+        } catch (BaseException exception) {
+            return new BaseResponse<>((exception.getStatus()));
+        }
+    }
+
+//    /**
+//     * 특정 상품 화면 - 이미지 API
+//     * [GET] /products/:productId
+//     * @return BaseResponse<GetStoreInfosRes>
+//     */
+//    @ResponseBody
+//    @GetMapping("/{productId}")
+//    public BaseResponse<GetProductInfoRes> getProductInfo(@PathVariable(required = false) String productId) {
+//        if(productId == null){
+//            return new BaseResponse<>(EMPTY_PATH_VARIABLE);
+//        }
+//        try {
+//            if(!isRegexInteger(productId)){
+//                return new BaseResponse<>(INVAILD_PATH_VARIABLE);
+//            }
+//            int id = Integer.parseInt(productId);
+//            if(productProvider.checkProductId(id) == 0){
+//                return new BaseResponse<>(INVALID_PRODUCT_ID);
+//            }
+//            GetProductInfoRes getProductInfoRes = productProvider.getProductInfos(id);
+//            return new BaseResponse<>(getStoreInfoRes);
+//        } catch (BaseException exception) {
+//            return new BaseResponse<>((exception.getStatus()));
+//        }
+//    }
 
 
 }
