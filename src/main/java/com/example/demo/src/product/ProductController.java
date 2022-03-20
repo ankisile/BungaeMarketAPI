@@ -24,7 +24,7 @@ public class ProductController {
     private final JwtService jwtService;
 
     @Autowired
-    public ReviewController(roductService productService,ProductProvider productProvider, JwtService jwtService) {
+    public ProductController(ProductService productService,ProductProvider productProvider, JwtService jwtService) {
         this.productService = productService;
         this.productProvider = productProvider;
         this.jwtService = jwtService;
@@ -37,63 +37,57 @@ public class ProductController {
      */
     @ResponseBody
     @PostMapping("")
-    public BaseResponse<String> postReviews(@RequestBody PostReviewReq postReviewReq) {
+    public BaseResponse<String> postProducts(@RequestBody PostProductReq postProductReq) {
 
+        if(postProductReq.getProductImgList()==null){
+            return new BaseResponse<>(DELETED_USER);
+        }
 
+        if(postProductReq.getTitle()==null){
+            return new BaseResponse<>(DELETED_USER);
 
+        }
+
+        if(postProductReq.getProductTagList()==null){
+            return new BaseResponse<>(DELETED_USER);
+
+        }
+
+        if(postProductReq.getPrice()==null){
+            return new BaseResponse<>(DELETED_USER);
+
+        }
+
+        if(postProductReq.getExplanation()==null){
+            return new BaseResponse<>(DELETED_USER);
+        }
 
 
         try {
             // jwt 에서 userId 추출.
-            int userIdByJwt = jwtService.getUserId();
+            int userIdByJwt = jwtService.getUserIdx();
 
             if (productProvider.checkUserStatusByUserId(userIdByJwt) == 0) {
                 return new BaseResponse<>(DELETED_USER);
             }
 
 
-            if(reviewProvider.checkOrderInfoId(userIdByJwt, postReviewReq.getOrderId()) == 0){
-                return new BaseResponse<>(INVALID_ORDER_INFO_ID);
-            }
+            int productId = productService.createProduct(userIdByJwt, postProductReq);
 
-            if(reviewProvider.checkExistReview(userIdByJwt, postReviewReq.getOrderId()) == 1){
-                return new BaseResponse<>(EXISTS_REVIEW);
-            }
-
-            int storeId = reviewProvider.getStoreId(userIdByJwt, postReviewReq.getOrderId());
-
-
-            if(postReviewReq.getOrderMenu() != null) {
-                List<OrderMenu> orderMenuList = postReviewReq.getOrderMenu();
-                for (OrderMenu orderMenu : orderMenuList) {
-                    if (reviewProvider.checkOrderMenuId(orderMenu.getOrderMenuId(), postReviewReq) == 0) {
-                        return new BaseResponse<>(INVALID_ORDER_INFO_MENU_ID);
-
-                    }
-                }
-
-            }
-
-
-            int productId = reviewService.createReview(storeId, userIdByJwt, postReviewReq);
-
-            if(postReviewReq.getOrderMenu() != null){
-                List<OrderMenu> orderMenuList = postReviewReq.getOrderMenu();
-                for(OrderMenu orderMenu : orderMenuList){
-                    if(reviewProvider.checkOrderMenuId(orderMenu.getOrderMenuId(), postReviewReq) != 0){
-                        if(orderMenu.getRecommend()==1)
-                            reviewService.createRecommend(reviewId, orderMenu.getOrderMenuId(), orderMenu.getRecommendDesc());
-                    }
-                }
-
-            }
-
-            if(postReviewReq.getReviewImgList() != null){
-                List<ReviewImg> reviewImgList = postReviewReq.getReviewImgList();
-                for(ReviewImg reviewImg : reviewImgList){
-                    reviewService.createReviewImage(reviewId, reviewImg.getReviewImg());
+            if(postProductReq.getProductImgList() != null){
+                List<ProductImg> productImgList = postProductReq.getProductImgList();
+                for(ProductImg productImg : productImgList){
+                    productService.createProductImage(productId, productImg.getProductImg());
                 }
             }
+
+            if(postProductReq.getProductTagList() != null){
+                List<ProductTag> productTagList = postProductReq.getProductTagList();
+                for(ProductTag productTag : productTagList){
+                    productService.createProductTag(productId, productTag.getTagName());
+                }
+            }
+
 
             return new BaseResponse<>("success");
         } catch (BaseException exception) {

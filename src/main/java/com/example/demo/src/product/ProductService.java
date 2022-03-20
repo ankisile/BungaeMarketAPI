@@ -1,7 +1,7 @@
-package com.example.demo.src.review;
+package com.example.demo.src.product;
 
 import com.example.demo.config.BaseException;
-import com.example.demo.src.review.model.PostReviewReq;
+import com.example.demo.src.product.model.PostProductReq;
 import com.example.demo.utils.JwtService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,55 +13,45 @@ import static com.example.demo.config.BaseResponseStatus.DATABASE_ERROR;
 
 @Service
 @Transactional(rollbackFor = BaseException.class)
-public class ReviewService {
+public class ProductService {
     final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    private final ReviewDao reviewDao;
-    private final ReviewProvider reviewProvider;
+    private final ProductDao productDao;
+    private final ProductProvider productProvider;
     private final JwtService jwtService;
 
     @Autowired
-    public ReviewService(ReviewDao reviewDao, ReviewProvider reviewProvider, JwtService jwtService) {
-        this.reviewDao = reviewDao;
-        this.reviewProvider = reviewProvider;
+    public ProductService(ProductDao productDao, ProductProvider productProvider, JwtService jwtService) {
+        this.productDao = productDao;
+        this.productProvider = productProvider;
         this.jwtService = jwtService;
     }
 
-    public int createReview(int storeId, int userId, PostReviewReq postReviewReq) throws BaseException {
+    public int createProduct(int userId, PostProductReq postProductReq) throws BaseException {
         try {
-            return reviewDao.createReview(storeId, userId, postReviewReq);
-        } catch (Exception exception) {
-            throw new BaseException(DATABASE_ERROR);
-        }
-    }
-    public void createRecommend(int reviewId, int foodId, String recommendDesc) throws BaseException {
-        try {
-            reviewDao.createRecommend(reviewId, foodId, recommendDesc);
+            return productDao.createProduct(userId, postProductReq);
         } catch (Exception exception) {
             throw new BaseException(DATABASE_ERROR);
         }
     }
 
-    public void createReviewImage(int reviewId, String reviewImageUrl) throws BaseException {
+
+    public void createProductImage(int productId, String productImageUrl) throws BaseException {
         try {
-            reviewDao.createReviewImage(reviewId, reviewImageUrl);
+            productDao.createProductImage(productId, productImageUrl);
         } catch (Exception exception) {
             throw new BaseException(DATABASE_ERROR);
         }
     }
 
-    public void deleteReview(int userId, int reviewId) throws BaseException {
-        try{
-            reviewDao.deleteReviewImgByReviewId(reviewId);
-            reviewDao.deleteReviewRecommendByReviewId(reviewId);
-
-            if(reviewProvider.checkReviewRecommendByReviewId(reviewId) == 0 && reviewProvider.checkReviewImgByReviewId(reviewId)==0){
-                reviewDao.deleteReview(reviewId);
-            }
-        }catch (Exception exception) {
+    public void createProductTag(int productId, String tagName) throws BaseException {
+        try {
+            productDao.createProductTag(productId, tagName);
+        } catch (Exception exception) {
             throw new BaseException(DATABASE_ERROR);
         }
     }
+
 
 
 }

@@ -1,4 +1,4 @@
-package com.example.demo.src.review.model;
+package com.example.demo.src.product.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,12 +9,18 @@ import java.util.List;
 @Getter
 @Setter
 @AllArgsConstructor
-public class PostReviewReq {
-    private Integer orderId;
-    private Integer reviewRate;
-    private String reviewDesc;
-    private List<ReviewImg> reviewImgList;
-    private List<OrderMenu> orderMenu;
-
-
+public class PostProductReq {
+    private List<ProductImg> productImgList;
+    private String title;
+    private int categoryLarge;
+    private int categoryMiddle;
+    private int categorySmall;
+    private Integer price;
+    private List<ProductTag> productTagList;
+    private String explanation;
+    private String shippingFee;
+    private int quantity;
+    private String productStatus;
+    private String exchangePossible;
+    private String securePayment;
 }
