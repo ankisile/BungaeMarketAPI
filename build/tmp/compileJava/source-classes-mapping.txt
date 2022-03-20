@@ -42,3 +42,21 @@ com/example/demo/src/user/UserController.java
  com.example.demo.src.user.UserController
 com/example/demo/src/user/UserProvider.java
  com.example.demo.src.user.UserProvider
+com/example/demo/src/category/CategoryProvider.java
+ com.example.demo.src.category.CategoryProvider
+com/example/demo/src/category/CategoryController.java
+ com.example.demo.src.category.CategoryController
+com/example/demo/src/category/model/GetMenuRes.java
+ com.example.demo.src.category.model.GetMenuRes
+com/example/demo/src/category/model/Category.java
+ com.example.demo.src.category.model.Category
+com/example/demo/src/event/EventDao.java
+ com.example.demo.src.event.EventDao
+com/example/demo/src/event/EventProvider.java
+ com.example.demo.src.event.EventProvider
+com/example/demo/src/event/EventController.java
+ com.example.demo.src.event.EventController
+com/example/demo/src/event/model/GetEventRes.java
+ com.example.demo.src.event.model.GetEventRes
+com/example/demo/src/category/CategoryDao.java
+ com.example.demo.src.category.CategoryDao
