@@ -28,8 +28,6 @@ public class UserController {
     private final JwtService jwtService;
 
 
-
-
     public UserController(UserProvider userProvider, UserService userService, JwtService jwtService){
         this.userProvider = userProvider;
         this.userService = userService;
@@ -59,6 +57,29 @@ public class UserController {
             return new BaseResponse<>((exception.getStatus()));
         }
     }
+
+    /**
+     * 메인 화면 - 주소 표시 API
+     * [GET] /users/addresses
+     * @return BaseResponse<String>
+     */
+    @ResponseBody
+    @GetMapping("/addresses")
+    public BaseResponse<String> getMainAddress() {
+        try {
+            // jwt 에서 userId 추출.
+            int userIdByJwt = jwtService.getUserIdx();
+
+            if (usetProvider.checkUserStatusByUserId(userIdByJwt) == 0) {
+                return new BaseResponse<>(DELETED_USER);
+            }
+
+            return new BaseResponse<>(userProvider.getMainAddress(userIdByJwt));
+        } catch (BaseException exception) {
+            return new BaseResponse<>((exception.getStatus()));
+        }
+    }
+
 
     /**
      * 회원 1명 조회 API

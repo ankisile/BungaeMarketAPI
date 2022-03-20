@@ -18,7 +18,7 @@ public class ProductDao {
     }
 
     public int checkUserStatusByUserId(int userId) {
-        String checkUserStatusByUserIdQuery = "select exists(select * from Users where id = ? and status = 'ACTIVE')";
+        String checkUserStatusByUserIdQuery = "select exists(select * from Users where user_id = ? and status = 'ACTIVE')";
         int checkUserStatusByUserIdParams = userId;
         return this.jdbcTemplate.queryForObject(checkUserStatusByUserIdQuery, int.class, checkUserStatusByUserIdParams);
     }

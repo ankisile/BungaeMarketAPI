@@ -11,25 +11,6 @@ public class ValidationRegex {
         return matcher.find();
     }
 
-    public static boolean isRegexTitle(String target) {
-        String regex = "^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$";
-        Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
-        Matcher matcher = pattern.matcher(target);
-        return matcher.find();
-    }
 
-    public static boolean isRegexPrice(String target) {
-        String regex = "^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$";
-        Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
-        Matcher matcher = pattern.matcher(target);
-        return matcher.find();
-    }
-
-    public static boolean isRegexExplanation(String target) {
-        String regex = "^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$";
-        Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
-        Matcher matcher = pattern.matcher(target);
-        return matcher.find();
-    }
 }
 
