@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Date;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -18,5 +20,5 @@ public class User {
     private Integer point;
     private String introduction;
     private String gender;
-    private String birthDate;
+    private String  birthDate;
 }

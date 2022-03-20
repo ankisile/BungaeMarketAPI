@@ -32,7 +32,7 @@ public class UserDao {
     }
 
     public List<GetUserRes> getUsersByEmail(String email){
-        String getUsersByEmailQuery = "select * from UserInfo where email =?";
+        String getUsersByEmailQuery = "select * from Users where email =?";
         String getUsersByEmailParams = email;
         return this.jdbcTemplate.query(getUsersByEmailQuery,
                 (rs, rowNum) -> new GetUserRes(
@@ -45,7 +45,7 @@ public class UserDao {
     }
 
     public GetUserRes getUser(int userIdx){
-        String getUserQuery = "select * from UserInfo where userIdx = ?";
+        String getUserQuery = "select * from Users where user_id = ?";
         int getUserParams = userIdx;
         return this.jdbcTemplate.queryForObject(getUserQuery,
                 (rs, rowNum) -> new GetUserRes(
@@ -76,12 +76,11 @@ public class UserDao {
         return this.jdbcTemplate.queryForObject(checkEmailQuery,
                 int.class,
                 checkEmailParams);
-
     }
 
-    public int modifyUserName(PatchUserReq patchUserReq){
-        String modifyUserNameQuery = "update Users set userName = ? where userIdx = ? ";
-        Object[] modifyUserNameParams = new Object[]{patchUserReq.getUserName(), patchUserReq.getUserIdx()};
+    public int modifyUserInfo(PatchUserReq patchUserReq,int userIdx){
+        String modifyUserNameQuery = "update Users set gender = ?,birth_date=?,phone=? where user_id = ? ";
+        Object[] modifyUserNameParams = new Object[]{patchUserReq.getGender(), patchUserReq.getBirthDate(), patchUserReq.getPhone(), userIdx};
 
         return this.jdbcTemplate.update(modifyUserNameQuery,modifyUserNameParams);
     }
