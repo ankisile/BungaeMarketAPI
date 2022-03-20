@@ -70,7 +70,7 @@ public class UserController {
             // jwt 에서 userId 추출.
             int userIdByJwt = jwtService.getUserIdx();
 
-            if (usetProvider.checkUserStatusByUserId(userIdByJwt) == 0) {
+            if (userProvider.checkUserStatusByUserId(userIdByJwt) == 0) {
                 return new BaseResponse<>(DELETED_USER);
             }
 

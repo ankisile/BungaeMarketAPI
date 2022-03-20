@@ -91,7 +91,7 @@ public class UserProvider {
 
     public int checkUserStatusByUserId(int userId) throws BaseException {
         try {
-            return productDao.checkUserStatusByUserId(userId);
+            return userDao.checkUserStatusByUserId(userId);
         } catch (Exception exception) {
             throw new BaseException(DATABASE_ERROR);
         }
@@ -99,7 +99,7 @@ public class UserProvider {
 
     public String getMainAddress(int userId) throws BaseException {
         try {
-            return mainDao.getMainAddress(userId);
+            return userDao.getMainAddress(userId);
         } catch (Exception exception) {
             throw new BaseException(DATABASE_ERROR);
         }

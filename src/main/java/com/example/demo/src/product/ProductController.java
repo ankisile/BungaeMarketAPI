@@ -96,28 +96,28 @@ public class ProductController {
     }
 
 
-    /**
-     * 특정 상품 화면 - 이미지 API
-     * [GET] /products/:productId/images
-     * @return BaseResponse<List<ProductImage>>
-     */
-    @ResponseBody
-    @GetMapping("/{productId}/images")
-    public BaseResponse<List<GetProductImgRes>> getProductImages(@PathVariable(required = false) String productId) {
-        if(productId == null){
-            return new BaseResponse<>(EMPTY_PATH_VARIABLE);
-        }
-        try {
-            if(!isRegexInteger(productId)){
-                return new BaseResponse<>(INVAILD_PATH_VARIABLE);
-            }
-            int id = Integer.parseInt(storeId);
-
-            return new BaseResponse<>(storeProvider.getStoreImages(id));
-        } catch (BaseException exception) {
-            return new BaseResponse<>((exception.getStatus()));
-        }
-    }
+//    /**
+//     * 특정 상품 화면 - 이미지 API
+//     * [GET] /products/:productId/images
+//     * @return BaseResponse<List<ProductImage>>
+//     */
+//    @ResponseBody
+//    @GetMapping("/{productId}/images")
+//    public BaseResponse<List<GetProductImgRes>> getProductImages(@PathVariable(required = false) String productId) {
+//        if(productId == null){
+//            return new BaseResponse<>(EMPTY_PATH_VARIABLE);
+//        }
+//        try {
+//            if(!isRegexInteger(productId)){
+//                return new BaseResponse<>(INVAILD_PATH_VARIABLE);
+//            }
+//            int id = Integer.parseInt(storeId);
+//
+//            return new BaseResponse<>(storeProvider.getStoreImages(id));
+//        } catch (BaseException exception) {
+//            return new BaseResponse<>((exception.getStatus()));
+//        }
+//    }
 
 
 }
