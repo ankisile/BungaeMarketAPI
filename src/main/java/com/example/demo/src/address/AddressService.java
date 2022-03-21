@@ -3,6 +3,7 @@ package com.example.demo.src.address;
 import com.example.demo.config.BaseException;
 import com.example.demo.src.address.model.GetAddressRes;
 import com.example.demo.src.address.model.PostAddressReq;
+import com.example.demo.src.address.model.PostDirectAddressReq;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -36,6 +37,15 @@ public class AddressService {
             addressDao.createAddress(postAddressReq, userIdx);
 
         } catch (Exception exception) {
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
+
+    public void createDirectAddress(PostDirectAddressReq postDirectAddressReq, int userIdx) throws BaseException {
+        try {
+            addressDao.createDirectAddress(postDirectAddressReq, userIdx);
+
+        } catch (Exception e) {
             throw new BaseException(DATABASE_ERROR);
         }
     }

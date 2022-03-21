@@ -2,6 +2,7 @@ package com.example.demo.src.address;
 
 import com.example.demo.src.address.model.GetAddressRes;
 import com.example.demo.src.address.model.PostAddressReq;
+import com.example.demo.src.address.model.PostDirectAddressReq;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
@@ -39,5 +40,10 @@ public class AddressDao {
 
     public void modifyAddressMain(Integer addressIdx) {
         jdbcTemplate.update("update Address set main='SUB' where address_id=?", addressIdx);
+    }
+
+    public void createDirectAddress(PostDirectAddressReq postDirectAddressReq, int userIdx) {
+        Object[] createDirectAddressParams = new Object[]{userIdx, postDirectAddressReq.getDirectAddress(), "DIRECT"};
+        jdbcTemplate.update("insert into Address(user_id,detail_address,address_type) VALUE ()", createDirectAddressParams);
     }
 }
