@@ -1,25 +1,29 @@
 package com.example.demo.src.product.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
 
 @Getter
 @Setter
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class GetProductInfoRes {
-    private Integer productIdx;
-    private String title;
-    private String category;
-    private Integer price;
+    @NonNull private int productIdx;
+    @NonNull private String title;
+    @NonNull private Integer price;
+    @NonNull private String directAddress;
+    @NonNull private String productOption;
+    @NonNull private String explanation;
+    @NonNull private String securePayment;
+    @NonNull private String sellStatus;
+    @NonNull private String createdAt;
+    @NonNull private String favoriteCount;
+    @NonNull private String category;
+    @NonNull private String productInquiry;
     private List<ProductTag> productTagList;
-    private String explanation;
-    private String shippingFee;
-    private String directPlace;
-    private int quantity;
-    private String productStatus;
-    private String exchangePossible;
-    private String securePayment;
+
+
 }

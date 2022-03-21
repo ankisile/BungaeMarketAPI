@@ -68,4 +68,70 @@ public class ProductDao {
     }
 
 
+    public GetProductInfoRes getProductInfos(int productId) {
+        String getProductInfoQuery = "select Products.product_id as productIdx, product_title as title, price,\n" +
+                "         (case when address IS NOT NULL then address\n" +
+                "            else '지역정보 없음' end) as directAddress,\n" +
+                "       concat(\n" +
+                "           case when product_status='USED' then '중고'\n" +
+                "                else '새상품' end,\n" +
+                "           '·',\n" +
+                "           case when shipping_fee='EXCLUDE' then '배송비별도'\n" +
+                "                else '배송비포함' end,\n" +
+                "           '·',\n" +
+                "           case when exchange_possible = 'EXCHANGEABLE' then '·교환가능' else \"\" end,\n" +
+                "           (concat('총 ',quantity,'개'))\n" +
+                "        ) as productOption,\n" +
+                "       explanation,\n" +
+                "       secure_payment as securePayment,\n" +
+                "       case when sell_status = 'SELLING' then '판매중'\n" +
+                "            when sell_status = 'RESERVED' then '예약중'\n" +
+                "           when sell_status = 'SOLDOUT' then '판매완료'\n" +
+                "           end as sellStatus,\n" +
+                "        (case when timestampdiff(second , Products.createdAt, current_timestamp) <60\n" +
+                "                then concat(timestampdiff(second, Products.createdAt, current_timestamp),' 초 전')\n" +
+                "            when timestampdiff(minute , Products.createdAt, current_timestamp) <60\n" +
+                "                then concat(timestampdiff(minute, Products.createdAt, current_timestamp),' 분 전')\n" +
+                "            when timestampdiff(hour, Products.createdAt, current_timestamp) <24\n" +
+                "                then concat(timestampdiff(hour, Products.createdAt, current_timestamp),' 시간 전')\n" +
+                "            else concat(datediff( current_timestamp, Products.createdAt),' 일 전')\n" +
+                "            end) as createdAt,\n" +
+                "       (select case when fCount is null then 0 else fCount end) as favoriteCount,\n" +
+                "       CS.category_small_name as category,\n" +
+                "       (select case when ICount is null then 0 else ICount end) as productInquiry\n" +
+                "from Products\n" +
+                "left join (select product_id, count(*) as fCount from Favorites group by product_id) as F on Products.product_id = F.product_id\n" +
+                "left join CategorySmall CS on Products.category_small_id = CS.category_small_id\n" +
+                "left join (select product_id, count(*) as ICount from ProductInquiry group by product_id) as PI on Products.product_id = PI.product_id\n" +
+                "left join (select user_id, address from Address where address_type='MEETING' and main='MAIN') as A on Products.user_id = A.user_id\n" +
+                "where Products.product_id=?";
+        int getProductInfoParams = productId;
+        return this.jdbcTemplate.queryForObject(getProductInfoQuery,
+                (rs, rowNum) -> new GetProductInfoRes(
+                        rs.getInt("productIdx"),
+                        rs.getString("title"),
+                        rs.getInt("price"),
+                        rs.getString("directAddress"),
+                        rs.getString("productOption"),
+                        rs.getString("explanation"),
+                        rs.getString("securePayment"),
+                        rs.getString("sellStatus"),
+                        rs.getString("createdAt"),
+                        rs.getString("favoriteCount"),
+                        rs.getString("category"),
+                        rs.getString("productInquiry")
+                ),
+                getProductInfoParams);
+    }
+
+    public List<ProductTag> getProductTags(int productId) {
+        String getProductTagQuery = "select tag_id as tagId, tag_name as tagName from Tag where product_id=?";
+        int getProductTagParams = productId;
+        return this.jdbcTemplate.query(getProductTagQuery,
+                (rs, rowNum) -> new ProductTag(
+                        rs.getInt("tagId"),
+                        rs.getString("tagName")
+                ),
+                getProductTagParams);
+    }
 }
