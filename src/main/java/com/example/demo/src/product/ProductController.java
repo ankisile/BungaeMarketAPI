@@ -120,9 +120,9 @@ public class ProductController {
     }
 
     /**
-     * 특정 상품 화면 - 이미지 API
+     * 특정 상품 화면 - 상품정보 API
      * [GET] /products/:productId
-     * @return BaseResponse<GetStoreInfosRes>
+     * @return BaseResponse<GetProductInfoRes>
      */
     @ResponseBody
     @GetMapping("/{productId}")
@@ -131,6 +131,12 @@ public class ProductController {
             return new BaseResponse<>(EMPTY_PATH_VARIABLE);
         }
         try {
+            int userIdByJwt = jwtService.getUserIdx();
+
+            if (productProvider.checkUserStatusByUserId(userIdByJwt) == 0) {
+                return new BaseResponse<>(DELETED_USER);
+            }
+
             if(!isRegexInteger(productId)){
                 return new BaseResponse<>(INVAILD_PATH_VARIABLE);
             }
@@ -139,7 +145,7 @@ public class ProductController {
                 return new BaseResponse<>(INVALID_PRODUCT_ID);
             }
 
-            GetProductInfoRes getProductInfoRes = productProvider.getProductInfos(id);
+            GetProductInfoRes getProductInfoRes = productProvider.getProductInfos(userIdByJwt, id);
             getProductInfoRes.setProductTagList(productProvider.getProductTags(id));
 
 
@@ -148,6 +154,30 @@ public class ProductController {
             return new BaseResponse<>((exception.getStatus()));
         }
     }
+
+    /**
+     * 특정 상품 화면 - 상품정보 API
+     * [GET] /products
+     * @return BaseResponse<GetProductRes>
+     */
+    @ResponseBody
+    @GetMapping("")
+    public BaseResponse<List<GetProductRes>> getProduct() {
+
+        try {
+            int userIdByJwt = jwtService.getUserIdx();
+
+            if (productProvider.checkUserStatusByUserId(userIdByJwt) == 0) {
+                return new BaseResponse<>(DELETED_USER);
+            }
+
+            List<GetProductRes> products = productProvider.getProducts(userIdByJwt);
+            return new BaseResponse<>(products);
+        } catch (BaseException exception) {
+            return new BaseResponse<>((exception.getStatus()));
+        }
+    }
+
 
 
 }

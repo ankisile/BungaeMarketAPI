@@ -23,6 +23,7 @@ public class GetProductInfoRes {
     @NonNull private String favoriteCount;
     @NonNull private String category;
     @NonNull private String productInquiry;
+    @NonNull private String myFavorite;
     private List<ProductTag> productTagList;
 
 

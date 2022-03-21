@@ -68,8 +68,9 @@ public class ProductDao {
     }
 
 
-    public GetProductInfoRes getProductInfos(int productId) {
+    public GetProductInfoRes getProductInfos(int userId, int productId) {
         String getProductInfoQuery = "select Products.product_id as productIdx, product_title as title, price,\n" +
+                "       (case when F.user_id=? then 'LIKE' else 'UNLIKE' end) as myFavorite,\n" +
                 "         (case when address IS NOT NULL then address\n" +
                 "            else '지역정보 없음' end) as directAddress,\n" +
                 "       concat(\n" +
@@ -100,12 +101,12 @@ public class ProductDao {
                 "       CS.category_small_name as category,\n" +
                 "       (select case when ICount is null then 0 else ICount end) as productInquiry\n" +
                 "from Products\n" +
-                "left join (select product_id, count(*) as fCount from Favorites group by product_id) as F on Products.product_id = F.product_id\n" +
+                "left join (select user_id, product_id, count(*) as fCount from Favorites group by product_id) as F on Products.product_id = F.product_id\n" +
                 "left join CategorySmall CS on Products.category_small_id = CS.category_small_id\n" +
                 "left join (select product_id, count(*) as ICount from ProductInquiry group by product_id) as PI on Products.product_id = PI.product_id\n" +
-                "left join (select user_id, address from Address where address_type='MEETING' and main='MAIN') as A on Products.user_id = A.user_id\n" +
+                "left join (select user_id, address from Address where address_type='DIRECT' and main='MAIN') as A on Products.user_id = A.user_id\n" +
                 "where Products.product_id=?";
-        int getProductInfoParams = productId;
+        Object[] getProductInfoParams = new Object[]{userId, productId};
         return this.jdbcTemplate.queryForObject(getProductInfoQuery,
                 (rs, rowNum) -> new GetProductInfoRes(
                         rs.getInt("productIdx"),
@@ -119,8 +120,9 @@ public class ProductDao {
                         rs.getString("createdAt"),
                         rs.getString("favoriteCount"),
                         rs.getString("category"),
-                        rs.getString("productInquiry")
-                ),
+                        rs.getString("productInquiry"),
+                        rs.getString("myFavorite")
+                        ),
                 getProductInfoParams);
     }
 
@@ -134,4 +136,40 @@ public class ProductDao {
                 ),
                 getProductTagParams);
     }
+
+    public List<GetProductRes> getProducts(int userId) {
+        String getProductsQuery = "select Products.product_id as productIdx, product_title as title, price,\n" +
+                "       (select product_image_url from ProductImages where product_id = product_id limit 1) as productImg,\n"+
+                "         (case when address IS NOT NULL then SUBSTRING_INDEX(address,\" \",-2)\n" +
+                "            else '지역정보 없음' end) as directAddress,\n" +
+                "       (case when F.user_id=? then 'LIKE' else 'UNLIKE' end) as myFavorite,\n" +
+                "       secure_payment as securePayment,\n" +
+                "        (case when timestampdiff(second , Products.createdAt, current_timestamp) <60\n" +
+                "                then concat(timestampdiff(second, Products.createdAt, current_timestamp),' 초 전')\n" +
+                "            when timestampdiff(minute , Products.createdAt, current_timestamp) <60\n" +
+                "                then concat(timestampdiff(minute, Products.createdAt, current_timestamp),' 분 전')\n" +
+                "            when timestampdiff(hour, Products.createdAt, current_timestamp) <24\n" +
+                "                then concat(timestampdiff(hour, Products.createdAt, current_timestamp),' 시간 전')\n" +
+                "            else concat(datediff( current_timestamp, Products.createdAt),' 일 전')\n" +
+                "            end) as createdAt,\n" +
+                "       (select case when fCount is null then 0 else fCount end) as favoriteCount\n" +
+                "from Products\n" +
+                "left join (select product_id, user_id, count(*) as fCount from Favorites group by product_id) as F on Products.product_id = F.product_id\n" +
+                "left join (select user_id, address from Address where address_type='DIRECT' and main='MAIN') as A on Products.user_id = A.user_id\n" +
+                "where sell_status='SELLING'";
+        int getProductParams = userId;
+        return this.jdbcTemplate.query(getProductsQuery,
+                (rs, rowNum) -> new GetProductRes(
+                        rs.getInt("productIdx"),
+                        rs.getString("productImg"),
+                        rs.getString("title"),
+                        rs.getInt("price"),
+                        rs.getString("directAddress"),
+                        rs.getString("securePayment"),
+                        rs.getString("myFavorite"),
+                        rs.getString("createdAt"),
+                        rs.getString("favoriteCount")
+                ), getProductParams);
+    }
+
 }

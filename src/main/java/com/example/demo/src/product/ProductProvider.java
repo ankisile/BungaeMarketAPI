@@ -49,19 +49,29 @@ public class ProductProvider {
         }
     }
 
-    public GetProductInfoRes getProductInfos(int productId) throws BaseException {
+    public GetProductInfoRes getProductInfos(int userId, int productId) throws BaseException {
         try{
-            GetProductInfoRes getProductInfoRes = productDao.getProductInfos(productId);
+            GetProductInfoRes getProductInfoRes = productDao.getProductInfos(userId, productId);
             return getProductInfoRes;
         } catch (Exception exception) {
             throw new BaseException(DATABASE_ERROR);
         }
     }
 
-    public List<ProductTag> getProductTags(int productId) throws BaseException {
+    public List<ProductTag> getProductTags( int productId) throws BaseException {
         try {
             List<ProductTag> productTagList = productDao.getProductTags(productId);
             return productTagList;
+        } catch (Exception exception) {
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
+
+
+    public List<GetProductRes> getProducts(int userId) throws BaseException {
+        try {
+            List<GetProductRes> productResList = productDao.getProducts(userId);
+            return productResList;
         } catch (Exception exception) {
             throw new BaseException(DATABASE_ERROR);
         }
