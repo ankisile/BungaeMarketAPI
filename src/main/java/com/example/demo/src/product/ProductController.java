@@ -119,31 +119,35 @@ public class ProductController {
         }
     }
 
-//    /**
-//     * 특정 상품 화면 - 이미지 API
-//     * [GET] /products/:productId
-//     * @return BaseResponse<GetStoreInfosRes>
-//     */
-//    @ResponseBody
-//    @GetMapping("/{productId}")
-//    public BaseResponse<GetProductInfoRes> getProductInfo(@PathVariable(required = false) String productId) {
-//        if(productId == null){
-//            return new BaseResponse<>(EMPTY_PATH_VARIABLE);
-//        }
-//        try {
-//            if(!isRegexInteger(productId)){
-//                return new BaseResponse<>(INVAILD_PATH_VARIABLE);
-//            }
-//            int id = Integer.parseInt(productId);
-//            if(productProvider.checkProductId(id) == 0){
-//                return new BaseResponse<>(INVALID_PRODUCT_ID);
-//            }
-//            GetProductInfoRes getProductInfoRes = productProvider.getProductInfos(id);
-//            return new BaseResponse<>(getStoreInfoRes);
-//        } catch (BaseException exception) {
-//            return new BaseResponse<>((exception.getStatus()));
-//        }
-//    }
+    /**
+     * 특정 상품 화면 - 이미지 API
+     * [GET] /products/:productId
+     * @return BaseResponse<GetStoreInfosRes>
+     */
+    @ResponseBody
+    @GetMapping("/{productId}")
+    public BaseResponse<GetProductInfoRes> getProductInfo(@PathVariable(required = false) String productId) {
+        if(productId == null){
+            return new BaseResponse<>(EMPTY_PATH_VARIABLE);
+        }
+        try {
+            if(!isRegexInteger(productId)){
+                return new BaseResponse<>(INVAILD_PATH_VARIABLE);
+            }
+            int id = Integer.parseInt(productId);
+            if(productProvider.checkProductId(id) == 0){
+                return new BaseResponse<>(INVALID_PRODUCT_ID);
+            }
+
+            GetProductInfoRes getProductInfoRes = productProvider.getProductInfos(id);
+            getProductInfoRes.setProductTagList(productProvider.getProductTags(id));
+
+
+            return new BaseResponse<>(getProductInfoRes);
+        } catch (BaseException exception) {
+            return new BaseResponse<>((exception.getStatus()));
+        }
+    }
 
 
 }
