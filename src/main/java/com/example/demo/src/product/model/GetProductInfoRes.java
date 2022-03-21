@@ -10,12 +10,14 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 public class GetProductInfoRes {
+    private Integer productIdx;
     private String title;
     private String category;
     private Integer price;
     private List<ProductTag> productTagList;
     private String explanation;
     private String shippingFee;
+    private String directPlace;
     private int quantity;
     private String productStatus;
     private String exchangePossible;
