@@ -53,32 +53,34 @@ public class AddressController {
     }
 
     @PostMapping("/direct")
-    public BaseResponse<String> createDirectAddress(@RequestBody PostDirectAddressReq postDirectAddressReq) {
+    public BaseResponse<String> createDirectAddress(@RequestBody PostDirectAddressReq postDirectAddressReq,@RequestParam int userIdx) {
 
         if (postDirectAddressReq.getDirectAddress() == null) {
             return new BaseResponse<>(POST_ADDRESS_EMPTY_DIRECT_ADDRESS);
         }
 
         try {
-            int userIdx = jwtService.getUserIdx();
+//            int userIdx = jwtService.getUserIdx();
             //userIdx와 접근한 유저가 같은지 확인
 
             addressService.createDirectAddress(postDirectAddressReq, userIdx);
 
-            return new BaseResponse<>("주소가 추가되었습니다.");
+            return new BaseResponse<>("직거래 주소가 추가되었습니다.");
         } catch (BaseException exception) {
             return new BaseResponse<>((exception.getStatus()));
         }
     }
 
-//    @GetMapping("/direct")
-//    public BaseResponse<List<GetDirectAddressRes>> getDirectAddresses() {
-//        try{
+    @GetMapping("/direct")
+    public BaseResponse<List<GetDirectAddressRes>> getDirectAddresses(@RequestParam int userIdx) {
+        try{
 //            int userIdx = jwtService.getUserIdx();
-//            addressProvider.getDirectAddresses(userIdx);
-//
-//        }catch (BaseException exception) {
-//            return new BaseResponse<>((exception.getStatus()));
-//        }
-//    }
+            List<GetDirectAddressRes> directAddresses = addressProvider.getDirectAddresses(userIdx);
+
+            return new BaseResponse<>(directAddresses);
+
+        }catch (BaseException exception) {
+            return new BaseResponse<>((exception.getStatus()));
+        }
+    }
 }

@@ -7,8 +7,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@AllArgsConstructor
 public class PostDirectAddressReq {
 
     private String directAddress;
+
 }

@@ -1,6 +1,7 @@
 package com.example.demo.src.address;
 
 import com.example.demo.src.address.model.GetAddressRes;
+import com.example.demo.src.address.model.GetDirectAddressRes;
 import com.example.demo.src.address.model.PostAddressReq;
 import com.example.demo.src.address.model.PostDirectAddressReq;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +45,13 @@ public class AddressDao {
 
     public void createDirectAddress(PostDirectAddressReq postDirectAddressReq, int userIdx) {
         Object[] createDirectAddressParams = new Object[]{userIdx, postDirectAddressReq.getDirectAddress(), "DIRECT"};
-        jdbcTemplate.update("insert into Address(user_id,detail_address,address_type) VALUE ()", createDirectAddressParams);
+        jdbcTemplate.update("insert into Address(user_id,address,address_type) VALUE (?,?,?)", createDirectAddressParams);
     }
+
+    public List<GetDirectAddressRes> getDirectAddresses(int userIdx) {
+        return jdbcTemplate.query("select address from Address where user_id=? and address_type='DIRECT'",
+                (rs, rowNum) -> new GetDirectAddressRes(
+                        rs.getString("address")), userIdx);
+    }
+
 }
