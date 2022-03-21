@@ -20,22 +20,22 @@ public class FavoriteController {
     private final JwtService jwtService;
 
 
-//    /**
-//     * 하트를 눌렀을때 찜목록에 추가
-//     * @param getProductInfoRes
-//     * @return
-//     */
-//    @PostMapping("")
-//    public BaseResponse<String> createFavorite(@RequestBody GetProductInfoRes getProductInfoRes) {
-//        try {
-//            int userIdx = jwtService.getUserIdx();
-//
-//            Integer productIdx = getProductInfoRes.getProductIdx();
-//            favoriteService.createFavorite(productIdx,userIdx);
-//
-//            return new BaseResponse<>("찜 목록에 추가되었습니다.");
-//        } catch (BaseException exception) {
-//            return new BaseResponse<>((exception.getStatus()));
-//        }
-//    }
+    /**
+     * 하트를 눌렀을때 찜목록에 추가
+     * @param getProductInfoRes
+     * @return
+     */
+    @PostMapping("")
+    public BaseResponse<String> createFavorite(@RequestBody GetProductInfoRes getProductInfoRes) {
+        try {
+            int userIdx = jwtService.getUserIdx();
+
+            Integer productIdx = getProductInfoRes.getProductIdx();
+            favoriteService.createFavorite(productIdx,userIdx);
+
+            return new BaseResponse<>("찜 목록에 추가되었습니다.");
+        } catch (BaseException exception) {
+            return new BaseResponse<>((exception.getStatus()));
+        }
+    }
 }
