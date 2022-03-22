@@ -181,16 +181,17 @@ public class UserController {
         }
     }
 
-    @PatchMapping("/shop-name")
+    @ResponseBody
+    @PatchMapping("/shopname")
     public BaseResponse<String> modifyShopName(@RequestBody PatchShopNameReq patchShopNameReq) {
-
         try {
             int userIdx = jwtService.getUserIdx();
-            userService.modifyShopName(patchShopNameReq, userIdx);
-            String result = "상점이름이 바뀌었습니다.";
-            return new BaseResponse<>(result);
-        }catch (BaseException exception) {
 
+            //같다면 유저네임 변경
+            userService.modifyShopName(patchShopNameReq, userIdx);
+            String result = "상점이름이 변경되었습니다.";
+            return new BaseResponse<>(result);
+        } catch (BaseException exception) {
             return new BaseResponse<>((exception.getStatus()));
         }
     }
