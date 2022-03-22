@@ -182,7 +182,7 @@ public class UserController {
     }
 
     @ResponseBody
-    @PatchMapping("/shopname")
+    @PostMapping("/shopname")
     public BaseResponse<String> modifyShopName(@RequestBody PatchShopNameReq patchShopNameReq) {
         try {
             int userIdx = jwtService.getUserIdx();
