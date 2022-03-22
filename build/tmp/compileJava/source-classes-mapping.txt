@@ -16,6 +16,10 @@ com/example/demo/src/address/AddressController.java
  com.example.demo.src.address.AddressController
 com/example/demo/config/BaseResponseStatus.java
  com.example.demo.config.BaseResponseStatus
+com/example/demo/src/product/model/RelateProduct.java
+ com.example.demo.src.product.model.RelateProduct
+com/example/demo/src/product/model/StoreInfo.java
+ com.example.demo.src.product.model.StoreInfo
 com/example/demo/src/user/model/PatchShopNameReq.java
  com.example.demo.src.user.model.PatchShopNameReq
 com/example/demo/src/category/CategoryProvider.java
@@ -26,8 +30,6 @@ com/example/demo/src/product/model/ProductImg.java
  com.example.demo.src.product.model.ProductImg
 com/example/demo/src/product/ProductDao.java
  com.example.demo.src.product.ProductDao
-com/example/demo/src/product/model/GetProductImgRes.java
- com.example.demo.src.product.model.GetProductImgRes
 com/example/demo/config/secret/Secret.java
  com.example.demo.config.secret.Secret
 com/example/demo/src/address/AddressProvider.java
@@ -36,6 +38,8 @@ com/example/demo/src/user/model/PostUserRes.java
  com.example.demo.src.user.model.PostUserRes
 com/example/demo/config/BaseResponse.java
  com.example.demo.config.BaseResponse
+com/example/demo/src/product/model/ProductInfo.java
+ com.example.demo.src.product.model.ProductInfo
 com/example/demo/src/address/model/PostDirectAddressReq.java
  com.example.demo.src.address.model.PostDirectAddressReq
 com/example/demo/src/favorite/FavoriteService.java
@@ -80,6 +84,8 @@ com/example/demo/src/WebSecurityConfig.java
  com.example.demo.src.WebSecurityConfig
 com/example/demo/src/test/TestController.java
  com.example.demo.src.test.TestController
+com/example/demo/src/product/model/SellProduct.java
+ com.example.demo.src.product.model.SellProduct
 com/example/demo/src/favorite/FavoriteDao.java
  com.example.demo.src.favorite.FavoriteDao
 com/example/demo/src/user/model/PostLoginReq.java
