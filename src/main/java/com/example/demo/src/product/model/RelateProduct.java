@@ -7,7 +7,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class ProductImg {
-    private int productImgId;
+public class RelateProduct{
     private String productImgUrl;
+    private String title;
+    private Integer price;
 }

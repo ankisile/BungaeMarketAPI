@@ -52,11 +52,12 @@ public class ProductDao {
         this.jdbcTemplate.update(createProductTagQuery, createProductTagParams);
     }
 
-    public List<GetProductImgRes> getProductImages(int productId){
-        String getProductImagesQuery = "select product_image_url as productImgUrl from ProductImages where product_id = ? ";
+    public List<ProductImg> getProductImages(int productId){
+        String getProductImagesQuery = "select product_image_id as productImgId, product_image_url as productImgUrl from ProductImages where product_id = ? ";
         int getProductImagesParams = productId;
         return this.jdbcTemplate.query(getProductImagesQuery,
-                (rs, rowNum) -> new GetProductImgRes(
+                (rs, rowNum) -> new ProductImg(
+                        rs.getInt("productImgId"),
                         rs.getString("productImgUrl")),
                 getProductImagesParams);
     }
@@ -68,8 +69,8 @@ public class ProductDao {
     }
 
 
-    public GetProductInfoRes getProductInfos(int userId, int productId) {
-        String getProductInfoQuery = "select Products.product_id as productIdx, product_title as title, price,\n" +
+    public ProductInfo getProductInfos(int userId, int productId) {
+        String getProductInfoQuery = "select product_title as title, price,\n" +
                 "       (case when F.user_id=? then 'LIKE' else 'UNLIKE' end) as myFavorite,\n" +
                 "         (case when address IS NOT NULL then address\n" +
                 "            else '지역정보 없음' end) as directAddress,\n" +
@@ -98,7 +99,7 @@ public class ProductDao {
                 "            else concat(datediff( current_timestamp, Products.createdAt),' 일 전')\n" +
                 "            end) as createdAt,\n" +
                 "       (select case when fCount is null then 0 else fCount end) as favoriteCount,\n" +
-                "       CS.category_small_name as category,\n" +
+                "       CS.category_small_name as category,CS.category_small_id as categoryId\n" +
                 "       (select case when ICount is null then 0 else ICount end) as productInquiry\n" +
                 "from Products\n" +
                 "left join (select user_id, product_id, count(*) as fCount from Favorites group by product_id) as F on Products.product_id = F.product_id\n" +
@@ -108,8 +109,7 @@ public class ProductDao {
                 "where Products.product_id=?";
         Object[] getProductInfoParams = new Object[]{userId, productId};
         return this.jdbcTemplate.queryForObject(getProductInfoQuery,
-                (rs, rowNum) -> new GetProductInfoRes(
-                        rs.getInt("productIdx"),
+                (rs, rowNum) -> new ProductInfo(
                         rs.getString("title"),
                         rs.getInt("price"),
                         rs.getString("directAddress"),
@@ -119,6 +119,7 @@ public class ProductDao {
                         rs.getString("sellStatus"),
                         rs.getString("createdAt"),
                         rs.getString("favoriteCount"),
+                        rs.getInt("categoryId"),
                         rs.getString("category"),
                         rs.getString("productInquiry"),
                         rs.getString("myFavorite")
@@ -170,6 +171,60 @@ public class ProductDao {
                         rs.getString("createdAt"),
                         rs.getString("favoriteCount")
                 ), getProductParams);
+    }
+
+    public StoreInfo getStoreInfos(int productId) {
+        String getStoreInfoQuery = "select shop_name as storeName,\n" +
+                "       case when fCount is not null then fCount else 0 end as followerCount,\n" +
+                "       case when rate is not null then fCount else 0 end as starRate,\n" +
+                "       case when rCount is not null then fCount else 0 end as reviewCount\n" +
+                "from Products P\n" +
+                "inner join Users U on P.user_id = U.user_id\n" +
+                "left join (select following_user_id, count(*) as fCount from Following group by following_user_id) as F on U.user_id = F.following_user_id\n" +
+                "left join (select store_id, ROUND(SUM(rate) / COUNT(store_id),1) as rate, count(*) as rCount from Reviews group by store_id)as R on U.user_id = R.store_id\n" +
+                "where product_id=?";
+        int getStoreInfoParams = productId;
+        return this.jdbcTemplate.queryForObject(getStoreInfoQuery,
+                (rs, rowNum) -> new StoreInfo(
+                        rs.getString("storeName"),
+                        rs.getInt("followerCount"),
+                        rs.getDouble("starRate"),
+                        rs.getInt("reviewCount")
+
+                        ),
+                getStoreInfoParams);
+    }
+
+    public List<SellProduct> getSellProducts(int storeId) {
+        String getSellProductsQuery = "select  price,\n" +
+                "       (select product_image_url from ProductImages where product_id = product_id limit 1) as productImgUrl\n" +
+                "from Products P\n" +
+                "where user_id=? limit 6";
+        int getSellProductsParams = storeId;
+        return this.jdbcTemplate.query(getSellProductsQuery,
+                (rs, rowNum) -> new SellProduct(
+                        rs.getString("productImgUrl"),
+                        rs.getInt("price")
+
+
+                        ),
+                getSellProductsParams);
+    }
+
+    public List<RelateProduct> getRelateProducts(int categoryId) {
+        String getRelateProductsQuery = "select  price,title\n" +
+                "       (select product_image_url from ProductImages where product_id = product_id limit 1) as productImgUrl\n" +
+                "inner join CategorySmall CS on P.category_small_id = CS.category_small_id\n" +
+                "where category_small_id = ? limit 18";
+        int getRelateProductsParams = categoryId;
+        return this.jdbcTemplate.query(getRelateProductsQuery,
+                (rs, rowNum) -> new RelateProduct(
+                        rs.getString("productImgUrl"),
+                        rs.getString("title"),
+                        rs.getInt("price")
+
+                ),
+                getRelateProductsParams);
     }
 
 }

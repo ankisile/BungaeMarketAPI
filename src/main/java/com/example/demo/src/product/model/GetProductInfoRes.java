@@ -12,19 +12,13 @@ import java.util.List;
 @RequiredArgsConstructor
 public class GetProductInfoRes {
     @NonNull private int productIdx;
-    @NonNull private String title;
-    @NonNull private Integer price;
-    @NonNull private String directAddress;
-    @NonNull private String productOption;
-    @NonNull private String explanation;
-    @NonNull private String securePayment;
-    @NonNull private String sellStatus;
-    @NonNull private String createdAt;
-    @NonNull private String favoriteCount;
-    @NonNull private String category;
-    @NonNull private String productInquiry;
-    @NonNull private String myFavorite;
+    private ProductInfo productInfo;
     private List<ProductTag> productTagList;
+    private List<ProductImg> productImgList;
+    private StoreInfo storeInfo;
+    private List<SellProduct> sellProductList;
+//    private List<Review> reviewList;
+    private List<RelateProduct> relateProductList;
 
 
 }

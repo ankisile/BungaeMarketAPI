@@ -77,7 +77,7 @@ public class ProductController {
             if(postProductReq.getProductImgList() != null){
                 List<ProductImg> productImgList = postProductReq.getProductImgList();
                 for(ProductImg productImg : productImgList){
-                    productService.createProductImage(productId, productImg.getProductImg());
+                    productService.createProductImage(productId, productImg.getProductImgUrl());
                 }
             }
 
@@ -90,30 +90,6 @@ public class ProductController {
 
 
             return new BaseResponse<>("success");
-        } catch (BaseException exception) {
-            return new BaseResponse<>((exception.getStatus()));
-        }
-    }
-
-
-    /**
-     * 특정 상품 화면 - 이미지 API
-     * [GET] /products/:productId/images
-     * @return BaseResponse<List<ProductImage>>
-     */
-    @ResponseBody
-    @GetMapping("/{productId}/images")
-    public BaseResponse<List<GetProductImgRes>> getProductImages(@PathVariable(required = false) String productId) {
-        if(productId == null){
-            return new BaseResponse<>(EMPTY_PATH_VARIABLE);
-        }
-        try {
-            if(!isRegexInteger(productId)){
-                return new BaseResponse<>(INVAILD_PATH_VARIABLE);
-            }
-            int id = Integer.parseInt(productId);
-
-            return new BaseResponse<>(productProvider.getProductImages(id));
         } catch (BaseException exception) {
             return new BaseResponse<>((exception.getStatus()));
         }
@@ -145,8 +121,14 @@ public class ProductController {
                 return new BaseResponse<>(INVALID_PRODUCT_ID);
             }
 
-            GetProductInfoRes getProductInfoRes = productProvider.getProductInfos(userIdByJwt, id);
+            GetProductInfoRes getProductInfoRes = new GetProductInfoRes(id);
+//            productProvider.setProductView(userIdByJwt, id, getProductInfoRes);
+            getProductInfoRes.setProductInfo(productProvider.getProductInfos(userIdByJwt,id));
             getProductInfoRes.setProductTagList(productProvider.getProductTags(id));
+            getProductInfoRes.setProductImgList(productProvider.getProductImages(id));
+            getProductInfoRes.setStoreInfo(productProvider.getStoreInfos(id));
+            getProductInfoRes.setSellProductList(productProvider.getSellProducts(id));
+//            getProductInfoRes.setRelateProductList(productProvider.getRelateProducts(getProductInfoRes.getProductInfo().getCategoryId()));
 
 
             return new BaseResponse<>(getProductInfoRes);
