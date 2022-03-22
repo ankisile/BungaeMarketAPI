@@ -17,7 +17,7 @@ public class GetProductInfoRes {
     private List<ProductImg> productImgList;
     private StoreInfo storeInfo;
     private List<SellProduct> sellProductList;
-//    private List<Review> reviewList;
+    private List<Review> reviewList;
     private List<RelateProduct> relateProductList;
 
 

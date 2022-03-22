@@ -86,7 +86,7 @@ public class ProductProvider {
             StoreInfo storeInfo = productDao.getStoreInfos(productId);
             return storeInfo;
         } catch (Exception exception) {
-            throw new BaseException(DATABASE_ERROR);
+            throw new BaseException(INVALID_PRODUCT_ID);
         }
     }
 
@@ -105,4 +105,14 @@ public class ProductProvider {
             throw new BaseException(DATABASE_ERROR);
         }
     }
+
+    public List<Review> getReviews(int storeId) throws BaseException {
+        try {
+            return productDao.getReviews(storeId);
+        } catch (Exception exception) {
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
+
+
 }

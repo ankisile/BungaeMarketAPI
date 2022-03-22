@@ -99,7 +99,7 @@ public class ProductDao {
                 "            else concat(datediff( current_timestamp, Products.createdAt),' 일 전')\n" +
                 "            end) as createdAt,\n" +
                 "       (select case when fCount is null then 0 else fCount end) as favoriteCount,\n" +
-                "       CS.category_small_name as category,CS.category_small_id as categoryId\n" +
+                "       CS.category_small_name as category,CS.category_small_id as categoryId,\n" +
                 "       (select case when ICount is null then 0 else ICount end) as productInquiry\n" +
                 "from Products\n" +
                 "left join (select user_id, product_id, count(*) as fCount from Favorites group by product_id) as F on Products.product_id = F.product_id\n" +
@@ -174,7 +174,7 @@ public class ProductDao {
     }
 
     public StoreInfo getStoreInfos(int productId) {
-        String getStoreInfoQuery = "select shop_name as storeName,\n" +
+        String getStoreInfoQuery = "select P.user_id as storeId, shop_name as storeName,\n" +
                 "       case when fCount is not null then fCount else 0 end as followerCount,\n" +
                 "       case when rate is not null then fCount else 0 end as starRate,\n" +
                 "       case when rCount is not null then fCount else 0 end as reviewCount\n" +
@@ -186,6 +186,7 @@ public class ProductDao {
         int getStoreInfoParams = productId;
         return this.jdbcTemplate.queryForObject(getStoreInfoQuery,
                 (rs, rowNum) -> new StoreInfo(
+                        rs.getInt("storeId"),
                         rs.getString("storeName"),
                         rs.getInt("followerCount"),
                         rs.getDouble("starRate"),
@@ -212,10 +213,9 @@ public class ProductDao {
     }
 
     public List<RelateProduct> getRelateProducts(int categoryId) {
-        String getRelateProductsQuery = "select  price,title\n" +
-                "       (select product_image_url from ProductImages where product_id = product_id limit 1) as productImgUrl\n" +
-                "inner join CategorySmall CS on P.category_small_id = CS.category_small_id\n" +
-                "where category_small_id = ? limit 18";
+        String getRelateProductsQuery = "select  price,product_title as title, (select product_image_url from ProductImages where product_id = product_id limit 1) as productImgUrl\n" +
+                "                        from Products P inner join CategorySmall CS on P.category_small_id = CS.category_small_id\n" +
+                "                where CS.category_small_id = ? limit 18";
         int getRelateProductsParams = categoryId;
         return this.jdbcTemplate.query(getRelateProductsQuery,
                 (rs, rowNum) -> new RelateProduct(
@@ -225,6 +225,24 @@ public class ProductDao {
 
                 ),
                 getRelateProductsParams);
+    }
+
+    public List<Review> getReviews(int storeId) {
+        String getReviewsQuery = "select product_title as title,rate,text as explanation,secure_payment as securePayment\n" +
+                "from Reviews\n" +
+                "join Products P on P.product_id = Reviews.product_id\n" +
+                "where store_id=? limit 2";
+        int getReviewsParams = storeId;
+        return this.jdbcTemplate.query(getReviewsQuery,
+                (rs, rowNum) -> new Review(
+                        rs.getString("title"),
+                        rs.getInt("rate"),
+                        rs.getString("explanation"),
+                        rs.getString("securePayment")
+
+
+                ),
+                getReviewsParams);
     }
 
 }

@@ -8,6 +8,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class StoreInfo{
+    private int storeId;
     private String storeName;
     private Integer followerCount;
     private double starRate;

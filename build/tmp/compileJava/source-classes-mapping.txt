@@ -54,6 +54,8 @@ com/example/demo/src/product/ProductController.java
  com.example.demo.src.product.ProductController
 com/example/demo/config/BaseException.java
  com.example.demo.config.BaseException
+com/example/demo/src/product/model/Review.java
+ com.example.demo.src.product.model.Review
 com/example/demo/src/address/model/GetAddressRes.java
  com.example.demo.src.address.model.GetAddressRes
 com/example/demo/src/category/CategoryDao.java

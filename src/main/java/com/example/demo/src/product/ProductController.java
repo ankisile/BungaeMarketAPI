@@ -122,13 +122,15 @@ public class ProductController {
             }
 
             GetProductInfoRes getProductInfoRes = new GetProductInfoRes(id);
-//            productProvider.setProductView(userIdByJwt, id, getProductInfoRes);
             getProductInfoRes.setProductInfo(productProvider.getProductInfos(userIdByJwt,id));
             getProductInfoRes.setProductTagList(productProvider.getProductTags(id));
             getProductInfoRes.setProductImgList(productProvider.getProductImages(id));
             getProductInfoRes.setStoreInfo(productProvider.getStoreInfos(id));
-            getProductInfoRes.setSellProductList(productProvider.getSellProducts(id));
-//            getProductInfoRes.setRelateProductList(productProvider.getRelateProducts(getProductInfoRes.getProductInfo().getCategoryId()));
+            int storeId=getProductInfoRes.getStoreInfo().getStoreId();
+            getProductInfoRes.setSellProductList(productProvider.getSellProducts(storeId));
+            int categoryId=getProductInfoRes.getProductInfo().getCategoryId();
+            getProductInfoRes.setRelateProductList(productProvider.getRelateProducts(categoryId)); //count 값에 따라 수정 필요
+            getProductInfoRes.setReviewList(productProvider.getReviews(storeId));
 
 
             return new BaseResponse<>(getProductInfoRes);
