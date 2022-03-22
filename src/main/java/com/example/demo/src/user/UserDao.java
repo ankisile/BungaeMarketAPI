@@ -86,8 +86,8 @@ public class UserDao {
     }
 
     public User getPwd(PostLoginReq postLoginReq){
-        String getPwdQuery = "select user_id, user_name,shop_name,email from Users where user_id = ?";
-        String getPwdParams = postLoginReq.getId();
+        String getPwdQuery = "select user_id, user_name,shop_name,email,password,phone,profile_Url,point,introduction,gender,birth_date from Users where email = ?";
+        String getPwdParams = postLoginReq.getEmail();
 
         return this.jdbcTemplate.queryForObject(getPwdQuery,
                 (rs,rowNum)-> new User(
@@ -122,4 +122,9 @@ public class UserDao {
     }
 
 
+    public int checkUserStatusByEmail(String email) {
+        String checkUserStatusByEmailQuery = "select exists(select * from Users where email = ? and status = 'WITHDRAWAL')";
+        String checkUserStatusByEmailParams = email;
+        return this.jdbcTemplate.queryForObject(checkUserStatusByEmailQuery, int.class, checkUserStatusByEmailParams);
+    }
 }

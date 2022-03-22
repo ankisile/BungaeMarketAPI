@@ -70,6 +70,15 @@ public class UserProvider {
     }
 
     public PostLoginRes logIn(PostLoginReq postLoginReq) throws BaseException{
+
+        if(checkEmail(postLoginReq.getEmail()) ==0){
+            throw new BaseException(POST_USERS_NOT_EXISTS_EMAIL);
+        }
+        if (checkUserStatusByEmail(postLoginReq.getEmail()) == 1) {
+            throw new BaseException(DELETED_USER);
+        }
+
+
         User user = userDao.getPwd(postLoginReq);
         String password;
         try {
@@ -92,6 +101,13 @@ public class UserProvider {
     public int checkUserStatusByUserId(int userId) throws BaseException {
         try {
             return userDao.checkUserStatusByUserId(userId);
+        } catch (Exception exception) {
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
+    public int checkUserStatusByEmail(String email) throws BaseException {
+        try {
+            return userDao.checkUserStatusByEmail(email);
         } catch (Exception exception) {
             throw new BaseException(DATABASE_ERROR);
         }
