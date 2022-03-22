@@ -127,4 +127,10 @@ public class UserDao {
         String checkUserStatusByEmailParams = email;
         return this.jdbcTemplate.queryForObject(checkUserStatusByEmailQuery, int.class, checkUserStatusByEmailParams);
     }
+
+    public int modifyShopName(PatchShopNameReq patchShopNameReq, int userIdx) {
+
+        Object[] modifyShopNameParams = new Object[]{patchShopNameReq.getShopName(), userIdx};
+        return jdbcTemplate.update("update Users set shop_name=? where user_id=?", modifyShopNameParams);
+    }
 }

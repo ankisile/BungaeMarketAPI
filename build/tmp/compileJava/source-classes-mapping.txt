@@ -104,3 +104,5 @@ com/example/demo/utils/JwtService.java
  com.example.demo.utils.JwtService
 com/example/demo/src/user/UserProvider.java
  com.example.demo.src.user.UserProvider
+com/example/demo/src/user/model/PatchShopNameReq.java
+ com.example.demo.src.user.model.PatchShopNameReq

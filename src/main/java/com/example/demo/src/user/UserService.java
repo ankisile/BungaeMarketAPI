@@ -67,4 +67,15 @@ public class UserService {
             throw new BaseException(DATABASE_ERROR);
         }
     }
+
+    public void modifyShopName(PatchShopNameReq patchShopNameReq, int userIdx) throws BaseException {
+        try {
+            int result = userDao.modifyShopName(patchShopNameReq, userIdx);
+            if (result == 0) {
+                throw new BaseException(MODIFY_FAIL_SHOP_NAME);
+            }
+        } catch (Exception exception) {
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
 }
