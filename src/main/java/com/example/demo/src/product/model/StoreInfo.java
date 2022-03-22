@@ -7,7 +7,9 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class ProductImg {
-    private int productImgId;
-    private String productImgUrl;
+public class StoreInfo{
+    private String storeName;
+    private Integer followerCount;
+    private double starRate;
+    private Integer reviewCount;
 }

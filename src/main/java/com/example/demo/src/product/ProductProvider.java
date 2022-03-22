@@ -33,13 +33,6 @@ public class ProductProvider {
         }
     }
 
-    public List<GetProductImgRes> getProductImages(int productId) throws BaseException {
-        try {
-            return productDao.getProductImages(productId);
-        } catch (Exception exception) {
-            throw new BaseException(DATABASE_ERROR);
-        }
-    }
 
     public int checkProductId(int productId) throws BaseException {
         try {
@@ -49,10 +42,19 @@ public class ProductProvider {
         }
     }
 
-    public GetProductInfoRes getProductInfos(int userId, int productId) throws BaseException {
+    public ProductInfo getProductInfos(int userId, int productId) throws BaseException {
         try{
-            GetProductInfoRes getProductInfoRes = productDao.getProductInfos(userId, productId);
-            return getProductInfoRes;
+            ProductInfo productInfo = productDao.getProductInfos(userId, productId);
+            return productInfo;
+        } catch (Exception exception) {
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
+
+
+    public List<ProductImg> getProductImages(int productId) throws BaseException {
+        try {
+            return productDao.getProductImages(productId);
         } catch (Exception exception) {
             throw new BaseException(DATABASE_ERROR);
         }
@@ -79,5 +81,28 @@ public class ProductProvider {
 
 
 
+    public StoreInfo getStoreInfos(int productId) throws BaseException {
+        try{
+            StoreInfo storeInfo = productDao.getStoreInfos(productId);
+            return storeInfo;
+        } catch (Exception exception) {
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
 
+    public List<SellProduct> getSellProducts(int storeId) throws BaseException {
+        try {
+            return productDao.getSellProducts(storeId);
+        } catch (Exception exception) {
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
+
+    public List<RelateProduct> getRelateProducts(int categoryId) throws BaseException {
+        try {
+            return productDao.getRelateProducts(categoryId);
+        } catch (Exception exception) {
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
 }

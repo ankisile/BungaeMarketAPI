@@ -7,6 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class GetProductImgRes {
+public class SellProduct{
     private String productImgUrl;
+    private Integer price;
 }
