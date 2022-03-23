@@ -245,4 +245,15 @@ public class ProductDao {
                 getReviewsParams);
     }
 
+    public List<GetCategoryRes> getLargeCategories() {
+        String getCategoryQuery = "select category_large_id as categoryIdx, category_large_name as categoryName\n" +
+                "from CategoryLarge\n" +
+                "where icon_type='CATEGORY'";
+//        int getCategoryParams = storeId;
+        return this.jdbcTemplate.query(getCategoryQuery,
+                (rs, rowNum) -> new GetCategoryRes(
+                        rs.getInt("categoryIdx"),
+                        rs.getString("categoryName")
+                ));
+    }
 }

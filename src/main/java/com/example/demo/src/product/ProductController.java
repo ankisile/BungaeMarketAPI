@@ -39,6 +39,7 @@ public class ProductController {
     @PostMapping("")
     public BaseResponse<String> postProducts(@RequestBody PostProductReq postProductReq) {
 
+        //에러처리 필요
         if(postProductReq.getProductImgList()==null){
             return new BaseResponse<>(DELETED_USER);
         }
@@ -73,7 +74,7 @@ public class ProductController {
 
 
             int productId = productService.createProduct(userIdByJwt, postProductReq);
-            //카테고리 부분이 문제
+
             if(postProductReq.getProductImgList() != null){
                 List<ProductImg> productImgList = postProductReq.getProductImgList();
                 for(ProductImg productImg : productImgList){
@@ -121,6 +122,7 @@ public class ProductController {
                 return new BaseResponse<>(INVALID_PRODUCT_ID);
             }
 
+            //이 부분 너무 더러움
             GetProductInfoRes getProductInfoRes = new GetProductInfoRes(id);
             getProductInfoRes.setProductInfo(productProvider.getProductInfos(userIdByJwt,id));
             getProductInfoRes.setProductTagList(productProvider.getProductTags(id));
@@ -129,7 +131,7 @@ public class ProductController {
             int storeId=getProductInfoRes.getStoreInfo().getStoreId();
             getProductInfoRes.setSellProductList(productProvider.getSellProducts(storeId));
             int categoryId=getProductInfoRes.getProductInfo().getCategoryId();
-            getProductInfoRes.setRelateProductList(productProvider.getRelateProducts(categoryId, id)); //count 값에 따라 수정 필요
+            getProductInfoRes.setRelateProductList(productProvider.getRelateProducts(categoryId, id));
             getProductInfoRes.setReviewList(productProvider.getReviews(storeId));
 
 
@@ -157,6 +159,29 @@ public class ProductController {
 
             List<GetProductRes> products = productProvider.getProducts(userIdByJwt);
             return new BaseResponse<>(products);
+        } catch (BaseException exception) {
+            return new BaseResponse<>((exception.getStatus()));
+        }
+    }
+
+    /**
+     * 특정 상품 화면 - 큰 카테고리 API
+     * [GET] /products/largeCategory
+     * @return BaseResponse<GetCategoryRes>
+     */
+    @ResponseBody
+    @GetMapping("/largeCategory")
+    public BaseResponse<List<GetCategoryRes>> getLargeCategories() {
+
+        try {
+            int userIdByJwt = jwtService.getUserIdx();
+
+            if (productProvider.checkUserStatusByUserId(userIdByJwt) == 0) {
+                return new BaseResponse<>(DELETED_USER);
+            }
+
+            List<GetCategoryRes> largeCategories = productProvider.getLargeCategories();
+            return new BaseResponse<>(largeCategories);
         } catch (BaseException exception) {
             return new BaseResponse<>((exception.getStatus()));
         }

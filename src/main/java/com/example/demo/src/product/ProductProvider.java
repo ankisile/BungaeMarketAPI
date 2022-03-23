@@ -114,5 +114,12 @@ public class ProductProvider {
         }
     }
 
+    public List<GetCategoryRes> getLargeCategories() throws BaseException {
+        try {
+            return productDao.getLargeCategories();
+        } catch (Exception exception) {
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
 
 }

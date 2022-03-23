@@ -90,6 +90,8 @@ com/example/demo/src/product/model/SellProduct.java
  com.example.demo.src.product.model.SellProduct
 com/example/demo/src/favorite/FavoriteDao.java
  com.example.demo.src.favorite.FavoriteDao
+com/example/demo/src/product/model/GetCategoryRes.java
+ com.example.demo.src.product.model.GetCategoryRes
 com/example/demo/src/user/model/PostLoginReq.java
  com.example.demo.src.user.model.PostLoginReq
 com/example/demo/src/address/model/PostAddressReq.java
