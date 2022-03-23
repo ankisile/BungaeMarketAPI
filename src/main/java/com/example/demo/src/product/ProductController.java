@@ -73,7 +73,7 @@ public class ProductController {
 
 
             int productId = productService.createProduct(userIdByJwt, postProductReq);
-
+            //카테고리 부분이 문제
             if(postProductReq.getProductImgList() != null){
                 List<ProductImg> productImgList = postProductReq.getProductImgList();
                 for(ProductImg productImg : productImgList){
