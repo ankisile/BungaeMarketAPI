@@ -3,11 +3,14 @@ package com.example.demo.src.favorite;
 
 import com.example.demo.config.BaseException;
 import com.example.demo.config.BaseResponse;
+import com.example.demo.src.favorite.model.GetFavoriteRes;
 import com.example.demo.src.favorite.model.PostFavoriteReq;
 import com.example.demo.src.product.model.GetProductInfoRes;
 import com.example.demo.utils.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 import static com.example.demo.config.BaseResponseStatus.INVALID_USER_JWT;
 
@@ -19,6 +22,19 @@ public class FavoriteController {
     private final FavoriteProvider favoriteProvider;
     private final FavoriteService favoriteService;
     private final JwtService jwtService;
+
+
+    @GetMapping("")
+    public BaseResponse<List<GetFavoriteRes>> getFavorites() {
+        try {
+            int userIdx = jwtService.getUserIdx();
+            List<GetFavoriteRes> favorites = favoriteProvider.getFavorites(userIdx);
+
+            return new BaseResponse<>(favorites);
+        } catch (BaseException exception) {
+            return new BaseResponse<>((exception.getStatus()));
+        }
+    }
 
 
     /**
