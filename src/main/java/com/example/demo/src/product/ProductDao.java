@@ -249,11 +249,29 @@ public class ProductDao {
         String getCategoryQuery = "select category_large_id as categoryIdx, category_large_name as categoryName\n" +
                 "from CategoryLarge\n" +
                 "where icon_type='CATEGORY'";
-//        int getCategoryParams = storeId;
         return this.jdbcTemplate.query(getCategoryQuery,
                 (rs, rowNum) -> new GetCategoryRes(
                         rs.getInt("categoryIdx"),
                         rs.getString("categoryName")
                 ));
     }
+    public List<GetCategoryRes> getMiddleCategories(int categoryId) {
+        String getCategoryQuery = "select category_middle_id as categoryIdx, category_middle_name as categoryName from CategoryMiddle where category_large_id=?";
+        int getCategoryParams = categoryId;
+        return this.jdbcTemplate.query(getCategoryQuery,
+                (rs, rowNum) -> new GetCategoryRes(
+                        rs.getInt("categoryIdx"),
+                        rs.getString("categoryName")
+                ), getCategoryParams);
+    }
+    public List<GetCategoryRes> getSmallCategories(int categoryId) {
+        String getCategoryQuery = "select category_small_id as categoryIdx, category_small_name as categoryName from CategorySmall where category_middle_id=?";
+        int getCategoryParams = categoryId;
+        return this.jdbcTemplate.query(getCategoryQuery,
+                (rs, rowNum) -> new GetCategoryRes(
+                        rs.getInt("categoryIdx"),
+                        rs.getString("categoryName")
+                ), getCategoryParams);
+    }
+
 }

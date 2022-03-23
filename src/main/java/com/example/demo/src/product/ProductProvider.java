@@ -122,4 +122,18 @@ public class ProductProvider {
         }
     }
 
+    public List<GetCategoryRes> getMiddleCategories(int categoryId) throws BaseException {
+        try {
+            return productDao.getMiddleCategories(categoryId);
+        } catch (Exception exception) {
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
+    public List<GetCategoryRes> getSmallCategories(int categoryId) throws BaseException {
+        try {
+            return productDao.getSmallCategories(categoryId);
+        } catch (Exception exception) {
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
 }

@@ -187,6 +187,55 @@ public class ProductController {
         }
     }
 
+    /**
+     * 특정 상품 화면 - 중간 카테고리 API
+     * [GET] /products/middleCategory/:largecategoryId
+     * @return BaseResponse<GetCategoryRes>
+     */
+    @ResponseBody
+    @GetMapping("/middleCategory/{largecategoryId}")
+    public BaseResponse<List<GetCategoryRes>> getMiddleCategories(@PathVariable(required = false) String largecategoryId) {
+
+        try {
+            int userIdByJwt = jwtService.getUserIdx();
+
+            if (productProvider.checkUserStatusByUserId(userIdByJwt) == 0) {
+                return new BaseResponse<>(DELETED_USER);
+            }
+
+            int categoryId = Integer.parseInt(largecategoryId);
+            List<GetCategoryRes> middleCategories = productProvider.getMiddleCategories(categoryId);
+            return new BaseResponse<>(middleCategories);
+        } catch (BaseException exception) {
+            return new BaseResponse<>((exception.getStatus()));
+        }
+    }
+
+
+    /**
+     * 특정 상품 화면 - 작은 카테고리 API
+     * [GET] /products/smallCategory/:smallcategoryId
+     * @return BaseResponse<GetCategoryRes>
+     */
+    @ResponseBody
+    @GetMapping("/smallCategory/{middlecategoryId}")
+    public BaseResponse<List<GetCategoryRes>> getSmallCategories(@PathVariable(required = false) String middlecategoryId) {
+
+        try {
+            int userIdByJwt = jwtService.getUserIdx();
+
+            if (productProvider.checkUserStatusByUserId(userIdByJwt) == 0) {
+                return new BaseResponse<>(DELETED_USER);
+            }
+
+            int categoryId = Integer.parseInt(middlecategoryId);
+            List<GetCategoryRes> smallCategories = productProvider.getSmallCategories(categoryId);
+            return new BaseResponse<>(smallCategories);
+        } catch (BaseException exception) {
+            return new BaseResponse<>((exception.getStatus()));
+        }
+    }
+
 
 
 }
