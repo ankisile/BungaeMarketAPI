@@ -98,9 +98,9 @@ public class ProductProvider {
         }
     }
 
-    public List<RelateProduct> getRelateProducts(int categoryId) throws BaseException {
+    public List<RelateProduct> getRelateProducts(int categoryId, int productId) throws BaseException {
         try {
-            return productDao.getRelateProducts(categoryId);
+            return productDao.getRelateProducts(categoryId, productId);
         } catch (Exception exception) {
             throw new BaseException(DATABASE_ERROR);
         }

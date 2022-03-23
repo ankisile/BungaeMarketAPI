@@ -212,11 +212,11 @@ public class ProductDao {
                 getSellProductsParams);
     }
 
-    public List<RelateProduct> getRelateProducts(int categoryId) {
+    public List<RelateProduct> getRelateProducts(int categoryId, int productId) {
         String getRelateProductsQuery = "select  price,product_title as title, (select product_image_url from ProductImages where product_id = product_id limit 1) as productImgUrl\n" +
-                "                        from Products P inner join CategorySmall CS on P.category_small_id = CS.category_small_id\n" +
-                "                where CS.category_small_id = ? limit 18";
-        int getRelateProductsParams = categoryId;
+                "                                        from Products P inner join CategorySmall CS on P.category_small_id = CS.category_small_id\n" +
+                "                                where CS.category_small_id = ? and product_id != ? limit 18";
+        Object[] getRelateProductsParams = new Object[]{categoryId, productId};
         return this.jdbcTemplate.query(getRelateProductsQuery,
                 (rs, rowNum) -> new RelateProduct(
                         rs.getString("productImgUrl"),

@@ -129,7 +129,7 @@ public class ProductController {
             int storeId=getProductInfoRes.getStoreInfo().getStoreId();
             getProductInfoRes.setSellProductList(productProvider.getSellProducts(storeId));
             int categoryId=getProductInfoRes.getProductInfo().getCategoryId();
-            getProductInfoRes.setRelateProductList(productProvider.getRelateProducts(categoryId)); //count 값에 따라 수정 필요
+            getProductInfoRes.setRelateProductList(productProvider.getRelateProducts(categoryId, id)); //count 값에 따라 수정 필요
             getProductInfoRes.setReviewList(productProvider.getReviews(storeId));
 
 
