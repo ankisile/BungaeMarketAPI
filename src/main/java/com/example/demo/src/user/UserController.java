@@ -105,28 +105,7 @@ public class UserController {
         }
     }
 
-    /**
-     * 메인 화면 - 주소 표시 API
-     * [GET] /users/addresses
-     *
-     * @return BaseResponse<String>
-     */
-    @ResponseBody
-    @GetMapping("/addresses")
-    public BaseResponse<String> getMainAddress() {
-        try {
-            // jwt 에서 userId 추출.
-            int userIdByJwt = jwtService.getUserIdx();
 
-            if (userProvider.checkUserStatusByUserId(userIdByJwt) == 0) {
-                return new BaseResponse<>(DELETED_USER);
-            }
-
-            return new BaseResponse<>(userProvider.getMainAddress(userIdByJwt));
-        } catch (BaseException exception) {
-            return new BaseResponse<>((exception.getStatus()));
-        }
-    }
 
     /**
      * 로그인 API

@@ -176,8 +176,8 @@ public class ProductDao {
     public StoreInfo getStoreInfos(int productId) {
         String getStoreInfoQuery = "select P.user_id as storeId, shop_name as storeName,\n" +
                 "       case when fCount is not null then fCount else 0 end as followerCount,\n" +
-                "       case when rate is not null then fCount else 0 end as starRate,\n" +
-                "       case when rCount is not null then fCount else 0 end as reviewCount\n" +
+                "       case when rate is not null then rate else 0 end as starRate,\n" +
+                "       case when rCount is not null then rCount else 0 end as reviewCount\n" +
                 "from Products P\n" +
                 "inner join Users U on P.user_id = U.user_id\n" +
                 "left join (select following_user_id, count(*) as fCount from Following group by following_user_id) as F on U.user_id = F.following_user_id\n" +

@@ -113,13 +113,7 @@ public class UserProvider {
         }
     }
 
-    public String getMainAddress(int userId) throws BaseException {
-        try {
-            return userDao.getMainAddress(userId);
-        } catch (Exception exception) {
-            throw new BaseException(DATABASE_ERROR);
-        }
-    }
+
 
 
 }

@@ -54,4 +54,16 @@ public class AddressDao {
                         rs.getString("address")), userIdx);
     }
 
+    public String getMainDirectAddress(int userId) {
+        String getMainAddressQuery = "select case when count(*)=0  then '지역정보 없음' else address end from Address where user_id = ? and main='MAIN' and address_type='DIRECT'";
+        int getMainAddressParams = userId;
+        return this.jdbcTemplate.queryForObject(getMainAddressQuery, String.class, getMainAddressParams);
+    }
+
+    public int checkUserStatusByUserId(int userId) {
+        String checkUserStatusByUserIdQuery = "select exists(select * from Users where user_id = ? and status = 'ACTIVE')";
+        int checkUserStatusByUserIdParams = userId;
+        return this.jdbcTemplate.queryForObject(checkUserStatusByUserIdQuery, int.class, checkUserStatusByUserIdParams);
+    }
+
 }
