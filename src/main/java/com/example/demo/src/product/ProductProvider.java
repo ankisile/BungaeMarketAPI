@@ -136,4 +136,12 @@ public class ProductProvider {
             throw new BaseException(DATABASE_ERROR);
         }
     }
+
+    public List<GetInquiryRes> getInquiries(int productId) throws BaseException {
+        try {
+            return productDao.getInquiries(productId);
+        } catch (Exception exception) {
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
 }

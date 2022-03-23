@@ -236,6 +236,30 @@ public class ProductController {
         }
     }
 
+    /**
+     * 특정 상품 화면 - 상품 문의 조회 API
+     * [GET] /products/smallCategory/:smallcategoryId
+     * @return BaseResponse<GetCategoryRes>
+     */
+    @ResponseBody
+    @GetMapping("/{productId}/inquiry")
+    public BaseResponse<List<GetInquiryRes>> getInquiries(@PathVariable(required = false) String productId) {
+
+        try {
+            int userIdByJwt = jwtService.getUserIdx();
+
+            if (productProvider.checkUserStatusByUserId(userIdByJwt) == 0) {
+                return new BaseResponse<>(DELETED_USER);
+            }
+
+            int id = Integer.parseInt(productId);
+            List<GetInquiryRes> inquiryResList = productProvider.getInquiries(id);
+            return new BaseResponse<>(inquiryResList);
+        } catch (BaseException exception) {
+            return new BaseResponse<>((exception.getStatus()));
+        }
+    }
+
 
 
 }

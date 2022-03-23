@@ -274,4 +274,27 @@ public class ProductDao {
                 ), getCategoryParams);
     }
 
+    public List<GetInquiryRes> getInquiries(int productId) {
+        String getInquiryQuery = "select product_inquiry_id as inquiryId, shop_name as storeName, text, profile_Url as profileUrl\n" +
+                "       (case when timestampdiff(second , createdAt, current_timestamp) <60\n" +
+                "                then concat(timestampdiff(second, createdAt, current_timestamp),' 초 전')\n" +
+                "            when timestampdiff(minute , createdAt, current_timestamp) <60\n" +
+                "                then concat(timestampdiff(minute, createdAt, current_timestamp),' 분 전')\n" +
+                "            when timestampdiff(hour, createdAt, current_timestamp) <24\n" +
+                "                then concat(timestampdiff(hour, createdAt, current_timestamp),' 시간 전')\n" +
+                "            else concat(datediff( current_timestamp, createdAt),' 일 전')\n" +
+                "            end) as createdAt\n" +
+                "       from ProductInquiry, Users\n" +
+                "        where product_id=? and ProductInquiry.user_id = Users.user_id";
+        int getInquiryParams = productId;
+        return this.jdbcTemplate.query(getInquiryQuery,
+                (rs, rowNum) -> new GetInquiryRes(
+                        rs.getInt("inquiryId"),
+                        rs.getString("storeName"),
+                        rs.getString("createdAt"),
+                        rs.getString("text"),
+                        rs.getString("profileUrl")
+                ), getInquiryParams);
+    }
+
 }
