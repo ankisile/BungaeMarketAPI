@@ -3,6 +3,7 @@ package com.example.demo.src.favorite;
 
 import com.example.demo.config.BaseException;
 import com.example.demo.config.BaseResponse;
+import com.example.demo.src.favorite.model.PostFavoriteReq;
 import com.example.demo.src.product.model.GetProductInfoRes;
 import com.example.demo.utils.JwtService;
 import lombok.RequiredArgsConstructor;
@@ -22,20 +23,22 @@ public class FavoriteController {
 
     /**
      * 하트를 눌렀을때 찜목록에 추가
-     * @param getProductInfoRes
      * @return
      */
     @PostMapping("")
-    public BaseResponse<String> createFavorite(@RequestBody GetProductInfoRes getProductInfoRes) {
+    public BaseResponse<String> exchangeFavorite(@RequestBody PostFavoriteReq postFavoriteReq) {
+
         try {
             int userIdx = jwtService.getUserIdx();
 
-            Integer productIdx = getProductInfoRes.getProductIdx();
-            favoriteService.createFavorite(productIdx,userIdx);
+            Integer productIdx = postFavoriteReq.getProductIdx();
+            String result = favoriteService.exchangeFavorite(productIdx, userIdx);
 
-            return new BaseResponse<>("찜 목록에 추가되었습니다.");
+            return new BaseResponse<>(result);
         } catch (BaseException exception) {
             return new BaseResponse<>((exception.getStatus()));
         }
     }
+
+
 }

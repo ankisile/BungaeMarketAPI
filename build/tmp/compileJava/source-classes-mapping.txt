@@ -12,6 +12,8 @@ com/example/demo/src/product/model/ProductTag.java
  com.example.demo.src.product.model.ProductTag
 com/example/demo/utils/ValidationRegex.java
  com.example.demo.utils.ValidationRegex
+com/example/demo/src/favorite/model/PostFavoriteReq.java
+ com.example.demo.src.favorite.model.PostFavoriteReq
 com/example/demo/src/address/AddressController.java
  com.example.demo.src.address.AddressController
 com/example/demo/config/BaseResponseStatus.java
