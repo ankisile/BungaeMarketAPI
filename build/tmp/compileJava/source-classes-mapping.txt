@@ -1,7 +1,7 @@
 com/example/demo/src/category/CategoryController.java
  com.example.demo.src.category.CategoryController
-com/example/demo/src/address/AddressService.java
- com.example.demo.src.address.AddressService
+com/example/demo/src/shop/ShopController.java
+ com.example.demo.src.shop.ShopController
 com/example/demo/config/Constant.java
  com.example.demo.config.Constant
 com/example/demo/src/favorite/model/GetFavoriteRes.java
@@ -60,8 +60,8 @@ com/example/demo/src/favorite/FavoriteService.java
  com.example.demo.src.favorite.FavoriteService
 com/example/demo/src/shop/ShopProvider.java
  com.example.demo.src.shop.ShopProvider
-com/example/demo/utils/JwtService.java
- com.example.demo.utils.JwtService
+com/example/demo/src/user/UserService.java
+ com.example.demo.src.user.UserService
 com/example/demo/src/product/model/GetProductInfoRes.java
  com.example.demo.src.product.model.GetProductInfoRes
 com/example/demo/src/address/AddressDao.java
@@ -98,8 +98,8 @@ com/example/demo/src/product/model/PostInquiryReq.java
  com.example.demo.src.product.model.PostInquiryReq
 com/example/demo/src/shop/ShopDao.java
  com.example.demo.src.shop.ShopDao
-com/example/demo/src/shop/ShopController.java
- com.example.demo.src.shop.ShopController
+com/example/demo/src/user/UserDao.java
+ com.example.demo.src.user.UserDao
 com/example/demo/src/recent/model/GetRecentRes.java
  com.example.demo.src.recent.model.GetRecentRes
 com/example/demo/utils/AES128.java
@@ -122,8 +122,8 @@ com/example/demo/src/user/model/PostLoginReq.java
  com.example.demo.src.user.model.PostLoginReq
 com/example/demo/src/address/model/PostAddressReq.java
  com.example.demo.src.address.model.PostAddressReq
-com/example/demo/DemoApplication.java
- com.example.demo.DemoApplication
+com/example/demo/src/user/UserController.java
+ com.example.demo.src.user.UserController
 com/example/demo/src/product/model/PostProductReq.java
  com.example.demo.src.product.model.PostProductReq
 com/example/demo/src/user/model/User.java
@@ -132,13 +132,13 @@ com/example/demo/src/product/model/GetProductRes.java
  com.example.demo.src.product.model.GetProductRes
 com/example/demo/src/category/model/GetMenuRes.java
  com.example.demo.src.category.model.GetMenuRes
-com/example/demo/src/user/UserDao.java
- com.example.demo.src.user.UserDao
-com/example/demo/src/user/UserService.java
- com.example.demo.src.user.UserService
+com/example/demo/src/address/AddressService.java
+ com.example.demo.src.address.AddressService
 com/example/demo/src/user/model/GetUserRes.java
  com.example.demo.src.user.model.GetUserRes
-com/example/demo/src/user/UserController.java
- com.example.demo.src.user.UserController
+com/example/demo/DemoApplication.java
+ com.example.demo.DemoApplication
+com/example/demo/utils/JwtService.java
+ com.example.demo.utils.JwtService
 com/example/demo/src/user/UserProvider.java
  com.example.demo.src.user.UserProvider
