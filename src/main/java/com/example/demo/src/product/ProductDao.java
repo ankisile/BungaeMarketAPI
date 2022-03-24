@@ -176,8 +176,8 @@ public class ProductDao {
     public StoreInfo getStoreInfos(int productId) {
         String getStoreInfoQuery = "select P.user_id as storeId, shop_name as storeName,\n" +
                 "       case when fCount is not null then fCount else 0 end as followerCount,\n" +
-                "       case when rate is not null then fCount else 0 end as starRate,\n" +
-                "       case when rCount is not null then fCount else 0 end as reviewCount\n" +
+                "       case when rate is not null then rate else 0 end as starRate,\n" +
+                "       case when rCount is not null then rCount else 0 end as reviewCount\n" +
                 "from Products P\n" +
                 "inner join Users U on P.user_id = U.user_id\n" +
                 "left join (select following_user_id, count(*) as fCount from Following group by following_user_id) as F on U.user_id = F.following_user_id\n" +
@@ -249,11 +249,58 @@ public class ProductDao {
         String getCategoryQuery = "select category_large_id as categoryIdx, category_large_name as categoryName\n" +
                 "from CategoryLarge\n" +
                 "where icon_type='CATEGORY'";
-//        int getCategoryParams = storeId;
         return this.jdbcTemplate.query(getCategoryQuery,
                 (rs, rowNum) -> new GetCategoryRes(
                         rs.getInt("categoryIdx"),
                         rs.getString("categoryName")
                 ));
     }
+    public List<GetCategoryRes> getMiddleCategories(int categoryId) {
+        String getCategoryQuery = "select category_middle_id as categoryIdx, category_middle_name as categoryName from CategoryMiddle where category_large_id=?";
+        int getCategoryParams = categoryId;
+        return this.jdbcTemplate.query(getCategoryQuery,
+                (rs, rowNum) -> new GetCategoryRes(
+                        rs.getInt("categoryIdx"),
+                        rs.getString("categoryName")
+                ), getCategoryParams);
+    }
+    public List<GetCategoryRes> getSmallCategories(int categoryId) {
+        String getCategoryQuery = "select category_small_id as categoryIdx, category_small_name as categoryName from CategorySmall where category_middle_id=?";
+        int getCategoryParams = categoryId;
+        return this.jdbcTemplate.query(getCategoryQuery,
+                (rs, rowNum) -> new GetCategoryRes(
+                        rs.getInt("categoryIdx"),
+                        rs.getString("categoryName")
+                ), getCategoryParams);
+    }
+
+    public List<GetInquiryRes> getInquiries(int productId) {
+        String getInquiryQuery = "select product_inquiry_id as inquiryId, shop_name as storeName, text, profile_Url as profileUrl,\n" +
+                "                       (case when timestampdiff(second , PI.createdAt, current_timestamp) <60\n" +
+                "                                then concat(timestampdiff(second, PI.createdAt, current_timestamp),' 초 전')\n" +
+                "                            when timestampdiff(minute , PI.createdAt, current_timestamp) <60\n" +
+                "                                then concat(timestampdiff(minute, PI.createdAt, current_timestamp),' 분 전')\n" +
+                "                            when timestampdiff(hour, PI.createdAt, current_timestamp) <24\n" +
+                "                                then concat(timestampdiff(hour, PI.createdAt, current_timestamp),' 시간 전')\n" +
+                "                            else concat(datediff( current_timestamp, PI.createdAt),' 일 전')\n" +
+                "                            end) as createdAt\n" +
+                "                       from ProductInquiry PI, Users\n" +
+                "                        where product_id=? and PI.user_id = Users.user_id";
+        int getInquiryParams = productId;
+        return this.jdbcTemplate.query(getInquiryQuery,
+                (rs, rowNum) -> new GetInquiryRes(
+                        rs.getInt("inquiryId"),
+                        rs.getString("storeName"),
+                        rs.getString("createdAt"),
+                        rs.getString("text"),
+                        rs.getString("profileUrl")
+                ), getInquiryParams);
+    }
+
+    public void createInquiry(int userId, int productId, PostInquiryReq postInquiryReq) {
+        String createInquiryQuery = "insert into ProductInquiry(user_id, product_id, text) values(?,?,?)";
+        Object[] createInquiryParams = new Object[]{userId, productId, postInquiryReq.getText()};
+        this.jdbcTemplate.update(createInquiryQuery, createInquiryParams);
+    }
+
 }

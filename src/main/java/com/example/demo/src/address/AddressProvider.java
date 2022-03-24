@@ -26,4 +26,20 @@ public class AddressProvider {
             throw new BaseException(DATABASE_ERROR);
         }
     }
+
+    public String getMainDirectAddress(int userId) throws BaseException {
+        try {
+            return addressDao.getMainDirectAddress(userId);
+        } catch (Exception exception) {
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
+
+    public int checkUserStatusByUserId(int userId) throws BaseException {
+        try {
+            return addressDao.checkUserStatusByUserId(userId);
+        } catch (Exception exception) {
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
 }

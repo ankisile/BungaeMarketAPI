@@ -108,11 +108,7 @@ public class UserDao {
 
     }
 
-    public String getMainAddress(int userId) {
-        String getMainAddressQuery = "select address from Address where user_id = ? and main='MAIN'";
-        int getMainAddressParams = userId;
-        return this.jdbcTemplate.queryForObject(getMainAddressQuery, String.class, getMainAddressParams);
-    }
+
 
 
     public int checkUserStatusByUserId(int userId) {

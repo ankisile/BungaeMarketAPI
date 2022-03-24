@@ -83,4 +83,27 @@ public class AddressController {
             return new BaseResponse<>((exception.getStatus()));
         }
     }
+
+    /**
+     * 메인 화면 - 주소 표시 API
+     * [GET] /addresses/mainDirect
+     *
+     * @return BaseResponse<String>
+     */
+    @ResponseBody
+    @GetMapping("/mainDirect")
+    public BaseResponse<String> getMainDirectAddress() {
+        try {
+            // jwt 에서 userId 추출.
+            int userIdByJwt = jwtService.getUserIdx();
+
+            if (addressProvider.checkUserStatusByUserId(userIdByJwt) == 0) {
+                return new BaseResponse<>(DELETED_USER);
+            }
+
+            return new BaseResponse<>(addressProvider.getMainDirectAddress(userIdByJwt));
+        } catch (BaseException exception) {
+            return new BaseResponse<>((exception.getStatus()));
+        }
+    }
 }

@@ -187,6 +187,105 @@ public class ProductController {
         }
     }
 
+    /**
+     * 특정 상품 화면 - 중간 카테고리 API
+     * [GET] /products/middleCategory/:largecategoryId
+     * @return BaseResponse<GetCategoryRes>
+     */
+    @ResponseBody
+    @GetMapping("/middleCategory/{largecategoryId}")
+    public BaseResponse<List<GetCategoryRes>> getMiddleCategories(@PathVariable(required = false) String largecategoryId) {
+
+        try {
+            int userIdByJwt = jwtService.getUserIdx();
+
+            if (productProvider.checkUserStatusByUserId(userIdByJwt) == 0) {
+                return new BaseResponse<>(DELETED_USER);
+            }
+
+            int categoryId = Integer.parseInt(largecategoryId);
+            List<GetCategoryRes> middleCategories = productProvider.getMiddleCategories(categoryId);
+            return new BaseResponse<>(middleCategories);
+        } catch (BaseException exception) {
+            return new BaseResponse<>((exception.getStatus()));
+        }
+    }
+
+
+    /**
+     * 특정 상품 화면 - 작은 카테고리 API
+     * [GET] /products/smallCategory/:smallcategoryId
+     * @return BaseResponse<GetCategoryRes>
+     */
+    @ResponseBody
+    @GetMapping("/smallCategory/{middlecategoryId}")
+    public BaseResponse<List<GetCategoryRes>> getSmallCategories(@PathVariable(required = false) String middlecategoryId) {
+
+        try {
+            int userIdByJwt = jwtService.getUserIdx();
+
+            if (productProvider.checkUserStatusByUserId(userIdByJwt) == 0) {
+                return new BaseResponse<>(DELETED_USER);
+            }
+
+            int categoryId = Integer.parseInt(middlecategoryId);
+            List<GetCategoryRes> smallCategories = productProvider.getSmallCategories(categoryId);
+            return new BaseResponse<>(smallCategories);
+        } catch (BaseException exception) {
+            return new BaseResponse<>((exception.getStatus()));
+        }
+    }
+
+    /**
+     * 특정 상품 화면 - 상품 문의 조회 API
+     * [GET] /products/smallCategory/:smallcategoryId
+     * @return BaseResponse<GetCategoryRes>
+     */
+    @ResponseBody
+    @GetMapping("/{productId}/inquiry")
+    public BaseResponse<List<GetInquiryRes>> getInquiries(@PathVariable(required = false) String productId) {
+
+        try {
+            int userIdByJwt = jwtService.getUserIdx();
+
+            if (productProvider.checkUserStatusByUserId(userIdByJwt) == 0) {
+                return new BaseResponse<>(DELETED_USER);
+            }
+
+            int id = Integer.parseInt(productId);
+            List<GetInquiryRes> inquiryResList = productProvider.getInquiries(id);
+            return new BaseResponse<>(inquiryResList);
+        } catch (BaseException exception) {
+            return new BaseResponse<>((exception.getStatus()));
+        }
+    }
+
+
+    /**
+     * 특정 상품 화면 - 상품 문의 API
+     * [POST] /products/:productId/inquiry
+     * @return BaseResponse<GetCategoryRes>
+     */
+    @ResponseBody
+    @PostMapping("/{productId}/inquiry")
+    public BaseResponse<String> postInquiry(@PathVariable("productId") String productId, @RequestBody PostInquiryReq postInquiryReq){
+
+        try {
+            int userIdByJwt = jwtService.getUserIdx();
+
+            if (productProvider.checkUserStatusByUserId(userIdByJwt) == 0) {
+                return new BaseResponse<>(DELETED_USER);
+            }
+
+            int id = Integer.parseInt(productId);
+
+            productService.createInquiry(userIdByJwt, id, postInquiryReq);
+            return new BaseResponse<>("success");
+        } catch (BaseException exception) {
+            return new BaseResponse<>((exception.getStatus()));
+        }
+    }
+
 
 
 }
