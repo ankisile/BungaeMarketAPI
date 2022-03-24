@@ -131,4 +131,35 @@ public class UserDao {
 
         return this.jdbcTemplate.update(modifyUserNameQuery,modifyUserNameParams);
     }
+
+    public GetMyPageRes getMyPage(int userIdx) {
+        String getMyPageQuery = "select profile_Url, shop_name,\n" +
+                "       case when rate is not null then rate else 0 end as rate,\n" +
+                "       case when favoriteCount is not null then favoriteCount else 0 end as favoriteCount,\n" +
+                "       case when reviewCount is not null then reviewCount else 0 end as reviewCount,\n" +
+                "       case when followerCount is not null then followerCount else 0 end as follwerCount,\n" +
+                "       case when followingCount is not null then followingCount else 0 end as followingCount\n" +
+                "from Users\n" +
+                "         left join (select user_id, count(*) as followerCount from Following group by user_id) as Follower\n" +
+                "                   on Users.user_id = Follower.user_id\n" +
+                "         left join (select following_user_id, count(*) as followingCount\n" +
+                "                    from Following\n" +
+                "                    group by following_user_id) as Following\n" +
+                "                   on Users.user_id = Following.following_user_id\n" +
+                "         left join (select store_id, ROUND(SUM(rate) / COUNT(store_id), 1) as rate,count(*) reviewCount from Reviews group by store_id) as R\n" +
+                "                   on R.store_id = Users.user_id\n" +
+                "         left join (select user_id,count(*) as favoriteCount from Favorites group by user_id) as Favorite on Favorite.user_id=Users.user_id\n" +
+                "where Users.user_id = ?";
+        return this.jdbcTemplate.queryForObject(getMyPageQuery,
+                (rs, rowNum) -> new GetMyPageRes(
+                        rs.getString("profile_Url"),
+                        rs.getString("shop_name"),
+                        rs.getInt("rate"),
+                        rs.getInt("favoriteCount"),
+                        rs.getInt("reviewCount"),
+                        rs.getInt("follwerCount"),
+                        rs.getInt("followingCount")),
+                userIdx);
+
+    }
 }
