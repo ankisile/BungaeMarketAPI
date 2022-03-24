@@ -1,7 +1,7 @@
 package com.example.demo.src.product;
 
 import com.example.demo.config.BaseException;
-import com.example.demo.src.product.model.PostProductReq;
+import com.example.demo.src.product.model.*;
 import com.example.demo.utils.JwtService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,6 +47,14 @@ public class ProductService {
     public void createProductTag(int productId, String tagName) throws BaseException {
         try {
             productDao.createProductTag(productId, tagName);
+        } catch (Exception exception) {
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
+
+    public void createInquiry(int userId, int productId, PostInquiryReq postInquiryReq) throws BaseException {
+        try {
+            productDao.createInquiry(userId, productId, postInquiryReq);
         } catch (Exception exception) {
             throw new BaseException(DATABASE_ERROR);
         }

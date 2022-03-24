@@ -261,5 +261,31 @@ public class ProductController {
     }
 
 
+    /**
+     * 특정 상품 화면 - 상품 문의 API
+     * [POST] /products/:productId/inquiry
+     * @return BaseResponse<GetCategoryRes>
+     */
+    @ResponseBody
+    @PostMapping("/{productId}/inquiry")
+    public BaseResponse<String> postInquiry(@PathVariable("productId") String productId, @RequestBody PostInquiryReq postInquiryReq){
+
+        try {
+            int userIdByJwt = jwtService.getUserIdx();
+
+            if (productProvider.checkUserStatusByUserId(userIdByJwt) == 0) {
+                return new BaseResponse<>(DELETED_USER);
+            }
+
+            int id = Integer.parseInt(productId);
+
+            productService.createInquiry(userIdByJwt, id, postInquiryReq);
+            return new BaseResponse<>("success");
+        } catch (BaseException exception) {
+            return new BaseResponse<>((exception.getStatus()));
+        }
+    }
+
+
 
 }

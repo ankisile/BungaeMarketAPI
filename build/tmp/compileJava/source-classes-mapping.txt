@@ -86,6 +86,8 @@ com/example/demo/src/event/model/GetEventRes.java
  com.example.demo.src.event.model.GetEventRes
 com/example/demo/src/user/model/PostLoginRes.java
  com.example.demo.src.user.model.PostLoginRes
+com/example/demo/src/product/model/PostInquiryReq.java
+ com.example.demo.src.product.model.PostInquiryReq
 com/example/demo/src/user/UserDao.java
  com.example.demo.src.user.UserDao
 com/example/demo/src/recent/model/GetRecentRes.java
