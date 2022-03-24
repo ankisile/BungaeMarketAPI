@@ -40,6 +40,15 @@ public enum BaseResponseStatus {
     POST_ADDRESS_EMPTY_DETAIL_ADDRESS(false, 2024, "상세주소를 입력해주세요"),
     POST_ADDRESS_EMPTY_DIRECT_ADDRESS(false, 2025, "직거래 장소를 입력해주세요"),
 
+    // [POST] /products
+    POST_PRODUCTS_EMPTY_IMAGE(false, 2026, "상품사진을 등록해주세요"),
+    POST_PRODUCTS_EMPTY_TITLE(false, 2027, "상품명을 2글자 이상 입력해주세요"),
+    POST_PRODUCTS_EMPTY_TAG(false, 2028, "태그를 입력해주세요"),
+    POST_PRODUCTS_EMPTY_PRICE(false, 2029, "100원 이상 입력해주세요"),
+    POST_PRODUCTS_EMPTY_EXPLANATION(false, 2030, "상품설명을 10자 이상 입력해주세요"),
+
+
+
 
     /**
      * 3000 : Response 오류

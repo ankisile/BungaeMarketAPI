@@ -140,7 +140,7 @@ public class ProductDao {
 
     public List<GetProductRes> getProducts(int userId) {
         String getProductsQuery = "select Products.product_id as productIdx, product_title as title, price,\n" +
-                "       (select product_image_url from ProductImages where product_id = product_id limit 1) as productImg,\n"+
+                "       (select product_image_url from ProductImages where Products.product_id = ProductImages.product_id limit 1) as productImg,\n"+
                 "         (case when address IS NOT NULL then SUBSTRING_INDEX(address,\" \",-2)\n" +
                 "            else '지역정보 없음' end) as directAddress,\n" +
                 "       (case when F.user_id=? then 'LIKE' else 'UNLIKE' end) as myFavorite,\n" +

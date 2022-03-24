@@ -39,28 +39,26 @@ public class ProductController {
     @PostMapping("")
     public BaseResponse<String> postProducts(@RequestBody PostProductReq postProductReq) {
 
-        //에러처리 필요
         if(postProductReq.getProductImgList()==null){
-            return new BaseResponse<>(DELETED_USER);
+            return new BaseResponse<>(POST_PRODUCTS_EMPTY_IMAGE);
         }
 
         if(postProductReq.getTitle()==null){
-            return new BaseResponse<>(DELETED_USER);
-
+            return new BaseResponse<>(POST_PRODUCTS_EMPTY_TITLE);
         }
 
         if(postProductReq.getProductTagList()==null){
-            return new BaseResponse<>(DELETED_USER);
+            return new BaseResponse<>(POST_PRODUCTS_EMPTY_TAG);
 
         }
 
-        if(postProductReq.getPrice()==null){
-            return new BaseResponse<>(DELETED_USER);
-
-        }
+//        if(postProductReq.getPrice()==null){
+//            return new BaseResponse<>(DELETED_USER);
+//
+//        }
 
         if(postProductReq.getExplanation()==null){
-            return new BaseResponse<>(DELETED_USER);
+            return new BaseResponse<>(POST_PRODUCTS_EMPTY_EXPLANATION);
         }
 
 
@@ -311,6 +309,8 @@ public class ProductController {
             return new BaseResponse<>((exception.getStatus()));
         }
     }
+
+
 
 
 }
