@@ -300,6 +300,9 @@ public class ProductController {
             if (productProvider.checkUserStatusByUserId(userIdByJwt) == 0) {
                 return new BaseResponse<>(DELETED_USER);
             }
+            if(!isRegexInteger(productId)||!isRegexInteger(inquiryId)){
+                return new BaseResponse<>(INVAILD_PATH_VARIABLE);
+            }
 
             int pId = Integer.parseInt(productId);
             int iId = Integer.parseInt(inquiryId);
@@ -311,6 +314,37 @@ public class ProductController {
     }
 
 
+    /**
+     * 특정 상품 화면 - 상품문의 삭제 API
+     * [DELETE] /products/:productId/inquiry/:inquiryId
+     * @return BaseResponse<String>
+     */
+    @ResponseBody
+    @DeleteMapping("/{productId}/inquiry/{inquiryId}")
+    public BaseResponse<String> deleteInquiry(@PathVariable("productId") String productId,@PathVariable("inquiryId") String inquiryId){
+
+        try {
+            int userIdByJwt = jwtService.getUserIdx();
+
+            if (productProvider.checkUserStatusByUserId(userIdByJwt) == 0) {
+                return new BaseResponse<>(DELETED_USER);
+            }
+            if(!isRegexInteger(productId)||!isRegexInteger(inquiryId)){
+                return new BaseResponse<>(INVAILD_PATH_VARIABLE);
+            }
+
+            int pId = Integer.parseInt(productId);
+            int iId = Integer.parseInt(inquiryId);
+
+            if(productProvider.checkInquiry(userIdByJwt, iId, pId) == 0){
+                return new BaseResponse<>(INVALID_INQUIRY_ID);
+            }
+            productService.deleteInquiry(userIdByJwt, iId, pId);
+            return new BaseResponse<>("success");
+        } catch (BaseException exception) {
+            return new BaseResponse<>((exception.getStatus()));
+        }
+    }
 
 
 }

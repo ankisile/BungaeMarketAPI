@@ -312,5 +312,20 @@ public class ProductDao {
     }
 
 
+    public int checkInquiry(int userId, int inquiryId, int productId){
+        String checkInquiryIdQuery = "select(exists(select * from ProductInquiry where user_id = ? and product_inquiry_id = ? and product_id=?))";
+        Object[] checkInquiryIdParams = new Object[]{userId, inquiryId, productId};
+        return this.jdbcTemplate.queryForObject(checkInquiryIdQuery, int.class, checkInquiryIdParams);
+    }
+
+    public void deleteInquiry(int userId, int inquiryId, int productId){
+        String deleteInquiryQuery = "delete from ProductInquiry where user_id = ? and product_inquiry_id = ? and product_id=?";
+        Object[] deleteInquiryParams = new Object[]{userId, inquiryId, productId};
+        this.jdbcTemplate.update(deleteInquiryQuery, deleteInquiryParams);
+    }
+
+
+
+
 
 }
