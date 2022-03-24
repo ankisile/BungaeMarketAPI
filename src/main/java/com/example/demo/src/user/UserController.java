@@ -43,21 +43,21 @@ public class UserController {
      * @return BaseResponse<List < GetUserRes>>
      */
     //Query String
-    @ResponseBody
-    @GetMapping("") // (GET) 127.0.0.1:9000/app/users
-    public BaseResponse<List<GetUserRes>> getUsers(@RequestParam(required = false) String Email) {
-        try {
-            if (Email == null) {
-                List<GetUserRes> getUsersRes = userProvider.getUsers();
-                return new BaseResponse<>(getUsersRes);
-            }
-            // Get Users
-            List<GetUserRes> getUsersRes = userProvider.getUsersByEmail(Email);
-            return new BaseResponse<>(getUsersRes);
-        } catch (BaseException exception) {
-            return new BaseResponse<>((exception.getStatus()));
-        }
-    }
+//    @ResponseBody
+//    @GetMapping("") // (GET) 127.0.0.1:9000/app/users
+//    public BaseResponse<List<GetUserRes>> getUsers(@RequestParam(required = false) String Email) {
+//        try {
+//            if (Email == null) {
+//                List<GetUserRes> getUsersRes = userProvider.getUsers();
+//                return new BaseResponse<>(getUsersRes);
+//            }
+//            // Get Users
+//            List<GetUserRes> getUsersRes = userProvider.getUsersByEmail(Email);
+//            return new BaseResponse<>(getUsersRes);
+//        } catch (BaseException exception) {
+//            return new BaseResponse<>((exception.getStatus()));
+//        }
+//    }
 
     /**
      * 회원 1명 조회 API
@@ -67,10 +67,12 @@ public class UserController {
      */
     // Path-variable
     @ResponseBody
-    @GetMapping("/{userIdx}") // (GET) 127.0.0.1:9000/app/users/:userIdx
-    public BaseResponse<GetUserRes> getUser(@PathVariable("userIdx") int userIdx) {
+    @GetMapping("") // (GET) 127.0.0.1:9000/app/users/:userIdx
+    public BaseResponse<GetUserRes> getUser() {
         // Get Users
+
         try {
+            int userIdx = jwtService.getUserIdx();
             GetUserRes getUserRes = userProvider.getUser(userIdx);
             return new BaseResponse<>(getUserRes);
         } catch (BaseException exception) {

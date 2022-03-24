@@ -27,7 +27,7 @@ public class UserDao {
                         rs.getString("user_name"),
                         rs.getString("shop_name"),
                         rs.getString("email"),
-                        rs.getString("password"))
+                        rs.getString("phone"))
                 );
     }
 
@@ -36,11 +36,11 @@ public class UserDao {
         String getUsersByEmailParams = email;
         return this.jdbcTemplate.query(getUsersByEmailQuery,
                 (rs, rowNum) -> new GetUserRes(
-                        rs.getInt("userIdx"),
-                        rs.getString("userName"),
-                        rs.getString("ID"),
-                        rs.getString("Email"),
-                        rs.getString("password")),
+                        rs.getInt("user_id"),
+                        rs.getString("user_name"),
+                        rs.getString("shop_name"),
+                        rs.getString("email"),
+                        rs.getString("phone")),
                 getUsersByEmailParams);
     }
 
@@ -49,11 +49,11 @@ public class UserDao {
         int getUserParams = userIdx;
         return this.jdbcTemplate.queryForObject(getUserQuery,
                 (rs, rowNum) -> new GetUserRes(
-                        rs.getInt("userIdx"),
-                        rs.getString("userName"),
-                        rs.getString("ID"),
-                        rs.getString("Email"),
-                        rs.getString("password")),
+                        rs.getInt("user_id"),
+                        rs.getString("user_name"),
+                        rs.getString("shop_name"),
+                        rs.getString("email"),
+                        rs.getString("phone")),
                 getUserParams);
     }
     
