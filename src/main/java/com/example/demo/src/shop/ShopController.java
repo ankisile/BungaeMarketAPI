@@ -16,19 +16,19 @@ import org.springframework.web.bind.annotation.RestController;
 public class ShopController {
 
 
-    private final ShopProvider shopProvider;
-    private final ShopService shopService;
-    private final JwtService jwtService;
-
-    @GetMapping("{userIdx}")
-    public BaseResponse<GetShopRes> getShop(@PathVariable int userIdx) {
-
-        try {
-            GetShopRes shop = shopProvider.getShop(userIdx);
-            return new BaseResponse<>(shop);
-
-        } catch (BaseException exception) {
-            return new BaseResponse<>(exception.getStatus());
-        }
-    }
+//    private final ShopProvider shopProvider;
+//    private final ShopService shopService;
+//    private final JwtService jwtService;
+//
+//    @GetMapping("{userIdx}")
+//    public BaseResponse<GetShopRes> getShop(@PathVariable int userIdx) {
+//
+//        try {
+//            GetShopRes shop = shopProvider.getShop(userIdx);
+//            return new BaseResponse<>(shop);
+//
+//        } catch (BaseException exception) {
+//            return new BaseResponse<>(exception.getStatus());
+//        }
+//    }
 }
