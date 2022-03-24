@@ -303,4 +303,14 @@ public class ProductDao {
         this.jdbcTemplate.update(createInquiryQuery, createInquiryParams);
     }
 
+    public String getInquiryCall(int prductId, int inquiryId) {
+        String getInquiryCallQuery = "select concat('@', shop_name, ' : ') from ProductInquiry PI\n" +
+                "inner join Users U on PI.user_id = U.user_id\n" +
+                "where PI.product_id=? and PI.product_inquiry_id=?";
+        Object[] getInquiryCallParams = new Object[]{prductId, inquiryId};
+        return this.jdbcTemplate.queryForObject(getInquiryCallQuery, String.class, getInquiryCallParams);
+    }
+
+
+
 }

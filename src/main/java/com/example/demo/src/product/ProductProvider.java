@@ -144,4 +144,12 @@ public class ProductProvider {
             throw new BaseException(DATABASE_ERROR);
         }
     }
+
+    public String getInquiryCall(int productId, int inquiryId) throws BaseException {
+        try {
+            return productDao.getInquiryCall(productId, inquiryId);
+        } catch (Exception exception) {
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
 }
