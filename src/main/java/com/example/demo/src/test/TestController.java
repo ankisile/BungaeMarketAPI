@@ -57,7 +57,7 @@ public class TestController {
     public @ResponseBody
     ResponseEntity<Resource> getImage(@RequestParam String imageName) throws IOException {
 
-        String imageRoot = "/var/www/번개장터/" + imageName;
+        String imageRoot = "/var/www/images/" + imageName;
 
         Resource resource = new FileSystemResource(imageRoot);
         HttpHeaders header = new HttpHeaders();
