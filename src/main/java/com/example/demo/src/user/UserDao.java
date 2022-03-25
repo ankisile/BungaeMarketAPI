@@ -165,7 +165,7 @@ public class UserDao {
 
     public GetMySellingProducts getMyProducts(int userIdx,String status) {
         int productCount = countProductByStatus(status, userIdx);
-
+        Object[] getMyProductsParams = new Object[]{userIdx, status};
         List<GetMyProducts> getMyProducts = jdbcTemplate.query("select product_id,\n" +
                         "       (select product_image_url from ProductImages where ProductImages.product_id = Products.product_id limit 1) as product_image_url,\n" +
                         "       product_title,\n" +
@@ -174,7 +174,7 @@ public class UserDao {
                         "       sell_status,\n" +
                         "       createdAt\n" +
                         "from Products\n" +
-                        "where user_id = 5 and sell_status=? and status='SAVED'",
+                        "where user_id = ? and sell_status=? and status='SAVED'",
                 (rs, rowNum) -> new GetMyProducts(
                         rs.getInt("product_id"),
                         rs.getString("product_image_url"),
@@ -183,7 +183,7 @@ public class UserDao {
                         rs.getString("secure_payment"),
                         rs.getString("sell_status"),
                         rs.getString("createdAt")
-                ));
+                ), getMyProductsParams);
 
         return new GetMySellingProducts(productCount, getMyProducts);
     }
@@ -197,5 +197,55 @@ public class UserDao {
         Object[] countProductByStatusParams = new Object[]{userIdx, status};
 
         return jdbcTemplate.queryForObject(countProductByStatus, int.class, countProductByStatusParams);
+    }
+
+    public List<GetMyFollowing> getFollowings(int userIdx) {
+        return jdbcTemplate.query("select Following.user_id as followingUserIdx,\n" +
+                        "       U.shop_name as followingShopName,\n" +
+                        "       U.profile_Url as profileUrl,\n" +
+                        "       case when productCount is not null then productCount else 0 end as productCount,\n" +
+                        "       case when follwerCount is not null then follwerCount else 0 end as followerCount\n" +
+                        "from Following\n" +
+                        "         left join Users U on Following.user_id = U.user_id\n" +
+                        "         left join (select user_id, count(*) as productCount from Products group by user_id) as P on P.user_id = U.user_id\n" +
+                        "         left join (select user_id,count(*) as follwerCount from Following group by user_id) as F on F.user_id=U.user_id\n" +
+                        "where following_user_id = ?",
+                (rs, rowNum) -> new GetMyFollowing(
+                        rs.getInt("followingUserIdx"),
+                        rs.getString("followingShopName"),
+                        rs.getString("profileUrl"),
+                        rs.getInt("productCount"),
+                        rs.getInt("followerCount"),
+                        null), userIdx);
+    }
+
+    public List<FollowingProduct> getFollowingProducts(int userIdx) {
+        return jdbcTemplate.query("select Products.product_id as productIdx, product_image_url, price\n" +
+                        "from Products\n" +
+                        "         left join (select product_id,product_image_url from ProductImages limit 1) as PI on PI.product_id=Products.product_id\n" +
+                        "where user_id = ?\n" +
+                        "limit 3",
+                (rs, rowNum) -> new FollowingProduct(
+                        rs.getInt("productIdx"),
+                        rs.getString("product_image_url"),
+                        rs.getInt("price")), userIdx);
+    }
+
+    public List<GetMyFollower> getFollowers(int userIdx) {
+        return jdbcTemplate.query("select following_user_id as followerUserIdx,\n" +
+                "       shop_name,\n" +
+                "       U.profile_Url as profileUrl,\n" +
+                "       case when productCount is not null then productCount else 0 end as productCount,\n" +
+                "       case when follwerCount is not null then follwerCount else 0 end as followerCount\n" +
+                "from Following\n" +
+                "         left join Users U on Following.following_user_id = U.user_id\n" +
+                "         left join (select user_id, count(*) as productCount from Products group by user_id) as P on P.user_id = U.user_id\n" +
+                "         left join (select user_id,count(*) as follwerCount from Following group by user_id) as F on F.user_id=U.user_id\n" +
+                "where Following.user_id = ?", (rs, rowNum) -> new GetMyFollower(rs.getInt("followerUserIdx"),
+                rs.getString("shop_name"),
+                rs.getString("profileUrl"),
+                rs.getInt("productCount"),
+                rs.getInt("followerCount")), userIdx);
+
     }
 }

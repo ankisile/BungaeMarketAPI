@@ -64,6 +64,8 @@ com/example/demo/src/favorite/FavoriteService.java
  com.example.demo.src.favorite.FavoriteService
 com/example/demo/src/shop/ShopProvider.java
  com.example.demo.src.shop.ShopProvider
+com/example/demo/src/user/GetMyFollowing.java
+ com.example.demo.src.user.GetMyFollowing
 com/example/demo/src/user/UserService.java
  com.example.demo.src.user.UserService
 com/example/demo/src/product/model/GetProductInfoRes.java
@@ -110,6 +112,8 @@ com/example/demo/src/user/UserDao.java
  com.example.demo.src.user.UserDao
 com/example/demo/src/recent/model/GetRecentRes.java
  com.example.demo.src.recent.model.GetRecentRes
+com/example/demo/src/user/model/FollowingProduct.java
+ com.example.demo.src.user.model.FollowingProduct
 com/example/demo/utils/AES128.java
  com.example.demo.utils.AES128
 com/example/demo/src/user/model/PatchUserReq.java
@@ -130,6 +134,8 @@ com/example/demo/src/user/model/PostLoginReq.java
  com.example.demo.src.user.model.PostLoginReq
 com/example/demo/src/address/model/PostAddressReq.java
  com.example.demo.src.address.model.PostAddressReq
+com/example/demo/src/user/model/GetMyFollower.java
+ com.example.demo.src.user.model.GetMyFollower
 com/example/demo/src/user/UserController.java
  com.example.demo.src.user.UserController
 com/example/demo/src/product/model/PostProductReq.java

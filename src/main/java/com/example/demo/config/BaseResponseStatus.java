@@ -66,7 +66,9 @@ public enum BaseResponseStatus {
 
     // [GET] /products
     INVALID_INQUIRY_ID(false, 3022, "올바르지 않은 inquiryId 입니다."),
-
+    NOT_EXIST_SELLING_PRODUCT(false, 3023, "판매중인 상품이 없습니다."),
+    NOT_EXIST_RESERVED_PRODUCT(false, 3024, "예약중인 상품이 없습니다."),
+    NOT_EXIST_SOLDOUT_PRODUCT(false, 3025, "판매완료된 상품이 없습니다."),
 
     /**
      * 4000 : Database, Server 오류
