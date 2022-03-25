@@ -77,7 +77,7 @@ public class TestController {
     public @ResponseBody
     ResponseEntity<Resource> getEventImage(@RequestParam String imageName) throws IOException {
 
-        String imageRoot = "/var/www/images/event" + imageName;
+        String imageRoot = "/var/www/images/event/" + imageName;
 
         Resource resource = new FileSystemResource(imageRoot);
         HttpHeaders header = new HttpHeaders();
