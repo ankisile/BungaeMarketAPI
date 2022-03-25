@@ -64,6 +64,9 @@ public enum BaseResponseStatus {
 
     INVALID_PRODUCT_ID(false, 3021, "올바르지 않은 productId 입니다."),
 
+    // [GET] /products
+    INVALID_INQUIRY_ID(false, 3022, "올바르지 않은 inquiryId 입니다."),
+
 
     /**
      * 4000 : Database, Server 오류

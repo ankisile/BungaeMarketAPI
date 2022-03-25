@@ -246,30 +246,33 @@ public class ProductDao {
     }
 
     public List<GetCategoryRes> getLargeCategories() {
-        String getCategoryQuery = "select category_large_id as categoryIdx, category_large_name as categoryName\n" +
+        String getCategoryQuery = "select category_large_id as categoryIdx, category_icon_image_Url as categoryUrl, category_large_name as categoryName\n" +
                 "from CategoryLarge\n" +
                 "where icon_type='CATEGORY'";
         return this.jdbcTemplate.query(getCategoryQuery,
                 (rs, rowNum) -> new GetCategoryRes(
                         rs.getInt("categoryIdx"),
+                        rs.getString("categoryUrl"),
                         rs.getString("categoryName")
                 ));
     }
     public List<GetCategoryRes> getMiddleCategories(int categoryId) {
-        String getCategoryQuery = "select category_middle_id as categoryIdx, category_middle_name as categoryName from CategoryMiddle where category_large_id=?";
+        String getCategoryQuery = "select category_middle_id as categoryIdx, category_icon_image_Url as categoryUrl, category_middle_name as categoryName from CategoryMiddle where category_large_id=?";
         int getCategoryParams = categoryId;
         return this.jdbcTemplate.query(getCategoryQuery,
                 (rs, rowNum) -> new GetCategoryRes(
                         rs.getInt("categoryIdx"),
+                        rs.getString("categoryUrl"),
                         rs.getString("categoryName")
                 ), getCategoryParams);
     }
     public List<GetCategoryRes> getSmallCategories(int categoryId) {
-        String getCategoryQuery = "select category_small_id as categoryIdx, category_small_name as categoryName from CategorySmall where category_middle_id=?";
+        String getCategoryQuery = "select category_small_id as categoryIdx, category_icon_image_Url as categoryUrl, category_small_name as categoryName from CategorySmall where category_middle_id=?";
         int getCategoryParams = categoryId;
         return this.jdbcTemplate.query(getCategoryQuery,
                 (rs, rowNum) -> new GetCategoryRes(
                         rs.getInt("categoryIdx"),
+                        rs.getString("categoryUrl"),
                         rs.getString("categoryName")
                 ), getCategoryParams);
     }
@@ -310,6 +313,21 @@ public class ProductDao {
         Object[] getInquiryCallParams = new Object[]{prductId, inquiryId};
         return this.jdbcTemplate.queryForObject(getInquiryCallQuery, String.class, getInquiryCallParams);
     }
+
+
+    public int checkInquiry(int userId, int inquiryId, int productId){
+        String checkInquiryIdQuery = "select(exists(select * from ProductInquiry where user_id = ? and product_inquiry_id = ? and product_id=?))";
+        Object[] checkInquiryIdParams = new Object[]{userId, inquiryId, productId};
+        return this.jdbcTemplate.queryForObject(checkInquiryIdQuery, int.class, checkInquiryIdParams);
+    }
+
+    public void deleteInquiry(int userId, int inquiryId, int productId){
+        String deleteInquiryQuery = "delete from ProductInquiry where user_id = ? and product_inquiry_id = ? and product_id=?";
+        Object[] deleteInquiryParams = new Object[]{userId, inquiryId, productId};
+        this.jdbcTemplate.update(deleteInquiryQuery, deleteInquiryParams);
+    }
+
+
 
 
 

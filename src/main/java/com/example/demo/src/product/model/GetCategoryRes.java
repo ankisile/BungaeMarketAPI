@@ -9,5 +9,6 @@ import java.util.List;
 @AllArgsConstructor
 public class GetCategoryRes {
     private int categoryIdx;
+    private String categoryUrl;
     private String categoryName;
 }

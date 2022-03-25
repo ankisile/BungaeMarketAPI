@@ -60,6 +60,14 @@ public class ProductService {
         }
     }
 
+    public void deleteInquiry(int userId, int inquiryId, int productId) throws BaseException {
+        try{
+            productDao.deleteInquiry(userId, inquiryId, productId);
+
+        }catch (Exception exception) {
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
 
 
 }

@@ -152,4 +152,22 @@ public class ProductProvider {
             throw new BaseException(DATABASE_ERROR);
         }
     }
+
+    public int checkInquiry(int userId, int inquiryId, int productId) throws BaseException {
+        try {
+            return productDao.checkInquiry(userId, inquiryId, productId);
+        } catch (Exception exception) {
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
+
+//    public int checkSellStatus(int userId, int productId) throws BaseException {
+//        try {
+//            return likesDao.checkLikes(userId, storeId);
+//        } catch (Exception exception) {
+//            throw new BaseException(DATABASE_ERROR);
+//        }
+//    }
+
+
 }
