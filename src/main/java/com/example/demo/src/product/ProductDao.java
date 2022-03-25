@@ -328,6 +328,30 @@ public class ProductDao {
     }
 
 
+    public int checkSellStatus(int userId, int productId){
+        String checkLikesQuery = "select(exists(select * from Products where user_id = ? and product_id = ?))";
+        Object[] checkLikesParams = new Object[]{userId, productId};
+        return this.jdbcTemplate.queryForObject(checkLikesQuery, int.class, checkLikesParams);
+    }
+
+
+    public void changeSellingStatus(int userId, int productId){
+        String changeStatusQuery = "update Products set product_status = 'SELLING' where user_id=? and product_id=?";
+        Object[] changeStatusParams = new Object[]{userId, productId};
+        this.jdbcTemplate.update(changeStatusQuery, changeStatusParams);
+    }
+
+    public void changeReservedStatus(int userId, int productId){
+        String changeStatusQuery = "update Products set product_status = 'RESERVED' where user_id=? and product_id=?";
+        Object[] changeStatusParams = new Object[]{userId, productId};
+        this.jdbcTemplate.update(changeStatusQuery, changeStatusParams);
+    }
+    public void changeSoldoutStatus(int userId, int productId){
+        String changeStatusQuery = "update Products set product_status = 'SOLDOUT' where user_id=? and product_id=?";
+        Object[] changeStatusParams = new Object[]{userId, productId};
+        this.jdbcTemplate.update(changeStatusQuery, changeStatusParams);
+    }
+
 
 
 
