@@ -72,4 +72,25 @@ public class TestController {
         // 이미지 리턴 실시 [브라우저에서 get 주소 확인 가능]
         return new ResponseEntity<Resource>(resource, header, HttpStatus.OK);
     }
+
+    @GetMapping("/events")
+    public @ResponseBody
+    ResponseEntity<Resource> getEventImage(@RequestParam String imageName) throws IOException {
+
+        String imageRoot = "/var/www/images/event" + imageName;
+
+        Resource resource = new FileSystemResource(imageRoot);
+        HttpHeaders header = new HttpHeaders();
+        Path filePath = null;
+        try {
+            filePath = Paths.get(imageRoot);
+            // 인풋으로 들어온 파일명 .png / .jpg 에 맞게 헤더 타입 설정
+            header.add("Content-Type", Files.probeContentType(filePath));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        // 이미지 리턴 실시 [브라우저에서 get 주소 확인 가능]
+        return new ResponseEntity<Resource>(resource, header, HttpStatus.OK);
+    }
+
 }
