@@ -69,5 +69,19 @@ public class ProductService {
         }
     }
 
+    public void updateSellStatus(int userId, int productId, String status) throws BaseException {
+        try {
+            if(status.equals("SELLING"))
+                productDao.changeSellingStatus(userId, productId);
+            else if(status.equals("RESERVED"))
+                productDao.changeReservedStatus(userId, productId);
+            else if(status.equals("SOLDOUT"))
+                productDao.changeSoldoutStatus(userId, productId);
+
+
+        } catch (Exception exception) {
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
 
 }
