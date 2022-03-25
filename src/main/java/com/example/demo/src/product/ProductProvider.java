@@ -161,4 +161,13 @@ public class ProductProvider {
         }
     }
 
+//    public int checkSellStatus(int userId, int productId) throws BaseException {
+//        try {
+//            return likesDao.checkLikes(userId, storeId);
+//        } catch (Exception exception) {
+//            throw new BaseException(DATABASE_ERROR);
+//        }
+//    }
+
+
 }

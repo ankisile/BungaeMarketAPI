@@ -346,5 +346,33 @@ public class ProductController {
         }
     }
 
+//    /**
+//     * 특정상품화면 - 상품 판매 상태 변경 API
+//     * [PATCH] /:productId/sellStatus
+//     * @return BaseResponse<String>
+//     */
+//    @ResponseBody
+//    @PatchMapping("/{productId}/sellStatus")
+//    public BaseResponse<String> pushLikes(@PathVariable("productId") String productId, @RequestBody PatchSellReq patchSellReq) throws BaseException {
+//        if(!isRegexInteger(productId)){
+//                return new BaseResponse<>(INVAILD_PATH_VARIABLE);
+//            }
+//        try{
+//            // jwt 에서 userId 추출
+//            int userIdByJwt = jwtService.getUserId();
+//            if (productProvider.checkUserStatusByUserId(userIdByJwt) == 0) {
+//                return new BaseResponse<>(DELETED_USER);
+//            }
+//                int id = Integer.parseInt(productId);
+
+
+//            if(productProvider.checkSellStatus(userIdByJwt, postLikesReq.getStoreId()) != 0) {
+//                productService.updateSellStatus(userIdByJwt, postLikesReq.getStoreId());
+//            return new BaseResponse<>("success");
+//        } catch(BaseException exception){
+//            return new BaseResponse<>((exception.getStatus()));
+//        }
+//    }
+
 
 }
