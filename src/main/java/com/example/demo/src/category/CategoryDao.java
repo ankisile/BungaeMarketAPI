@@ -47,4 +47,20 @@ public class CategoryDao {
 
         return menu;
     }
+
+
+    public List<GetMenuRes> getHomeCategories() {
+        List<GetMenuRes> homeMenu = new ArrayList<>();
+
+        GetMenuRes getMenuRes1 = new GetMenuRes();
+        getMenuRes1.setIconType("MENU");
+        List<Category> categories = jdbcTemplate.query("select * from CategoryLarge where icon_type='MENU'",
+                (rs, rowNum) -> new Category(
+                        rs.getInt("category_large_id"),
+                        rs.getString("category_large_name"),
+                        rs.getString("category_icon_image_Url")));
+        getMenuRes1.setCategory(categories);
+        homeMenu.add(getMenuRes1);
+        return homeMenu;
+    }
 }

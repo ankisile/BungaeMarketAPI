@@ -12,18 +12,29 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/app/categories")
+@RequestMapping("/app")
 @RequiredArgsConstructor
 public class CategoryController {
 
     private final CategoryProvider categoryProvider;
 
-    @GetMapping("")
+    @GetMapping("/categories")
     public BaseResponse<List<GetMenuRes>> getMenu() {
 
         try {
             List<GetMenuRes> menu = categoryProvider.getMenu();
             return new BaseResponse<>(menu);
+        } catch (BaseException exception) {
+            return new BaseResponse<>((exception.getStatus()));
+        }
+    }
+
+    @GetMapping("/homecategories")
+    public BaseResponse<List<GetMenuRes>> getHomeCategories() {
+
+        try {
+            List<GetMenuRes> homeMenu = categoryProvider.getHomeCategories();
+            return new BaseResponse<>(homeMenu);
         } catch (BaseException exception) {
             return new BaseResponse<>((exception.getStatus()));
         }

@@ -26,4 +26,14 @@ public class CategoryProvider {
             throw new BaseException(DATABASE_ERROR);
         }
     }
+
+    public List<GetMenuRes> getHomeCategories() throws BaseException {
+        try{
+            List<GetMenuRes> homeMenu = categoryDao.getHomeCategories();
+            return homeMenu;
+        }
+        catch (Exception exception) {
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
 }

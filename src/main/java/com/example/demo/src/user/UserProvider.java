@@ -121,4 +121,16 @@ public class UserProvider {
             throw new BaseException(DATABASE_ERROR);
         }
     }
+
+    public GetMySellingProducts getMyProducts(int userIdx,String status) throws BaseException {
+        try {
+            int countProductByStatus = userDao.countProductByStatus(status, userIdx);
+            if (countProductByStatus == 0) {
+                return new GetMySellingProducts(countProductByStatus, null);
+            }
+            return userDao.getMyProducts(userIdx,status);
+        } catch (Exception exception) {
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
 }

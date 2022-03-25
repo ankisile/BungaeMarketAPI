@@ -162,4 +162,40 @@ public class UserDao {
                 userIdx);
 
     }
+
+    public GetMySellingProducts getMyProducts(int userIdx,String status) {
+        int productCount = countProductByStatus(status, userIdx);
+
+        List<GetMyProducts> getMyProducts = jdbcTemplate.query("select product_id,\n" +
+                        "       (select product_image_url from ProductImages where ProductImages.product_id = Products.product_id limit 1) as product_image_url,\n" +
+                        "       product_title,\n" +
+                        "       price,\n" +
+                        "       secure_payment,\n" +
+                        "       sell_status,\n" +
+                        "       createdAt\n" +
+                        "from Products\n" +
+                        "where user_id = 5 and sell_status=? and status='SAVED'",
+                (rs, rowNum) -> new GetMyProducts(
+                        rs.getInt("product_id"),
+                        rs.getString("product_image_url"),
+                        rs.getString("product_title"),
+                        rs.getInt("price"),
+                        rs.getString("secure_payment"),
+                        rs.getString("sell_status"),
+                        rs.getString("createdAt")
+                ));
+
+        return new GetMySellingProducts(productCount, getMyProducts);
+    }
+
+
+    public int countProductByStatus(String status, int userIdx) {
+
+        String countProductByStatus = "select case when count(*) is not null then count(*) else 0 end as productCount\n" +
+                "from Products\n" +
+                "where user_id = ? and sell_status = ? and status = 'SAVED'";
+        Object[] countProductByStatusParams = new Object[]{userIdx, status};
+
+        return jdbcTemplate.queryForObject(countProductByStatus, int.class, countProductByStatusParams);
+    }
 }

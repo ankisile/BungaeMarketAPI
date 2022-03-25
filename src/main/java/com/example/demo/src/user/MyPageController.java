@@ -5,10 +5,13 @@ import com.example.demo.config.BaseException;
 import com.example.demo.config.BaseResponse;
 import com.example.demo.src.shop.model.GetShopRes;
 import com.example.demo.src.user.model.GetMyPageRes;
+import com.example.demo.src.user.model.GetMyProducts;
+import com.example.demo.src.user.model.GetMySellingProducts;
 import com.example.demo.utils.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -26,6 +29,19 @@ public class MyPageController {
             int userIdx = jwtService.getUserIdx();
 
             GetMyPageRes myPage = userProvider.getMyPage(userIdx);
+            return new BaseResponse<>(myPage);
+
+        } catch (BaseException exception) {
+            return new BaseResponse<>(exception.getStatus());
+        }
+    }
+    @GetMapping("/products")
+    public BaseResponse<GetMySellingProducts> getMyProducts(@RequestParam String status) {
+        try {
+
+            int userIdx = jwtService.getUserIdx();
+
+            GetMySellingProducts myPage = userProvider.getMyProducts(userIdx,status);
             return new BaseResponse<>(myPage);
 
         } catch (BaseException exception) {
