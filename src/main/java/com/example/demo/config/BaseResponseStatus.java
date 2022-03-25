@@ -47,7 +47,9 @@ public enum BaseResponseStatus {
     POST_PRODUCTS_EMPTY_PRICE(false, 2029, "100원 이상 입력해주세요"),
     POST_PRODUCTS_EMPTY_EXPLANATION(false, 2030, "상품설명을 10자 이상 입력해주세요"),
 
-
+    // [POST] /follows
+    POST_FOLLOW_EMPTY_STORE_ID(false, 2031, "상점이름을 입력해주세요"),
+    INVALID_STORE_ID(false, 2032, "올바르지 않은 상점입니다"),
 
 
     /**
@@ -82,6 +84,7 @@ public enum BaseResponseStatus {
 
     PASSWORD_ENCRYPTION_ERROR(false, 4011, "비밀번호 암호화에 실패하였습니다."),
     PASSWORD_DECRYPTION_ERROR(false, 4012, "비밀번호 복호화에 실패하였습니다.");
+
 
 
     // 5000 : 필요시 만들어서 쓰세요
