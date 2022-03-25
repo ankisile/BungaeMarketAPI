@@ -100,6 +100,8 @@ com/example/demo/src/event/model/GetEventRes.java
  com.example.demo.src.event.model.GetEventRes
 com/example/demo/src/user/model/PostLoginRes.java
  com.example.demo.src.user.model.PostLoginRes
+com/example/demo/src/product/model/PatchSellReq.java
+ com.example.demo.src.product.model.PatchSellReq
 com/example/demo/src/product/model/PostInquiryReq.java
  com.example.demo.src.product.model.PostInquiryReq
 com/example/demo/src/shop/ShopDao.java
