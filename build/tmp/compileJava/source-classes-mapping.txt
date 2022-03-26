@@ -16,14 +16,18 @@ com/example/demo/src/product/model/ProductTag.java
  com.example.demo.src.product.model.ProductTag
 com/example/demo/src/recent/RecentProvider.java
  com.example.demo.src.recent.RecentProvider
-com/example/demo/src/product/model/GetInquiryRes.java
- com.example.demo.src.product.model.GetInquiryRes
 com/example/demo/utils/ValidationRegex.java
  com.example.demo.utils.ValidationRegex
+com/example/demo/src/product/model/GetInquiryRes.java
+ com.example.demo.src.product.model.GetInquiryRes
 com/example/demo/src/favorite/model/PostFavoriteReq.java
  com.example.demo.src.favorite.model.PostFavoriteReq
+com/example/demo/src/follow/model/PostFollowReq.java
+ com.example.demo.src.follow.model.PostFollowReq
 com/example/demo/src/address/AddressController.java
  com.example.demo.src.address.AddressController
+com/example/demo/src/follow/FollowService.java
+ com.example.demo.src.follow.FollowService
 com/example/demo/config/BaseResponseStatus.java
  com.example.demo.config.BaseResponseStatus
 com/example/demo/src/product/model/RelateProduct.java
@@ -92,6 +96,8 @@ com/example/demo/src/shop/ShopService.java
  com.example.demo.src.shop.ShopService
 com/example/demo/src/user/model/PostUserReq.java
  com.example.demo.src.user.model.PostUserReq
+com/example/demo/src/follow/FollowController.java
+ com.example.demo.src.follow.FollowController
 com/example/demo/src/category/model/Category.java
  com.example.demo.src.category.model.Category
 com/example/demo/src/event/EventDao.java
@@ -114,6 +120,8 @@ com/example/demo/src/shop/model/GetProductByShopRes.java
  com.example.demo.src.shop.model.GetProductByShopRes
 com/example/demo/src/user/UserDao.java
  com.example.demo.src.user.UserDao
+com/example/demo/src/follow/FollowDao.java
+ com.example.demo.src.follow.FollowDao
 com/example/demo/src/recent/model/GetRecentRes.java
  com.example.demo.src.recent.model.GetRecentRes
 com/example/demo/src/user/model/FollowingProduct.java
@@ -164,3 +172,5 @@ com/example/demo/utils/JwtService.java
  com.example.demo.utils.JwtService
 com/example/demo/src/user/UserProvider.java
  com.example.demo.src.user.UserProvider
+com/example/demo/src/follow/FollowProvider.java
+ com.example.demo.src.follow.FollowProvider
