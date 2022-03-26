@@ -29,7 +29,8 @@ public class ProductService {
 
     public int createProduct(int userId, PostProductReq postProductReq) throws BaseException {
         try {
-            return productDao.createProduct(userId, postProductReq);
+            String address = productProvider.getMainDirectAddress(userId);
+            return productDao.createProduct(userId, address, postProductReq);
         } catch (Exception exception) {
             throw new BaseException(DATABASE_ERROR);
         }

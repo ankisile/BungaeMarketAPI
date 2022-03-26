@@ -169,5 +169,12 @@ public class ProductProvider {
         }
     }
 
+    public String getMainDirectAddress(int userId) throws BaseException {
+        try {
+            return productDao.getMainDirectAddress(userId);
+        } catch (Exception exception) {
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
 
 }
