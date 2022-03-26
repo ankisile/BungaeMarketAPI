@@ -52,10 +52,10 @@ public class ProductController {
 
         }
 
-//        if(postProductReq.getPrice()==null){
-//            return new BaseResponse<>(DELETED_USER);
-//
-//        }
+        if(postProductReq.getPrice()==null){
+            return new BaseResponse<>(POST_PRODUCTS_EMPTY_PRICE);
+
+        }
 
         if(postProductReq.getExplanation()==null){
             return new BaseResponse<>(POST_PRODUCTS_EMPTY_EXPLANATION);

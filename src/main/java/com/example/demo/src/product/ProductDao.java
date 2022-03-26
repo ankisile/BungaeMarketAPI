@@ -31,7 +31,7 @@ public class ProductDao {
                 "values(?,?,?,?,?,?,?,?,?,?,?,?)";
         Object[] createProductParams = new Object[]{userId, postProductReq.getTitle(), postProductReq.getCategoryLarge(),
                 postProductReq.getCategoryMiddle(),postProductReq.getCategorySmall(),postProductReq.getProductStatus(),
-                postProductReq.getExchangePossible(),postProductReq.getPrice(),postProductReq.getShippingFee(),
+                postProductReq.getExchangePossible(),Integer.parseInt(postProductReq.getPrice()),postProductReq.getShippingFee(),
                 postProductReq.getExplanation(), postProductReq.getQuantity(), postProductReq.getSecurePayment()};
         this.jdbcTemplate.update(createProductQuery, createProductParams);
 
@@ -91,12 +91,12 @@ public class ProductDao {
                 "           when sell_status = 'SOLDOUT' then '판매완료'\n" +
                 "           end as sellStatus,\n" +
                 "        (case when timestampdiff(second , Products.createdAt, current_timestamp) <60\n" +
-                "                then concat(timestampdiff(second, Products.createdAt, current_timestamp),' 초 전')\n" +
+                "                then concat(timestampdiff(second, Products.createdAt, current_timestamp),'초 전')\n" +
                 "            when timestampdiff(minute , Products.createdAt, current_timestamp) <60\n" +
-                "                then concat(timestampdiff(minute, Products.createdAt, current_timestamp),' 분 전')\n" +
+                "                then concat(timestampdiff(minute, Products.createdAt, current_timestamp),'분 전')\n" +
                 "            when timestampdiff(hour, Products.createdAt, current_timestamp) <24\n" +
-                "                then concat(timestampdiff(hour, Products.createdAt, current_timestamp),' 시간 전')\n" +
-                "            else concat(datediff( current_timestamp, Products.createdAt),' 일 전')\n" +
+                "                then concat(timestampdiff(hour, Products.createdAt, current_timestamp),'시간 전')\n" +
+                "            else concat(datediff( current_timestamp, Products.createdAt),'일 전')\n" +
                 "            end) as createdAt,\n" +
                 "       (select case when fCount is null then 0 else fCount end) as favoriteCount,\n" +
                 "       CS.category_small_name as category,CS.category_small_id as categoryId,\n" +
@@ -146,12 +146,12 @@ public class ProductDao {
                 "       (case when F.user_id=? then 'LIKE' else 'UNLIKE' end) as myFavorite,\n" +
                 "       secure_payment as securePayment,\n" +
                 "        (case when timestampdiff(second , Products.createdAt, current_timestamp) <60\n" +
-                "                then concat(timestampdiff(second, Products.createdAt, current_timestamp),' 초 전')\n" +
+                "                then concat(timestampdiff(second, Products.createdAt, current_timestamp),'초 전')\n" +
                 "            when timestampdiff(minute , Products.createdAt, current_timestamp) <60\n" +
-                "                then concat(timestampdiff(minute, Products.createdAt, current_timestamp),' 분 전')\n" +
+                "                then concat(timestampdiff(minute, Products.createdAt, current_timestamp),'분 전')\n" +
                 "            when timestampdiff(hour, Products.createdAt, current_timestamp) <24\n" +
-                "                then concat(timestampdiff(hour, Products.createdAt, current_timestamp),' 시간 전')\n" +
-                "            else concat(datediff( current_timestamp, Products.createdAt),' 일 전')\n" +
+                "                then concat(timestampdiff(hour, Products.createdAt, current_timestamp),'시간 전')\n" +
+                "            else concat(datediff( current_timestamp, Products.createdAt),'일 전')\n" +
                 "            end) as createdAt,\n" +
                 "       (select case when fCount is null then 0 else fCount end) as favoriteCount\n" +
                 "from Products\n" +
@@ -282,12 +282,12 @@ public class ProductDao {
     public List<GetInquiryRes> getInquiries(int productId) {
         String getInquiryQuery = "select product_inquiry_id as inquiryId, shop_name as storeName, text, profile_Url as profileUrl,\n" +
                 "                       (case when timestampdiff(second , PI.createdAt, current_timestamp) <60\n" +
-                "                                then concat(timestampdiff(second, PI.createdAt, current_timestamp),' 초 전')\n" +
+                "                                then concat(timestampdiff(second, PI.createdAt, current_timestamp),'초 전')\n" +
                 "                            when timestampdiff(minute , PI.createdAt, current_timestamp) <60\n" +
-                "                                then concat(timestampdiff(minute, PI.createdAt, current_timestamp),' 분 전')\n" +
+                "                                then concat(timestampdiff(minute, PI.createdAt, current_timestamp),'분 전')\n" +
                 "                            when timestampdiff(hour, PI.createdAt, current_timestamp) <24\n" +
-                "                                then concat(timestampdiff(hour, PI.createdAt, current_timestamp),' 시간 전')\n" +
-                "                            else concat(datediff( current_timestamp, PI.createdAt),' 일 전')\n" +
+                "                                then concat(timestampdiff(hour, PI.createdAt, current_timestamp),'시간 전')\n" +
+                "                            else concat(datediff( current_timestamp, PI.createdAt),'일 전')\n" +
                 "                            end) as createdAt\n" +
                 "                       from ProductInquiry PI, Users\n" +
                 "                        where product_id=? and PI.user_id = Users.user_id";

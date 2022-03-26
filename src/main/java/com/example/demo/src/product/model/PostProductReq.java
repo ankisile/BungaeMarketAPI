@@ -15,7 +15,7 @@ public class PostProductReq {
     private int categoryLarge;
     private int categoryMiddle;
     private int categorySmall;
-    private Integer price;
+    private String price;
     private List<ProductTag> productTagList;
     private String explanation;
     private String shippingFee;
