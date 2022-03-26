@@ -11,5 +11,14 @@ import lombok.Setter;
 public class GetShopRes {
 
     private String userImageUrl;
+    private String shopName;
+    private String userName;
+    private String introduction;
+    private Integer rate;
+    private Integer openDay;
+    private Integer productCount;
+    private Integer reviewCount;
+    private Integer followingCount;
+    private Integer followerCount;
 
 }

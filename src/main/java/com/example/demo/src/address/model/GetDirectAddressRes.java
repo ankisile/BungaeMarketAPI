@@ -11,4 +11,5 @@ import lombok.Setter;
 public class GetDirectAddressRes {
 
     private String directAddress;
+    private String main;
 }

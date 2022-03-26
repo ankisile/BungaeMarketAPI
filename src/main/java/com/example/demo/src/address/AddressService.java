@@ -43,7 +43,17 @@ public class AddressService {
 
     public void createDirectAddress(PostDirectAddressReq postDirectAddressReq, int userIdx) throws BaseException {
         try {
+            cleanDirectAddress(userIdx);
             addressDao.createDirectAddress(postDirectAddressReq, userIdx);
+
+        } catch (Exception e) {
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
+
+    public void cleanDirectAddress(int userIdx) throws BaseException {
+        try {
+            addressDao.cleanDirectAddress(userIdx);
 
         } catch (Exception e) {
             throw new BaseException(DATABASE_ERROR);

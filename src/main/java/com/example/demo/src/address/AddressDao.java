@@ -45,13 +45,14 @@ public class AddressDao {
 
     public void createDirectAddress(PostDirectAddressReq postDirectAddressReq, int userIdx) {
         Object[] createDirectAddressParams = new Object[]{userIdx, postDirectAddressReq.getDirectAddress(), "DIRECT"};
-        jdbcTemplate.update("insert into Address(user_id,address,address_type) VALUE (?,?,?)", createDirectAddressParams);
+        jdbcTemplate.update("insert into Address(user_id,address,address_type,main) VALUE (?,?,?,'MAIN')", createDirectAddressParams);
     }
 
     public List<GetDirectAddressRes> getDirectAddresses(int userIdx) {
-        return jdbcTemplate.query("select address from Address where user_id=? and address_type='DIRECT'",
+        return jdbcTemplate.query("select address,main from Address where user_id=? and address_type='DIRECT'",
                 (rs, rowNum) -> new GetDirectAddressRes(
-                        rs.getString("address")), userIdx);
+                        rs.getString("address"),
+                        rs.getString("main")), userIdx);
     }
 
     public String getMainDirectAddress(int userId) {
@@ -66,4 +67,11 @@ public class AddressDao {
         return this.jdbcTemplate.queryForObject(checkUserStatusByUserIdQuery, int.class, checkUserStatusByUserIdParams);
     }
 
+    public void cleanDirectAddress(int userIdx) {
+        Integer addressIdx = jdbcTemplate.queryForObject("select case when count(*)=0 then 0 else address_id end from Address where user_id=? and main='MAIN' and address_type='DIRECT'", int.class, userIdx);
+        if (addressIdx != 0) {
+            jdbcTemplate.update("update Address set main='SUB' where address_id=?", addressIdx);
+
+        }
+    }
 }

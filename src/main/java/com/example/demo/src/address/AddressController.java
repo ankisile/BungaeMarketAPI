@@ -53,15 +53,15 @@ public class AddressController {
     }
 
     @PostMapping("/direct")
-    public BaseResponse<String> createDirectAddress(@RequestBody PostDirectAddressReq postDirectAddressReq,@RequestParam int userIdx) {
+    public BaseResponse<String> createDirectAddress(@RequestBody PostDirectAddressReq postDirectAddressReq) {
 
         if (postDirectAddressReq.getDirectAddress() == null) {
             return new BaseResponse<>(POST_ADDRESS_EMPTY_DIRECT_ADDRESS);
         }
 
         try {
-//            int userIdx = jwtService.getUserIdx();
-            //userIdx와 접근한 유저가 같은지 확인
+            int userIdx = jwtService.getUserIdx();
+//            userIdx와 접근한 유저가 같은지 확인
 
             addressService.createDirectAddress(postDirectAddressReq, userIdx);
 
@@ -71,10 +71,33 @@ public class AddressController {
         }
     }
 
-    @GetMapping("/direct")
-    public BaseResponse<List<GetDirectAddressRes>> getDirectAddresses(@RequestParam int userIdx) {
+    @PostMapping("/clean")
+    public BaseResponse<String> cleanDirectAddress() {
         try{
-//            int userIdx = jwtService.getUserIdx();
+            int userIdx = jwtService.getUserIdx();
+
+            if (addressProvider.checkUserStatusByUserId(userIdx) == 0) {
+                return new BaseResponse<>(DELETED_USER);
+            }
+            addressService.cleanDirectAddress(userIdx);
+
+            return new BaseResponse<>("지역설정안함");
+
+        }catch (BaseException exception) {
+            return new BaseResponse<>((exception.getStatus()));
+        }
+
+    }
+
+    @GetMapping("/direct")
+    public BaseResponse<List<GetDirectAddressRes>> getDirectAddresses() {
+        try{
+            int userIdx = jwtService.getUserIdx();
+
+            if (addressProvider.checkUserStatusByUserId(userIdx) == 0) {
+                return new BaseResponse<>(DELETED_USER);
+            }
+
             List<GetDirectAddressRes> directAddresses = addressProvider.getDirectAddresses(userIdx);
 
             return new BaseResponse<>(directAddresses);

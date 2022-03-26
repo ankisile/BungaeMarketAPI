@@ -32,6 +32,8 @@ com/example/demo/src/product/model/StoreInfo.java
  com.example.demo.src.product.model.StoreInfo
 com/example/demo/src/user/model/GetMyProducts.java
  com.example.demo.src.user.model.GetMyProducts
+com/example/demo/src/shop/model/GetInquiryByShopRes.java
+ com.example.demo.src.shop.model.GetInquiryByShopRes
 com/example/demo/src/user/model/PatchShopNameReq.java
  com.example.demo.src.user.model.PatchShopNameReq
 com/example/demo/src/category/CategoryProvider.java
@@ -108,12 +110,16 @@ com/example/demo/src/product/model/PostInquiryReq.java
  com.example.demo.src.product.model.PostInquiryReq
 com/example/demo/src/shop/ShopDao.java
  com.example.demo.src.shop.ShopDao
+com/example/demo/src/shop/model/GetProductByShopRes.java
+ com.example.demo.src.shop.model.GetProductByShopRes
 com/example/demo/src/user/UserDao.java
  com.example.demo.src.user.UserDao
 com/example/demo/src/recent/model/GetRecentRes.java
  com.example.demo.src.recent.model.GetRecentRes
 com/example/demo/src/user/model/FollowingProduct.java
  com.example.demo.src.user.model.FollowingProduct
+com/example/demo/src/shop/model/GetReviewByShopRes.java
+ com.example.demo.src.shop.model.GetReviewByShopRes
 com/example/demo/utils/AES128.java
  com.example.demo.utils.AES128
 com/example/demo/src/user/model/PatchUserReq.java
