@@ -8,6 +8,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class SellProduct{
+    private int productIdx;
     private String productImgUrl;
     private Integer price;
 }

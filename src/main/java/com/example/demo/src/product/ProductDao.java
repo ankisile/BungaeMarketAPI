@@ -197,13 +197,14 @@ public class ProductDao {
     }
 
     public List<SellProduct> getSellProducts(int storeId) {
-        String getSellProductsQuery = "select  price,\n" +
+        String getSellProductsQuery = "select  product_id as productIdx, price,\n" +
                 "       (select product_image_url from ProductImages where product_id = product_id limit 1) as productImgUrl\n" +
                 "from Products P\n" +
                 "where user_id=? limit 6";
         int getSellProductsParams = storeId;
         return this.jdbcTemplate.query(getSellProductsQuery,
                 (rs, rowNum) -> new SellProduct(
+                        rs.getInt("productIdx"),
                         rs.getString("productImgUrl"),
                         rs.getInt("price")
 
@@ -213,12 +214,13 @@ public class ProductDao {
     }
 
     public List<RelateProduct> getRelateProducts(int categoryId, int productId) {
-        String getRelateProductsQuery = "select  price,product_title as title, (select product_image_url from ProductImages where product_id = product_id limit 1) as productImgUrl\n" +
+        String getRelateProductsQuery = "select  product_id as productIdx, price,product_title as title, (select product_image_url from ProductImages where product_id = product_id limit 1) as productImgUrl\n" +
                 "                                        from Products P inner join CategorySmall CS on P.category_small_id = CS.category_small_id\n" +
                 "                                where CS.category_small_id = ? and product_id != ? limit 18";
         Object[] getRelateProductsParams = new Object[]{categoryId, productId};
         return this.jdbcTemplate.query(getRelateProductsQuery,
                 (rs, rowNum) -> new RelateProduct(
+                        rs.getInt("productIdx"),
                         rs.getString("productImgUrl"),
                         rs.getString("title"),
                         rs.getInt("price")

@@ -8,6 +8,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class RelateProduct{
+    private int productIdx;
     private String productImgUrl;
     private String title;
     private Integer price;
