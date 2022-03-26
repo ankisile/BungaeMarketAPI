@@ -31,7 +31,7 @@ public class ProductDao {
                 "values(?,?,?,?,?,?,?,?,?,?,?,?,?)";
         Object[] createProductParams = new Object[]{userId, postProductReq.getTitle(), postProductReq.getCategoryLarge(),
                 postProductReq.getCategoryMiddle(),postProductReq.getCategorySmall(),postProductReq.getProductStatus(),
-                postProductReq.getExchangePossible(),Integer.parseInt(postProductReq.getPrice()),postProductReq.getShippingFee(),
+                postProductReq.getExchangePossible(),postProductReq.getPrice(),postProductReq.getShippingFee(),
                 postProductReq.getExplanation(), postProductReq.getQuantity(), postProductReq.getSecurePayment(), address};
         this.jdbcTemplate.update(createProductQuery, createProductParams);
 
