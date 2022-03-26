@@ -11,7 +11,7 @@ import java.util.List;
 @AllArgsConstructor
 public class PostReviewReq {
     private Integer productId;
-    private Integer reviewRate;
+    private Double reviewRate;
     private String reviewDesc;
     private List<ReviewImg> reviewImgList;
 

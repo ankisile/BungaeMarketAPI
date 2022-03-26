@@ -8,8 +8,10 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class Review{
+    private String profileUrl;
+    private String storeName;
     private String title;
-    private Integer rate;
+    private Double rate;
     private String explanation;
     private String securePayment;
 }

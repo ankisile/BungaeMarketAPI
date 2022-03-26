@@ -226,19 +226,28 @@ public class ProductDao {
     }
 
     public List<Review> getReviews(int storeId) {
-        String getReviewsQuery = "select product_title as title,rate,text as explanation,secure_payment as securePayment\n" +
-                "from Reviews\n" +
-                "join Products P on P.product_id = Reviews.product_id\n" +
-                "where store_id=? limit 2";
+        String getReviewsQuery = "select U.profile_Url as profileUrl, U.shop_name as storeName, product_title as title,rate,text as explanation,secure_payment as securePayment,\n" +
+                "       (case when timestampdiff(second , R.createdAt, current_timestamp) <60\n" +
+                "                                then concat(timestampdiff(second, R.createdAt, current_timestamp),'초 전')\n" +
+                "                            when timestampdiff(minute , R.createdAt, current_timestamp) <60\n" +
+                "                                then concat(timestampdiff(minute, R.createdAt, current_timestamp),'분 전')\n" +
+                "                            when timestampdiff(hour, R.createdAt, current_timestamp) <24\n" +
+                "                                then concat(timestampdiff(hour, R.createdAt, current_timestamp),'시간 전')\n" +
+                "                            else concat(datediff( current_timestamp, R.createdAt),'일 전')\n" +
+                "                            end) as createdAt\n" +
+                "                from Reviews R\n" +
+                "                join Products P on P.product_id = R.product_id\n" +
+                "                left  join Users U on R.user_id = U.user_id\n" +
+                "                where R.store_id=? limit 2";
         int getReviewsParams = storeId;
         return this.jdbcTemplate.query(getReviewsQuery,
                 (rs, rowNum) -> new Review(
+                        rs.getString("profileUrl"),
+                        rs.getString("storeName"),
                         rs.getString("title"),
-                        rs.getInt("rate"),
+                        rs.getDouble("rate"),
                         rs.getString("explanation"),
                         rs.getString("securePayment")
-
-
                 ),
                 getReviewsParams);
     }
