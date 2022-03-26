@@ -11,7 +11,7 @@ public class GetProductRes {
     private int productIdx;
     private String productImg;
     private String title;
-    private int price;
+    private String price;
     private String directAddress;
     private String securePayment;
     private String myFavorite;

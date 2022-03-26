@@ -9,7 +9,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class ProductInfo{
     private String title;
-    private Integer price;
+    private String price;
     private String directAddress;
     private String productOption;
     private String explanation;

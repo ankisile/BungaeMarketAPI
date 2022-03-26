@@ -109,7 +109,7 @@ public class ProductDao {
         return this.jdbcTemplate.queryForObject(getProductInfoQuery,
                 (rs, rowNum) -> new ProductInfo(
                         rs.getString("title"),
-                        rs.getInt("price"),
+                        rs.getString("price"),
                         rs.getString("directAddress"),
                         rs.getString("productOption"),
                         rs.getString("explanation"),
@@ -160,7 +160,7 @@ public class ProductDao {
                         rs.getInt("productIdx"),
                         rs.getString("productImg"),
                         rs.getString("title"),
-                        rs.getInt("price"),
+                        rs.getString("price"),
                         rs.getString("directAddress"),
                         rs.getString("securePayment"),
                         rs.getString("myFavorite"),
@@ -202,7 +202,7 @@ public class ProductDao {
                 (rs, rowNum) -> new SellProduct(
                         rs.getInt("productIdx"),
                         rs.getString("productImgUrl"),
-                        rs.getInt("price")
+                        rs.getString("price")
 
 
                         ),
@@ -219,7 +219,7 @@ public class ProductDao {
                         rs.getInt("productIdx"),
                         rs.getString("productImgUrl"),
                         rs.getString("title"),
-                        rs.getInt("price")
+                        rs.getString("price")
 
                 ),
                 getRelateProductsParams);
