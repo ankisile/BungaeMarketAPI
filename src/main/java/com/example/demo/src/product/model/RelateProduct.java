@@ -11,5 +11,5 @@ public class RelateProduct{
     private int productIdx;
     private String productImgUrl;
     private String title;
-    private String price;
+    private Integer price;
 }

@@ -10,5 +10,5 @@ import lombok.Setter;
 public class SellProduct{
     private int productIdx;
     private String productImgUrl;
-    private String price;
+    private Integer price;
 }
