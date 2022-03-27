@@ -8,7 +8,8 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class PostOrderReq {
-    private String payment;
-    private String toOwnerMessage;
-    private String toRiderMessage;
+    private Integer productId;
+    private String tradingMethod;
+    private String payMethod;
+    private String addressOption;
 }
