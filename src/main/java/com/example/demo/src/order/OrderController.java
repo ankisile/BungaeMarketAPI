@@ -52,4 +52,26 @@ public class OrderController {
     }
 
 
+
+    /**
+     * 상품 구매 화면 API
+     * [GET] /orders/:productId
+     * @return BaseResponse<GetCategoryRes>
+     */
+    @ResponseBody
+    @GetMapping("/{productId}")
+    public BaseResponse<GetProductOrderRes> getOrderView(@PathVariable(required = false) String productId) {
+
+        try {
+            int userIdByJwt = jwtService.getUserIdx();
+
+            int id = Integer.parseInt(productId);
+            GetProductOrderRes getProductOrderRes = orderProvider.getOrderView(userIdByJwt, id);
+//            getProductOrderRes.setProduct(orderProvider.getProduct(id));
+            return new BaseResponse<>(getProductOrderRes);
+        } catch (BaseException exception) {
+            return new BaseResponse<>((exception.getStatus()));
+        }
+    }
+
 }

@@ -47,6 +47,8 @@ public class OrderService {
 
             orderDao.changeReservedStatus(postOrderReq.getProductId());
 
+            orderDao.changePoint(userId, point);
+
         } catch (Exception exception) {
             throw new BaseException(DATABASE_ERROR);
         }
