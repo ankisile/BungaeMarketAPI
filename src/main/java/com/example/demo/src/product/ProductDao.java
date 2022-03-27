@@ -70,20 +70,15 @@ public class ProductDao {
 
 
     public ProductInfo getProductInfos(int userId, int productId) {
-        String getProductInfoQuery = "select product_title as title, price,\n" +
+        String getProductInfoQuery = "select view_count as viewCount, product_title as title, price,\n" +
                 "       (case when F.user_id=? then 'LIKE' else 'UNLIKE' end) as myFavorite,\n" +
                 "          direct_address as directAddress,\n" +
-                "       concat(\n" +
                 "           case when product_status='USED' then '중고'\n" +
-                "                else '새상품' end,\n" +
-                "           '·',\n" +
+                "                else '새상품' end as productStatus,\n" +
                 "           case when shipping_fee='EXCLUDE' then '배송비별도'\n" +
-                "                else '배송비포함' end,\n" +
-                "           '·',\n" +
-                "           case when exchange_possible = 'EXCHANGEABLE' then '·교환가능' else \"\" end,\n" +
-                "           (concat('총 ',quantity,'개'))\n" +
-                "        ) as productOption,\n" +
-                "       explanation,\n" +
+                "                else '배송비포함' end as shippingFee,\n" +
+                "           case when exchange_possible = 'EXCHANGEABLE' then '·교환가능' else \"\" end as exchangePossible,\n" +
+                "          quantity, explanation,\n" +
                 "       secure_payment as securePayment,\n" +
                 "       case when sell_status = 'SELLING' then '판매중'\n" +
                 "            when sell_status = 'RESERVED' then '예약중'\n" +
@@ -111,7 +106,11 @@ public class ProductDao {
                         rs.getString("title"),
                         rs.getInt("price"),
                         rs.getString("directAddress"),
-                        rs.getString("productOption"),
+                        rs.getString("productStatus"),
+                        rs.getString("shippingFee"),
+                        rs.getString("exchangePossible"),
+                        rs.getInt("quantity"),
+
                         rs.getString("explanation"),
                         rs.getString("securePayment"),
                         rs.getString("sellStatus"),
@@ -120,8 +119,9 @@ public class ProductDao {
                         rs.getInt("categoryId"),
                         rs.getString("category"),
                         rs.getString("productInquiry"),
-                        rs.getString("myFavorite")
-                        ),
+                        rs.getString("myFavorite"),
+                        rs.getInt("viewCount")
+                ),
                 getProductInfoParams);
     }
 
@@ -188,7 +188,7 @@ public class ProductDao {
                         rs.getDouble("starRate"),
                         rs.getInt("reviewCount")
 
-                        ),
+                ),
                 getStoreInfoParams);
     }
 
@@ -205,7 +205,7 @@ public class ProductDao {
                         rs.getInt("price")
 
 
-                        ),
+                ),
                 getSellProductsParams);
     }
 
@@ -226,19 +226,28 @@ public class ProductDao {
     }
 
     public List<Review> getReviews(int storeId) {
-        String getReviewsQuery = "select product_title as title,rate,text as explanation,secure_payment as securePayment\n" +
-                "from Reviews\n" +
-                "join Products P on P.product_id = Reviews.product_id\n" +
-                "where store_id=? limit 2";
+        String getReviewsQuery = "select U.profile_Url as profileUrl, U.shop_name as storeName, product_title as title,rate,text as explanation,secure_payment as securePayment,\n" +
+                "       (case when timestampdiff(second , R.createdAt, current_timestamp) <60\n" +
+                "                                then concat(timestampdiff(second, R.createdAt, current_timestamp),'초 전')\n" +
+                "                            when timestampdiff(minute , R.createdAt, current_timestamp) <60\n" +
+                "                                then concat(timestampdiff(minute, R.createdAt, current_timestamp),'분 전')\n" +
+                "                            when timestampdiff(hour, R.createdAt, current_timestamp) <24\n" +
+                "                                then concat(timestampdiff(hour, R.createdAt, current_timestamp),'시간 전')\n" +
+                "                            else concat(datediff( current_timestamp, R.createdAt),'일 전')\n" +
+                "                            end) as createdAt\n" +
+                "                from Reviews R\n" +
+                "                join Products P on P.product_id = R.product_id\n" +
+                "                left  join Users U on R.user_id = U.user_id\n" +
+                "                where R.store_id=? limit 2";
         int getReviewsParams = storeId;
         return this.jdbcTemplate.query(getReviewsQuery,
                 (rs, rowNum) -> new Review(
+                        rs.getString("profileUrl"),
+                        rs.getString("storeName"),
                         rs.getString("title"),
-                        rs.getInt("rate"),
+                        rs.getDouble("rate"),
                         rs.getString("explanation"),
                         rs.getString("securePayment")
-
-
                 ),
                 getReviewsParams);
     }
@@ -305,7 +314,7 @@ public class ProductDao {
     }
 
     public String getInquiryCall(int prductId, int inquiryId) {
-        String getInquiryCallQuery = "select concat('@', shop_name, ' : ') from ProductInquiry PI\n" +
+        String getInquiryCallQuery = "select shop_name from ProductInquiry PI\n" +
                 "inner join Users U on PI.user_id = U.user_id\n" +
                 "where PI.product_id=? and PI.product_inquiry_id=?";
         Object[] getInquiryCallParams = new Object[]{prductId, inquiryId};
@@ -356,6 +365,10 @@ public class ProductDao {
         return this.jdbcTemplate.queryForObject(getMainAddressQuery, String.class, getMainAddressParams);
     }
 
-
+    public void updateViewCount(int productId){
+        String updateViewCountQuery = "update Products set view_count = view_count+1 where product_id=?";
+        int updateViewCountParams =  productId;
+        this.jdbcTemplate.update(updateViewCountQuery, updateViewCountParams);
+    }
 
 }

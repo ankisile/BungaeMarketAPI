@@ -1,5 +1,4 @@
 package com.example.demo.src.product;
-
 import com.example.demo.config.BaseException;
 import com.example.demo.config.BaseResponse;
 import com.example.demo.src.product.model.*;
@@ -120,6 +119,8 @@ public class ProductController {
                 return new BaseResponse<>(INVALID_PRODUCT_ID);
             }
 
+            productService.updateViewCount(id);
+
             //이 부분 너무 더러움
             GetProductInfoRes getProductInfoRes = new GetProductInfoRes(id);
             getProductInfoRes.setProductInfo(productProvider.getProductInfos(userIdByJwt,id));
@@ -131,6 +132,9 @@ public class ProductController {
             int categoryId=getProductInfoRes.getProductInfo().getCategoryId();
             getProductInfoRes.setRelateProductList(productProvider.getRelateProducts(categoryId, id));
             getProductInfoRes.setReviewList(productProvider.getReviews(storeId));
+
+
+
 
 
             return new BaseResponse<>(getProductInfoRes);
@@ -284,34 +288,34 @@ public class ProductController {
         }
     }
 
-
-    /**
-     * 특정 상품 화면 - 상품 답장 API
-     * [POST] /products/:productId/inquiry/:inquiryId/call
-     * @return BaseResponse<GetCategoryRes>
-     */
-    @ResponseBody
-    @GetMapping("/{productId}/inquiry/{inquiryId}/call")
-    public BaseResponse<String> postInquiry(@PathVariable("productId") String productId,@PathVariable("inquiryId") String inquiryId){
-
-        try {
-            int userIdByJwt = jwtService.getUserIdx();
-
-            if (productProvider.checkUserStatusByUserId(userIdByJwt) == 0) {
-                return new BaseResponse<>(DELETED_USER);
-            }
-            if(!isRegexInteger(productId)||!isRegexInteger(inquiryId)){
-                return new BaseResponse<>(INVAILD_PATH_VARIABLE);
-            }
-
-            int pId = Integer.parseInt(productId);
-            int iId = Integer.parseInt(inquiryId);
-
-            return new BaseResponse<>(productProvider.getInquiryCall(pId, iId));
-        } catch (BaseException exception) {
-            return new BaseResponse<>((exception.getStatus()));
-        }
-    }
+//
+//    /**
+//     * 특정 상품 화면 - 상품 답장 API
+//     * [POST] /products/:productId/inquiry/:inquiryId/call
+//     * @return BaseResponse<GetCategoryRes>
+//     */
+//    @ResponseBody
+//    @GetMapping("/{productId}/inquiry/{inquiryId}/call")
+//    public BaseResponse<String> postInquiry(@PathVariable("productId") String productId,@PathVariable("inquiryId") String inquiryId){
+//
+//        try {
+//            int userIdByJwt = jwtService.getUserIdx();
+//
+//            if (productProvider.checkUserStatusByUserId(userIdByJwt) == 0) {
+//                return new BaseResponse<>(DELETED_USER);
+//            }
+//            if(!isRegexInteger(productId)||!isRegexInteger(inquiryId)){
+//                return new BaseResponse<>(INVAILD_PATH_VARIABLE);
+//            }
+//
+//            int pId = Integer.parseInt(productId);
+//            int iId = Integer.parseInt(inquiryId);
+//
+//            return new BaseResponse<>(productProvider.getInquiryCall(pId, iId));
+//        } catch (BaseException exception) {
+//            return new BaseResponse<>((exception.getStatus()));
+//        }
+//    }
 
 
     /**
@@ -355,8 +359,8 @@ public class ProductController {
     @PatchMapping("/{productId}/sellStatus")
     public BaseResponse<String> changeSellStatus(@PathVariable("productId") String productId, @RequestBody PatchSellReq patchSellReq) throws BaseException {
         if(!isRegexInteger(productId)){
-                return new BaseResponse<>(INVAILD_PATH_VARIABLE);
-            }
+            return new BaseResponse<>(INVAILD_PATH_VARIABLE);
+        }
         try{
             // jwt 에서 userId 추출
             int userIdByJwt = jwtService.getUserIdx();
