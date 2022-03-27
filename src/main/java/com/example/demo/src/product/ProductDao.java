@@ -70,7 +70,7 @@ public class ProductDao {
 
 
     public ProductInfo getProductInfos(int userId, int productId) {
-        String getProductInfoQuery = "select product_title as title, price,\n" +
+        String getProductInfoQuery = "select view_count as viewCount, product_title as title, price,\n" +
                 "       (case when F.user_id=? then 'LIKE' else 'UNLIKE' end) as myFavorite,\n" +
                 "          direct_address as directAddress,\n" +
                 "       concat(\n" +
@@ -120,7 +120,8 @@ public class ProductDao {
                         rs.getInt("categoryId"),
                         rs.getString("category"),
                         rs.getString("productInquiry"),
-                        rs.getString("myFavorite")
+                        rs.getString("myFavorite"),
+                        rs.getInt("viewCount")
                         ),
                 getProductInfoParams);
     }
@@ -365,6 +366,10 @@ public class ProductDao {
         return this.jdbcTemplate.queryForObject(getMainAddressQuery, String.class, getMainAddressParams);
     }
 
-
+    public void updateViewCount(int productId){
+        String updateViewCountQuery = "update Products set view_count = view_count+1 where product_id=?";
+        int updateViewCountParams =  productId;
+        this.jdbcTemplate.update(updateViewCountQuery, updateViewCountParams);
+    }
 
 }

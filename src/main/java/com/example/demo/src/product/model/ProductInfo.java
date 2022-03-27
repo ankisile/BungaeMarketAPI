@@ -21,4 +21,5 @@ public class ProductInfo{
     private String category;
     private String productInquiry;
     private String myFavorite;
+    private Integer viewCount;
 }

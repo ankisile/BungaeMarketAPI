@@ -120,6 +120,8 @@ public class ProductController {
                 return new BaseResponse<>(INVALID_PRODUCT_ID);
             }
 
+            productService.updateViewCount(id);
+
             //이 부분 너무 더러움
             GetProductInfoRes getProductInfoRes = new GetProductInfoRes(id);
             getProductInfoRes.setProductInfo(productProvider.getProductInfos(userIdByJwt,id));
@@ -131,6 +133,9 @@ public class ProductController {
             int categoryId=getProductInfoRes.getProductInfo().getCategoryId();
             getProductInfoRes.setRelateProductList(productProvider.getRelateProducts(categoryId, id));
             getProductInfoRes.setReviewList(productProvider.getReviews(storeId));
+
+
+
 
 
             return new BaseResponse<>(getProductInfoRes);

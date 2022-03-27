@@ -85,4 +85,11 @@ public class ProductService {
         }
     }
 
+    public void updateViewCount(int productId) throws BaseException {
+        try {
+            productDao.updateViewCount(productId);
+        } catch (Exception exception) {
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
 }
