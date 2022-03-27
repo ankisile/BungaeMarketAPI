@@ -11,7 +11,10 @@ public class ProductInfo{
     private String title;
     private Integer price;
     private String directAddress;
-    private String productOption;
+    private String productStatus;
+    private String shippingFee;
+    private String exchangePossible;
+    private int quantity;
     private String explanation;
     private String securePayment;
     private String sellStatus;

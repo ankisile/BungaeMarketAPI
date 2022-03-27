@@ -170,6 +170,8 @@ com/example/demo/src/product/model/GetProductRes.java
  com.example.demo.src.product.model.GetProductRes
 com/example/demo/src/category/model/GetMenuRes.java
  com.example.demo.src.category.model.GetMenuRes
+com/example/demo/src/order/model/PostOrderReq.java
+ com.example.demo.src.order.model.PostOrderReq
 com/example/demo/src/address/AddressService.java
  com.example.demo.src.address.AddressService
 com/example/demo/src/user/model/GetUserRes.java
