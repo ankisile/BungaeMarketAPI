@@ -1,10 +1,7 @@
 package com.example.demo.src.shop;
 
 import com.example.demo.config.BaseException;
-import com.example.demo.src.shop.model.GetInquiryByShopRes;
-import com.example.demo.src.shop.model.GetProductByShopRes;
-import com.example.demo.src.shop.model.GetReviewByShopRes;
-import com.example.demo.src.shop.model.GetShopRes;
+import com.example.demo.src.shop.model.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,9 +15,16 @@ public class ShopProvider {
 
     private final ShopDao shopDao;
 
-    public GetShopRes getShop(int shopIdx) throws BaseException {
+    public GetShopRes getShop(int userIdx,int shopIdx) throws BaseException {
         try{
-            return shopDao.getShop(shopIdx);
+            List<GetProductByShopRes> products = shopDao.getProducts(shopIdx, userIdx);
+            List<GetReviewByShopRes> reviews = shopDao.getReviews(shopIdx);
+            List<GetInquiryByShopRes> inquiries = shopDao.getInquiries(shopIdx);
+            GetShopRes shop = shopDao.getShop(shopIdx);
+            shop.setProducts(products);
+            shop.setReviews(reviews);
+            shop.setInquiries(inquiries);
+            return shop;
         }
         catch (Exception exception) {
             throw new BaseException(DATABASE_ERROR);
@@ -48,6 +52,30 @@ public class ShopProvider {
     public List<GetReviewByShopRes> getReviews(int shopIdx) throws BaseException {
         try{
             return shopDao.getReviews(shopIdx);
+        }
+        catch (Exception exception) {
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
+
+    public List<GetFollowingByShopRes> getFollowings(int shopIdx,int userIdx) throws BaseException {
+        try{
+
+            List<GetFollowingByShopRes> followings = shopDao.getFollowings(shopIdx);
+            for (GetFollowingByShopRes following : followings) {
+
+                following.setProducts(shopDao.getProducts(shopIdx,userIdx));
+            }
+            return followings;
+        }
+        catch (Exception exception) {
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
+
+    public List<GetFollowerByShopRes> getFollowers(int shopIdx) throws BaseException {
+        try{
+            return shopDao.getFollowers(shopIdx);
         }
         catch (Exception exception) {
             throw new BaseException(DATABASE_ERROR);

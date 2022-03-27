@@ -1,7 +1,7 @@
 com/example/demo/src/category/CategoryController.java
  com.example.demo.src.category.CategoryController
-com/example/demo/src/shop/ShopController.java
- com.example.demo.src.shop.ShopController
+com/example/demo/utils/JwtService.java
+ com.example.demo.utils.JwtService
 com/example/demo/config/Constant.java
  com.example.demo.config.Constant
 com/example/demo/src/favorite/model/GetFavoriteRes.java
@@ -48,8 +48,8 @@ com/example/demo/src/product/model/ProductImg.java
  com.example.demo.src.product.model.ProductImg
 com/example/demo/src/user/model/GetMySellingProducts.java
  com.example.demo.src.user.model.GetMySellingProducts
-com/example/demo/src/shop/model/GetShopRes.java
- com.example.demo.src.shop.model.GetShopRes
+com/example/demo/src/user/MyPageController.java
+ com.example.demo.src.user.MyPageController
 com/example/demo/src/product/ProductDao.java
  com.example.demo.src.product.ProductDao
 com/example/demo/config/secret/Secret.java
@@ -68,8 +68,8 @@ com/example/demo/src/address/model/PostDirectAddressReq.java
  com.example.demo.src.address.model.PostDirectAddressReq
 com/example/demo/src/favorite/FavoriteService.java
  com.example.demo.src.favorite.FavoriteService
-com/example/demo/src/shop/ShopProvider.java
- com.example.demo.src.shop.ShopProvider
+com/example/demo/src/user/UserProvider.java
+ com.example.demo.src.user.UserProvider
 com/example/demo/src/user/GetMyFollowing.java
  com.example.demo.src.user.GetMyFollowing
 com/example/demo/src/user/UserService.java
@@ -114,8 +114,8 @@ com/example/demo/src/product/model/PatchSellReq.java
  com.example.demo.src.product.model.PatchSellReq
 com/example/demo/src/product/model/PostInquiryReq.java
  com.example.demo.src.product.model.PostInquiryReq
-com/example/demo/src/shop/ShopDao.java
- com.example.demo.src.shop.ShopDao
+com/example/demo/src/follow/FollowProvider.java
+ com.example.demo.src.follow.FollowProvider
 com/example/demo/src/shop/model/GetProductByShopRes.java
  com.example.demo.src.shop.model.GetProductByShopRes
 com/example/demo/src/user/UserDao.java
@@ -166,11 +166,15 @@ com/example/demo/src/user/model/GetUserRes.java
  com.example.demo.src.user.model.GetUserRes
 com/example/demo/DemoApplication.java
  com.example.demo.DemoApplication
-com/example/demo/src/user/MyPageController.java
- com.example.demo.src.user.MyPageController
-com/example/demo/utils/JwtService.java
- com.example.demo.utils.JwtService
-com/example/demo/src/user/UserProvider.java
- com.example.demo.src.user.UserProvider
-com/example/demo/src/follow/FollowProvider.java
- com.example.demo.src.follow.FollowProvider
+com/example/demo/src/shop/model/GetShopRes.java
+ com.example.demo.src.shop.model.GetShopRes
+com/example/demo/src/shop/model/GetFollowerByShopRes.java
+ com.example.demo.src.shop.model.GetFollowerByShopRes
+com/example/demo/src/shop/model/GetFollowingByShopRes.java
+ com.example.demo.src.shop.model.GetFollowingByShopRes
+com/example/demo/src/shop/ShopDao.java
+ com.example.demo.src.shop.ShopDao
+com/example/demo/src/shop/ShopProvider.java
+ com.example.demo.src.shop.ShopProvider
+com/example/demo/src/shop/ShopController.java
+ com.example.demo.src.shop.ShopController
