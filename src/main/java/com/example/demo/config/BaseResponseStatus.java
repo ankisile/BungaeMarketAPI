@@ -51,6 +51,10 @@ public enum BaseResponseStatus {
     POST_FOLLOW_EMPTY_STORE_ID(false, 2031, "상점이름을 입력해주세요"),
     INVALID_STORE_ID(false, 2032, "올바르지 않은 상점입니다"),
 
+    // [POST] /reviews
+    POST_REVIEWS_EMPTY_PRODUCT_ID(false, 2033, "productId를 입력하세요."),
+    POST_REVIEWS_EMPTY_DESCRIPTION(false, 2034, "reviewDescription을 입력하세요."),
+    POST_REVIEWS_INVALID_SCORE(false, 2035, "1이상 5이하의 reviewScore를 입력하세요."),
 
     /**
      * 3000 : Response 오류
@@ -71,6 +75,14 @@ public enum BaseResponseStatus {
     NOT_EXIST_SELLING_PRODUCT(false, 3023, "판매중인 상품이 없습니다."),
     NOT_EXIST_RESERVED_PRODUCT(false, 3024, "예약중인 상품이 없습니다."),
     NOT_EXIST_SOLDOUT_PRODUCT(false, 3025, "판매완료된 상품이 없습니다."),
+
+    // [POST] /reviews
+    EXISTS_REVIEW(false, 3027, "이미 리뷰가 존재합니다."),
+
+    // [DELETE] /users/reviews/:reviewId
+    INVALID_REVIEW_ID(false, 3028, "올바르지 않은 reviewId 입니다."),
+    EMPTY_REVIEW(false, 3029, "리뷰가 없습니다"),
+    DELETE_REVIEWS_INVALID_REVIEW_ID(false, 3030, "1이상의 reviewId를 입력하세요."),
 
     /**
      * 4000 : Database, Server 오류
