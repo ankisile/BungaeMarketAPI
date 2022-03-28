@@ -72,4 +72,13 @@ public class OrderProvider {
         }
     }
 
+    public String getSellStatus(int productId) throws BaseException {
+        try{
+            return orderDao.getSellStatus(productId);
+
+        } catch (Exception exception) {
+            throw new BaseException(DELETED_USER);
+        }
+    }
+
 }

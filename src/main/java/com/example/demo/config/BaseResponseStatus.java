@@ -84,6 +84,9 @@ public enum BaseResponseStatus {
     EMPTY_REVIEW(false, 3029, "리뷰가 없습니다"),
     DELETE_REVIEWS_INVALID_REVIEW_ID(false, 3030, "1이상의 reviewId를 입력하세요."),
 
+    // [post] /orders
+    INVALID_PURCHASE(false, 3031, "구매 불가 상품입니다"),
+
     /**
      * 4000 : Database, Server 오류
      */

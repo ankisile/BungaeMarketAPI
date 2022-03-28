@@ -16,4 +16,5 @@ public class GetProductOrderRes {
     private int price;
     private String title;
     private String productImg;
+    private String shippingFee;
 }

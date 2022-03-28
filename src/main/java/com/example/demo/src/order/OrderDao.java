@@ -57,7 +57,7 @@ public class OrderDao {
     }
 
     public GetProductOrderRes getOrderView(int userId, int productId) {
-        String getOrderViewQuery = "select point, product_title as title, price,\n" +
+        String getOrderViewQuery = "select point, product_title as title, price, shipping_fee as shippingFee, \n" +
                 "       (select product_image_url from ProductImages where Products.product_id = ProductImages.product_id limit 1) as productImg,\n" +
                 "       address, name, A.phone as phone\n" +
                 "from  Products, Users\n" +
@@ -72,7 +72,8 @@ public class OrderDao {
                         rs.getString("phone"),
                         rs.getInt("price"),
                         rs.getString("title"),
-                        rs.getString("productImg")
+                        rs.getString("productImg"),
+                        rs.getString("shippingFee")
                 ),
                 getOrderViewParams);
     }
@@ -90,5 +91,12 @@ public class OrderDao {
                         rs.getString("productUrl")
                 ),
                 getAddressInfoParams);
+    }
+
+    public String getSellStatus(int productId) {
+        String getSellStatusQuery = "select sell_status from Products where product_id=? ";
+        int getSellStatusParams =  productId;
+
+        return this.jdbcTemplate.queryForObject(getSellStatusQuery, String.class, getSellStatusParams);
     }
 }
