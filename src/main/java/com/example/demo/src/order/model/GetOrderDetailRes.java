@@ -13,15 +13,20 @@ public class GetOrderDetailRes {
     private String title;
     private int price;
 
-    private int orderId;
-    private String tradingMethod;
-    private String buyer;
-    private String seller;
+    private int orderId; //
+    private String tradingMethod; //
+    private String buyer; //
+    private String seller; //
     private String shippingFee;
     private int totalPrice;
+    private int year; //
+    private int month; //
+    private int day; //
+    private String time; //
 
     private String address;
     private String detailAddress;
     private String name;
-    private String phone;
+    private String buyerPhone;
+    private String sellerPhone;
 }

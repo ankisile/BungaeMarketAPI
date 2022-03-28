@@ -81,4 +81,13 @@ public class OrderProvider {
         }
     }
 
+//    public void getOrderDetail(int orderId) throws BaseException {
+//        try{
+//            orderDao.getOrderDetail(orderId);
+//
+//        } catch (Exception exception) {
+//            throw new BaseException(DELETED_USER);
+//        }
+//    }
+
 }
