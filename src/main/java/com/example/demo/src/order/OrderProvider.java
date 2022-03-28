@@ -68,7 +68,7 @@ public class OrderProvider {
             return orderDao.getProduct(productId);
 
         } catch (Exception exception) {
-            throw new BaseException(DELETED_USER);
+            throw new BaseException(DATABASE_ERROR);
         }
     }
 
@@ -77,17 +77,17 @@ public class OrderProvider {
             return orderDao.getSellStatus(productId);
 
         } catch (Exception exception) {
-            throw new BaseException(DELETED_USER);
+            throw new BaseException(DATABASE_ERROR);
         }
     }
 
-//    public void getOrderDetail(int orderId) throws BaseException {
-//        try{
-//            orderDao.getOrderDetail(orderId);
-//
-//        } catch (Exception exception) {
-//            throw new BaseException(DELETED_USER);
-//        }
-//    }
+    public GetOrderDetailRes getOrderDetail(int orderId) throws BaseException {
+        try{
+            return orderDao.getOrderDetail(orderId);
+
+        } catch (Exception exception) {
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
 
 }

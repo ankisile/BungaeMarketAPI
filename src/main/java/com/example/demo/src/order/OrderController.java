@@ -78,24 +78,24 @@ public class OrderController {
         }
     }
 
-//    /**
-//     * 주문 명세서 API
-//     * [GET] /orders/:orderId
-//     * @return BaseResponse<GetCategoryRes>
-//     */
-//    @ResponseBody
-//    @GetMapping("/{orderId}")
-//    public BaseResponse<GetOrderDetailRes> getOrderDetail(@PathVariable(required = false) String orderId) {
-//
-//        try {
-//            int userIdByJwt = jwtService.getUserIdx();
-//
-//            int id = Integer.parseInt(orderId);
-//            GetOrderDetailRes getOrderDetailRes = orderProvider.getOrderDetail(id);
-//
-//            return new BaseResponse<>(getOrderDetailRes);
-//        } catch (BaseException exception) {
-//            return new BaseResponse<>((exception.getStatus()));
-//        }
-//    }
+    /**
+     * 주문 명세서 API
+     * [GET] /orders/:orderId
+     * @return BaseResponse<GetCategoryRes>
+     */
+    @ResponseBody
+    @GetMapping("/details/{orderId}")
+    public BaseResponse<GetOrderDetailRes> getOrderDetail(@PathVariable(required = false) String orderId) {
+
+        try {
+            int userIdByJwt = jwtService.getUserIdx();
+
+            int id = Integer.parseInt(orderId);
+            GetOrderDetailRes getOrderDetailRes = orderProvider.getOrderDetail(id);
+
+            return new BaseResponse<>(getOrderDetailRes);
+        } catch (BaseException exception) {
+            return new BaseResponse<>((exception.getStatus()));
+        }
+    }
 }

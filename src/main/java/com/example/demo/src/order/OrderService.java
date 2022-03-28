@@ -33,8 +33,15 @@ public class OrderService {
         try {
 
             String address = null;
+            String name = null;
+            String phone = null;
             if((postOrderReq.getTradingMethod()).equals("DELIVERY")) {
-                 address = orderProvider.getUserAddress(userId);
+                address = orderDao.getUserAddress(userId);
+                name =  orderDao.getDeliverName(userId);
+                phone =  orderDao.getDeliverPhone(userId);
+            }
+            else {
+                phone =  orderDao.getUserPhone(userId);
             }
 
             int point = postOrderReq.getPoint();
@@ -43,8 +50,7 @@ public class OrderService {
             int totalPrice = price-point+postOrderReq.getTax();
 
 
-
-            int orderId = orderDao.makeOrderInfo(userId, address, totalPrice, postOrderReq);
+            int orderId = orderDao.makeOrderInfo(userId, address, totalPrice, postOrderReq, name, phone);
 
             orderDao.changeReservedStatus(postOrderReq.getProductId());
 

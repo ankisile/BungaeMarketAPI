@@ -25,7 +25,7 @@ public class GetOrderDetailRes {
     private String time; //
 
     private String address;
-    private String detailAddress;
+    private String directAddress;
     private String name;
     private String buyerPhone;
     private String sellerPhone;
