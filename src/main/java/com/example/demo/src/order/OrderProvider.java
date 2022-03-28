@@ -53,4 +53,23 @@ public class OrderProvider {
         }
     }
 
+
+    public GetProductOrderRes getOrderView(int userId, int productId) throws BaseException {
+        try{
+            return orderDao.getOrderView(userId, productId);
+
+        } catch (Exception exception) {
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
+
+    public Product getProduct(int productId) throws BaseException {
+        try{
+            return orderDao.getProduct(productId);
+
+        } catch (Exception exception) {
+            throw new BaseException(DELETED_USER);
+        }
+    }
+
 }
