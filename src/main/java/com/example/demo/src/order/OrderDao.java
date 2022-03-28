@@ -59,15 +59,16 @@ public class OrderDao {
     public GetProductOrderRes getOrderView(int userId, int productId) {
         String getOrderViewQuery = "select point, product_title as title, price, shipping_fee as shippingFee, \n" +
                 "       (select product_image_url from ProductImages where Products.product_id = ProductImages.product_id limit 1) as productImg,\n" +
-                "       address, name, A.phone as phone\n" +
+                "       address, detailAddress, name, A.phone as phone\n" +
                 "from  Products, Users\n" +
-                "left outer join (select concat(Address.address, ' ', detail_address) as address, name, phone, user_id from Address where address_type='DELIVERY' and main='MAIN') as  A on Users.user_id = A.user_id\n" +
+                "left outer join (select Address.address as address, detail_address as detailAddress, name, phone, user_id from Address where address_type='DELIVERY' and main='MAIN') as  A on Users.user_id = A.user_id\n" +
                 "where Users.user_id=? and product_id=?";
         Object[] getOrderViewParams = new Object[]{userId, productId};
         return this.jdbcTemplate.queryForObject(getOrderViewQuery,
                 (rs, rowNum) -> new GetProductOrderRes(
                         rs.getInt("point"),
                         rs.getString("address"),
+                        rs.getString("detailAddress"),
                         rs.getString("name"),
                         rs.getString("phone"),
                         rs.getInt("price"),
