@@ -49,7 +49,7 @@ public class OrderController {
             else
                 return new BaseResponse<>(INVALID_PURCHASE);
 
-            return new BaseResponse<>("orderId");
+            return new BaseResponse<>("success");
         } catch (BaseException exception) {
             return new BaseResponse<>((exception.getStatus()));
         }

@@ -37,21 +37,20 @@ public class OrderService {
                  address = orderProvider.getUserAddress(userId);
             }
 
-            int point = orderProvider.getPoint(userId);
-
+            int point = postOrderReq.getPoint();
             int price = orderProvider.getProductPrice(postOrderReq.getProductId());
 
-            int totalPrice = price-point;
+            int totalPrice = price-point+postOrderReq.getTax();
 
 
 
-                int orderId = orderDao.makeOrderInfo(userId, address, totalPrice, postOrderReq);
+            int orderId = orderDao.makeOrderInfo(userId, address, totalPrice, postOrderReq);
 
-                orderDao.changeReservedStatus(postOrderReq.getProductId());
+            orderDao.changeReservedStatus(postOrderReq.getProductId());
 
-                orderDao.changePoint(userId, point);
+            orderDao.changePoint(userId, point);
 
-                return orderId;
+            return orderId;
 
 
         } catch (Exception exception) {
