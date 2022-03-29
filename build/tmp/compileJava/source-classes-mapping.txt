@@ -12,8 +12,6 @@ com/example/demo/src/address/model/GetDirectAddressRes.java
  com.example.demo.src.address.model.GetDirectAddressRes
 com/example/demo/src/event/EventController.java
  com.example.demo.src.event.EventController
-com/example/demo/src/order/model/Product.java
- com.example.demo.src.order.model.Product
 com/example/demo/src/favorite/model/PostFavoriteReq.java
  com.example.demo.src.favorite.model.PostFavoriteReq
 com/example/demo/src/address/AddressController.java
@@ -90,6 +88,8 @@ com/example/demo/src/recent/model/GetRecentRes.java
  com.example.demo.src.recent.model.GetRecentRes
 com/example/demo/src/order/model/GetProductOrderRes.java
  com.example.demo.src.order.model.GetProductOrderRes
+com/example/demo/src/order/model/PostCancelReq.java
+ com.example.demo.src.order.model.PostCancelReq
 com/example/demo/src/user/model/PatchUserReq.java
  com.example.demo.src.user.model.PatchUserReq
 com/example/demo/src/test/TestController.java
@@ -150,6 +150,8 @@ com/example/demo/src/shop/model/GetShopRes.java
  com.example.demo.src.shop.model.GetShopRes
 com/example/demo/config/secret/Secret.java
  com.example.demo.config.secret.Secret
+com/example/demo/src/order/model/PostConfirmReq.java
+ com.example.demo.src.order.model.PostConfirmReq
 com/example/demo/config/BaseResponse.java
  com.example.demo.config.BaseResponse
 com/example/demo/src/user/UserService.java
