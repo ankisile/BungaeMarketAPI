@@ -10,10 +10,11 @@ import java.util.List;
 public class GetProductOrderRes {
      private int point;
      private String address;
+    private String detailAddress;
     private String name;
      private String phone;
-//    private Product product;
     private int price;
     private String title;
     private String productImg;
+    private String shippingFee;
 }

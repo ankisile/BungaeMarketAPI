@@ -9,6 +9,8 @@ import lombok.Setter;
 @AllArgsConstructor
 public class PostOrderReq {
     private Integer productId;
+    private Integer point;
+    private Integer tax;
     private String tradingMethod;
     private String payMethod;
     private String addressOption;

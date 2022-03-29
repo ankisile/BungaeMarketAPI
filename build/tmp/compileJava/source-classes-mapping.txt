@@ -124,6 +124,8 @@ com/example/demo/src/product/model/ProductTag.java
  com.example.demo.src.product.model.ProductTag
 com/example/demo/src/recent/RecentProvider.java
  com.example.demo.src.recent.RecentProvider
+com/example/demo/src/order/model/GetOrderDetailRes.java
+ com.example.demo.src.order.model.GetOrderDetailRes
 com/example/demo/src/order/OrderDao.java
  com.example.demo.src.order.OrderDao
 com/example/demo/utils/ValidationRegex.java

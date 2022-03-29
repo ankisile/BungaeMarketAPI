@@ -43,7 +43,11 @@ public class OrderController {
             // jwt 에서 userId 추출.
             int userIdByJwt = jwtService.getUserIdx();
 
-            orderService.createOrder(postOrderReq, userIdByJwt);
+            if(orderProvider.getSellStatus(postOrderReq.getProductId()).equals("SELLING")){
+                int orderId = orderService.createOrder(postOrderReq, userIdByJwt);
+            }
+            else
+                return new BaseResponse<>(INVALID_PURCHASE);
 
             return new BaseResponse<>("success");
         } catch (BaseException exception) {
@@ -74,4 +78,24 @@ public class OrderController {
         }
     }
 
+    /**
+     * 주문 명세서 API
+     * [GET] /orders/:orderId
+     * @return BaseResponse<GetCategoryRes>
+     */
+    @ResponseBody
+    @GetMapping("/details/{orderId}")
+    public BaseResponse<GetOrderDetailRes> getOrderDetail(@PathVariable(required = false) String orderId) {
+
+        try {
+            int userIdByJwt = jwtService.getUserIdx();
+
+            int id = Integer.parseInt(orderId);
+            GetOrderDetailRes getOrderDetailRes = orderProvider.getOrderDetail(id);
+
+            return new BaseResponse<>(getOrderDetailRes);
+        } catch (BaseException exception) {
+            return new BaseResponse<>((exception.getStatus()));
+        }
+    }
 }

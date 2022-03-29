@@ -87,6 +87,9 @@ public enum BaseResponseStatus {
     //  [GET] /chatting
     NOT_EXIST_CHATTING_ROOM(false, 3040, "채팅방이 없습니다."),
 
+    // [post] /orders
+    INVALID_PURCHASE(false, 3031, "구매 불가 상품입니다"),
+
     /**
      * 4000 : Database, Server 오류
      */

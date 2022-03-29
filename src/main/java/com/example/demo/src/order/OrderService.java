@@ -29,25 +29,35 @@ public class OrderService {
         this.jwtService = jwtService;
     }
 
-    public void createOrder(PostOrderReq postOrderReq, int userId) throws BaseException {
+    public int createOrder(PostOrderReq postOrderReq, int userId) throws BaseException {
         try {
 
             String address = null;
+            String name = null;
+            String phone = null;
             if((postOrderReq.getTradingMethod()).equals("DELIVERY")) {
-                 address = orderProvider.getUserAddress(userId);
+                address = orderDao.getUserAddress(userId);
+                name =  orderDao.getDeliverName(userId);
+                phone =  orderDao.getDeliverPhone(userId);
+            }
+            else {
+                phone =  orderDao.getUserPhone(userId);
             }
 
-            int point = orderProvider.getPoint(userId);
-
+            int point = postOrderReq.getPoint();
             int price = orderProvider.getProductPrice(postOrderReq.getProductId());
 
-            int totalPrice = price-point;
+            int totalPrice = price-point+postOrderReq.getTax();
 
-            orderDao.makeOrderInfo(userId, address, totalPrice, postOrderReq);
+
+            int orderId = orderDao.makeOrderInfo(userId, address, totalPrice, postOrderReq, name, phone);
 
             orderDao.changeReservedStatus(postOrderReq.getProductId());
 
             orderDao.changePoint(userId, point);
+
+            return orderId;
+
 
         } catch (Exception exception) {
             throw new BaseException(DATABASE_ERROR);
