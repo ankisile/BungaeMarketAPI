@@ -71,7 +71,6 @@ public class OrderController {
 
             int id = Integer.parseInt(productId);
             GetProductOrderRes getProductOrderRes = orderProvider.getOrderView(userIdByJwt, id);
-//            getProductOrderRes.setProduct(orderProvider.getProduct(id));
             return new BaseResponse<>(getProductOrderRes);
         } catch (BaseException exception) {
             return new BaseResponse<>((exception.getStatus()));
@@ -94,6 +93,57 @@ public class OrderController {
             GetOrderDetailRes getOrderDetailRes = orderProvider.getOrderDetail(id);
 
             return new BaseResponse<>(getOrderDetailRes);
+        } catch (BaseException exception) {
+            return new BaseResponse<>((exception.getStatus()));
+        }
+    }
+
+    /**
+     * 구매 취소 API
+     * [GET] /orders/cancel
+     * @return BaseResponse<GetCategoryRes>
+     */
+    @ResponseBody
+    @PostMapping("/cancel")
+    public BaseResponse<String> postCancel(@RequestBody PostCancelReq postCancelReq) {
+
+        try {
+            // jwt 에서 userId 추출.
+            int userIdByJwt = jwtService.getUserIdx();
+
+            if(orderProvider.getOrderStatus(postCancelReq.getOrderId()).equals("RESERVED")){
+               orderService.changeCancelStatus(postCancelReq, userIdByJwt);
+            }
+            else
+                return new BaseResponse<>(INVALID_PURCHASE);
+
+            return new BaseResponse<>("success");
+        } catch (BaseException exception) {
+            return new BaseResponse<>((exception.getStatus()));
+        }
+    }
+
+
+    /**
+     * 구매 확정 API
+     * [GET] /orders/confirm
+     * @return BaseResponse<GetCategoryRes>
+     */
+    @ResponseBody
+    @PostMapping("/confirm")
+    public BaseResponse<String> postConfirm(@RequestBody PostConfirmReq postConfirmReq) {
+
+        try {
+            // jwt 에서 userId 추출.
+            int userIdByJwt = jwtService.getUserIdx();
+
+            if(orderProvider.getOrderStatus(postConfirmReq.getOrderId()).equals("RESERVED")){
+                orderService.changeConfirmStatus(postConfirmReq, userIdByJwt);
+            }
+            else
+                return new BaseResponse<>(INVALID_PURCHASE);
+
+            return new BaseResponse<>("success");
         } catch (BaseException exception) {
             return new BaseResponse<>((exception.getStatus()));
         }

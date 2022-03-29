@@ -63,4 +63,38 @@ public class OrderService {
             throw new BaseException(DATABASE_ERROR);
         }
     }
+
+    public void changeCancelStatus(PostCancelReq postCancelReq, int userId) throws BaseException {
+        try {
+            int buyerId = orderDao.getBuyerId(postCancelReq.getOrderId());
+            int sellerId = orderDao.getSellerId(postCancelReq.getOrderId());
+
+            int productId = orderDao.getProductId(postCancelReq.getOrderId());
+            if(userId == buyerId || userId == sellerId){
+                orderDao.changeCancelStatus(postCancelReq.getOrderId());
+                orderDao.changeSellingStatus(productId);
+            }
+
+
+        } catch (Exception exception) {
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
+
+    public void changeConfirmStatus(PostConfirmReq postConfirmReq, int userId) throws BaseException {
+        try {
+            int buyerId = orderDao.getBuyerId(postConfirmReq.getOrderId());
+            int sellerId = orderDao.getSellerId(postConfirmReq.getOrderId());
+
+            int productId = orderDao.getProductId(postConfirmReq.getOrderId());
+            if(userId == buyerId || userId == sellerId){
+                orderDao.changeConfirmStatus(postConfirmReq.getOrderId());
+                orderDao.changeSoldoutStatus(productId);
+            }
+
+
+        } catch (Exception exception) {
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
 }

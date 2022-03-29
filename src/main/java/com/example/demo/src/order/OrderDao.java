@@ -80,20 +80,6 @@ public class OrderDao {
                 getOrderViewParams);
     }
 
-    public Product getProduct(int productId) {
-        String getAddressInfoQuery = "select product_title as title, price,\n" +
-                "       (select ProductImages.product_image_url from ProductImages where ProductImages.product_id =? limit 1) as productImg from Products where product_id=? ";
-        Object[] getAddressInfoParams = new Object[]{productId, productId};
-
-        return this.jdbcTemplate.queryForObject(getAddressInfoQuery,
-                (rs, rowNum) -> new Product(
-
-                        rs.getInt("price"),
-                        rs.getString("title"),
-                        rs.getString("productUrl")
-                ),
-                getAddressInfoParams);
-    }
 
     public String getSellStatus(int productId) {
         String getSellStatusQuery = "select sell_status from Products where product_id=? ";
@@ -103,7 +89,7 @@ public class OrderDao {
     }
 
     public GetOrderDetailRes getOrderDetail(int orderId) {
-        String getOrderViewQuery = "select order_id as orderId, trading_method as tradingMethod,  U.shop_name as buyer, O.total_price as totalPrice,\n" +
+        String getOrderViewQuery = "select P.product_id as productId, order_id as orderId, trading_method as tradingMethod,  U.shop_name as buyer, O.total_price as totalPrice,\n" +
                 "       YEAR(O.createdAt) as year, MONTH(O.createdAt) as month, DAY(O.createdAt) as day, date_format(O.createdAt, '%h:%i:%s') as time,\n" +
                 "        product_title as title, price, (select product_image_url from ProductImages where P.product_id = ProductImages.product_id limit 1) as productImg, \n" +
                 "       U2.shop_name as seller, P.shipping_fee as shippingFee, U2.phone as sellerPhone,\n" +
@@ -117,6 +103,7 @@ public class OrderDao {
         int getOrderViewParams = orderId;
         return this.jdbcTemplate.queryForObject(getOrderViewQuery,
                 (rs, rowNum) -> new GetOrderDetailRes(
+                        rs.getInt("productId"),
                         rs.getString("productImg"),
                         rs.getString("title"),
                         rs.getInt("price"),
@@ -160,4 +147,57 @@ public class OrderDao {
         int getUserAddressParams = userId;
         return this.jdbcTemplate.queryForObject(getUserAddressQuery, String.class, getUserAddressParams);
     }
+
+    public String getOrderStatus(int orderId) {
+        String getSellStatusQuery = "select order_status from Orders where order_id=? ";
+        int getSellStatusParams =  orderId;
+
+        return this.jdbcTemplate.queryForObject(getSellStatusQuery, String.class, getSellStatusParams);
+    }
+
+    public int getBuyerId(int orderId) {
+        String getSellStatusQuery = "select user_id from Orders where order_id=? ";
+        int getSellStatusParams =  orderId;
+
+        return this.jdbcTemplate.queryForObject(getSellStatusQuery, int.class, getSellStatusParams);
+    }
+
+    public int getSellerId(int orderId) {
+        String getSellStatusQuery = "select P.user_id from Orders join Products P on P.product_id = Orders.product_id where order_id=? ";
+        int getSellStatusParams =  orderId;
+
+        return this.jdbcTemplate.queryForObject(getSellStatusQuery, int.class, getSellStatusParams);
+    }
+
+    public int getProductId(int orderId) {
+        String getSellStatusQuery = "select product_id from Orders where order_id=? ";
+        int getSellStatusParams =  orderId;
+
+        return this.jdbcTemplate.queryForObject(getSellStatusQuery, int.class, getSellStatusParams);
+    }
+
+    public void changeSellingStatus(int productId){
+        String changeStatusQuery = "update Products set sell_status = 'SELLING' where  product_id=?";
+        int changeStatusParams = productId;
+        this.jdbcTemplate.update(changeStatusQuery, changeStatusParams);
+    }
+
+    public void changeCancelStatus(int orderId){
+        String changeStatusQuery = "update Orders set order_status = 'CANCEL' where  order_id=?";
+        int changeStatusParams = orderId;
+        this.jdbcTemplate.update(changeStatusQuery, changeStatusParams);
+    }
+
+    public void changeConfirmStatus(int orderId){
+        String changeStatusQuery = "update Orders set order_status = 'CONFIRM' where  order_id=?";
+        int changeStatusParams = orderId;
+        this.jdbcTemplate.update(changeStatusQuery, changeStatusParams);
+    }
+
+    public void changeSoldoutStatus(int productId){
+        String changeStatusQuery = "update Products set sell_status = 'SOLDOUT' where  product_id=?";
+        int changeStatusParams = productId;
+        this.jdbcTemplate.update(changeStatusQuery, changeStatusParams);
+    }
+
 }

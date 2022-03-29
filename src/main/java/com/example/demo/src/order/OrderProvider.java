@@ -63,15 +63,6 @@ public class OrderProvider {
         }
     }
 
-    public Product getProduct(int productId) throws BaseException {
-        try{
-            return orderDao.getProduct(productId);
-
-        } catch (Exception exception) {
-            throw new BaseException(DATABASE_ERROR);
-        }
-    }
-
     public String getSellStatus(int productId) throws BaseException {
         try{
             return orderDao.getSellStatus(productId);
@@ -89,5 +80,15 @@ public class OrderProvider {
             throw new BaseException(DATABASE_ERROR);
         }
     }
+
+    public String getOrderStatus(int orderId) throws BaseException {
+        try{
+            return orderDao.getOrderStatus(orderId);
+
+        } catch (Exception exception) {
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
+
 
 }

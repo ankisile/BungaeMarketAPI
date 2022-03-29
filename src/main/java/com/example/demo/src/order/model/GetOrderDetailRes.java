@@ -9,6 +9,7 @@ import java.util.List;
 @AllArgsConstructor
 public class GetOrderDetailRes {
 
+    private int productId;
     private String productImg;
     private String title;
     private int price;
