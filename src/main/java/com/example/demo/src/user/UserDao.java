@@ -172,7 +172,14 @@ public class UserDao {
                         "       price,\n" +
                         "       secure_payment,\n" +
                         "       sell_status,\n" +
-                        "       createdAt\n" +
+                        "       (case when timestampdiff(second , createdAt, current_timestamp) <60\n" +
+                        "                then concat(timestampdiff(second, createdAt, current_timestamp),' 초 전')\n" +
+                        "            when timestampdiff(minute , createdAt, current_timestamp) <60\n" +
+                        "                then concat(timestampdiff(minute, createdAt, current_timestamp),' 분 전')\n" +
+                        "            when timestampdiff(hour, createdAt, current_timestamp) <24\n" +
+                        "                then concat(timestampdiff(hour, createdAt, current_timestamp),' 시간 전')\n" +
+                        "            else concat(datediff( current_timestamp, createdAt),' 일 전')\n" +
+                        "        end) as createdAt\n" +
                         "from Products\n" +
                         "where user_id = ? and sell_status=? and status='SAVED'",
                 (rs, rowNum) -> new GetMyProducts(
@@ -185,7 +192,7 @@ public class UserDao {
                         rs.getString("createdAt")
                 ), getMyProductsParams);
 
-        return new GetMySellingProducts(productCount, getMyProducts);
+        return new GetMySellingProducts(productCount,status, getMyProducts);
     }
 
 
@@ -207,7 +214,7 @@ public class UserDao {
                         "       case when follwerCount is not null then follwerCount else 0 end as followerCount\n" +
                         "from Following\n" +
                         "         left join Users U on Following.user_id = U.user_id\n" +
-                        "         left join (select user_id, count(*) as productCount from Products group by user_id) as P on P.user_id = U.user_id\n" +
+                        "         left join (select user_id, count(*) as productCount from Products where sell_status='SELLING' group by user_id) as P on P.user_id = U.user_id\n" +
                         "         left join (select user_id,count(*) as follwerCount from Following group by user_id) as F on F.user_id=U.user_id\n" +
                         "where following_user_id = ?",
                 (rs, rowNum) -> new GetMyFollowing(
@@ -222,8 +229,8 @@ public class UserDao {
     public List<FollowingProduct> getFollowingProducts(int userIdx) {
         return jdbcTemplate.query("select Products.product_id as productIdx, product_image_url, price\n" +
                         "from Products\n" +
-                        "         left join (select product_id,product_image_url from ProductImages limit 1) as PI on PI.product_id=Products.product_id\n" +
-                        "where user_id = ?\n" +
+                        "         left join (select product_id,product_image_url from ProductImages) as PI on PI.product_id=Products.product_id\n" +
+                        "where user_id = ? and sell_status='SELLING'\n" +
                         "limit 3",
                 (rs, rowNum) -> new FollowingProduct(
                         rs.getInt("productIdx"),
@@ -239,7 +246,7 @@ public class UserDao {
                 "       case when follwerCount is not null then follwerCount else 0 end as followerCount\n" +
                 "from Following\n" +
                 "         left join Users U on Following.following_user_id = U.user_id\n" +
-                "         left join (select user_id, count(*) as productCount from Products group by user_id) as P on P.user_id = U.user_id\n" +
+                "         left join (select user_id, count(*) as productCount from Products where sell_status='SELLING' group by user_id) as P on P.user_id = U.user_id\n" +
                 "         left join (select user_id,count(*) as follwerCount from Following group by user_id) as F on F.user_id=U.user_id\n" +
                 "where Following.user_id = ?", (rs, rowNum) -> new GetMyFollower(rs.getInt("followerUserIdx"),
                 rs.getString("shop_name"),

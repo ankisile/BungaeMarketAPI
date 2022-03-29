@@ -70,8 +70,7 @@ public class ShopDao {
                 "       (case when F.user_id=? then 'LIKE' else 'UNLIKE' end) as myFavorite\n" +
                 "from Products\n" +
                 "left join (select product_id, user_id, count(*) as fCount from Favorites group by product_id) as F on Products.product_id = F.product_id\n" +
-                "left join (select user_id, address from Address where address_type='DIRECT' and main='MAIN') as A on Products.user_id = A.user_id\n" +
-                "where sell_status='SELLING' and Products.user_id=?";
+                "where Products.sell_status='SELLING' and Products.user_id=?";
         return this.jdbcTemplate.query(getProductsQuery,
                 (rs, rowNum) -> new GetProductByShopRes(
                         rs.getInt("productIdx"),
@@ -117,7 +116,14 @@ public class ShopDao {
                 "       rate,\n" +
                 "       text,\n" +
                 "       product_title,\n" +
-                "       Reviews.createdAt as createdAt\n" +
+                "       (case when timestampdiff(second , Reviews.createdAt, current_timestamp) <60\n" +
+                "                then concat(timestampdiff(second, Reviews.createdAt, current_timestamp),' 초 전')\n" +
+                "            when timestampdiff(minute , Reviews.createdAt, current_timestamp) <60\n" +
+                "                then concat(timestampdiff(minute, Reviews.createdAt, current_timestamp),' 분 전')\n" +
+                "            when timestampdiff(hour, Reviews.createdAt, current_timestamp) <24\n" +
+                "                then concat(timestampdiff(hour, Reviews.createdAt, current_timestamp),' 시간 전')\n" +
+                "            else concat(datediff( current_timestamp, Reviews.createdAt),' 일 전')\n" +
+                "        end) as createdAt\n" +
                 "from Reviews\n" +
                 "         inner join Users U on Reviews.user_id = U.user_id\n" +
                 "         left join Products P on Reviews.product_id = P.product_id where store_id=?";
@@ -136,13 +142,13 @@ public class ShopDao {
         String getReviewsQuery = "select Following.user_id as userIdx,\n" +
                 "       U.shop_name as shopName,\n" +
                 "       profile_Url,\n" +
-                "       count(product_id) as productCount,\n" +
+                "       productCount,\n" +
                 "       followerCount\n" +
                 "from Following\n" +
                 "         inner join Users U on Following.user_id = U.user_id\n" +
-                "         left join Products P on P.user_id = U.user_id\n" +
+                "         left join (select count(*) as productCount, sell_status, user_id from Products where sell_status = 'SELLING' group by user_id) P on P.user_id = U.user_id\n" +
                 "         left join (select user_id,count(*) as followerCount from Following group by user_id) as F2 on F2.user_id=U.user_id\n" +
-                "where Following.following_user_id = ?\n" +
+                "where Following.following_user_id = ? \n" +
                 "group by U.user_id";
         return jdbcTemplate.query(getReviewsQuery,
                 (rs, rowNum) -> new GetFollowingByShopRes(
@@ -180,5 +186,10 @@ public class ShopDao {
                         rs.getInt("followerCount")
                 ), shopIdx);
 
+    }
+
+    public int checkProducts(int shopIdx) {
+        String checkProductsQuery = "select exists(select * from Products where user_id = ? and sell_status = 'SELLING')";
+        return this.jdbcTemplate.queryForObject(checkProductsQuery, int.class, shopIdx);
     }
 }

@@ -13,6 +13,7 @@ import java.util.List;
 public class GetMySellingProducts {
 
     private Integer productCount;
+    private String sellStatus;
     private List<GetMyProducts> products;
 
 }

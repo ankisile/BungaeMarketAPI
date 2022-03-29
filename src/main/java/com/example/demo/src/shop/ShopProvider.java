@@ -63,8 +63,8 @@ public class ShopProvider {
 
             List<GetFollowingByShopRes> followings = shopDao.getFollowings(shopIdx);
             for (GetFollowingByShopRes following : followings) {
-
-                following.setProducts(shopDao.getProducts(shopIdx,userIdx));
+                int followingUserIdx = following.getUserIdx();
+                following.setProducts(shopDao.getProducts(followingUserIdx,userIdx));
             }
             return followings;
         }
@@ -76,6 +76,15 @@ public class ShopProvider {
     public List<GetFollowerByShopRes> getFollowers(int shopIdx) throws BaseException {
         try{
             return shopDao.getFollowers(shopIdx);
+        }
+        catch (Exception exception) {
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
+
+    public int checkProducts(int shopIdx) throws BaseException {
+        try{
+            return shopDao.checkProducts(shopIdx);
         }
         catch (Exception exception) {
             throw new BaseException(DATABASE_ERROR);

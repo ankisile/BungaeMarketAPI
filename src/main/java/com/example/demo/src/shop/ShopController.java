@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+import static com.example.demo.config.BaseResponseStatus.NOT_EXIST_SELLING_PRODUCT;
+
 @RestController
 @RequestMapping("/app/shop")
 @RequiredArgsConstructor
@@ -40,6 +42,10 @@ public class ShopController {
     @GetMapping("/{shopIdx}/products")
     public BaseResponse<List<GetProductByShopRes>> getProducts(@PathVariable int shopIdx) {
         try {
+
+            if (shopProvider.checkProducts(shopIdx) == 0) {
+                return new BaseResponse<>(NOT_EXIST_SELLING_PRODUCT);
+            }
 
             int userIdx = jwtService.getUserIdx();
 

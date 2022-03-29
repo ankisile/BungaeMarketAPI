@@ -33,7 +33,7 @@ public class FavoriteDao {
 
     public void deleteFavorite(int productIdx, int userIdx) {
         Object[] deleteFavoriteParams = new Object[]{productIdx, userIdx};
-        jdbcTemplate.update("update Favorites set status='DELETED' where product_id=? and user_id=?", deleteFavoriteParams);
+        jdbcTemplate.update("delete from Favorites where product_id=? and user_id=?", deleteFavoriteParams);
     }
 
     public int checkDeletedFavorite(int productIdx, int userIdx) {
@@ -68,7 +68,7 @@ public class FavoriteDao {
                 "from Favorites\n" +
                 "         inner join Products P on Favorites.product_id = P.product_id\n" +
                 "         inner join Users U on P.user_id = U.user_id\n" +
-                "where Favorites.user_id=?";
+                "where Favorites.user_id=? and Favorites.status='SAVED'";
         return this.jdbcTemplate.query(getFavoritesQuery,
                 (rs, rowNum) -> new GetFavoriteRes(
                         rs.getInt("productIdx"),

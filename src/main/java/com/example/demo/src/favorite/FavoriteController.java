@@ -39,15 +39,15 @@ public class FavoriteController {
 
     /**
      * 하트를 눌렀을때 찜목록에 추가
+     *
      * @return
      */
-    @PostMapping("")
-    public BaseResponse<String> exchangeFavorite(@RequestBody PostFavoriteReq postFavoriteReq) {
+    @PostMapping("/{productIdx}")
+    public BaseResponse<String> exchangeFavorite(@PathVariable int productIdx) {
 
         try {
             int userIdx = jwtService.getUserIdx();
 
-            Integer productIdx = postFavoriteReq.getProductIdx();
             String result = favoriteService.exchangeFavorite(productIdx, userIdx);
 
             return new BaseResponse<>(result);

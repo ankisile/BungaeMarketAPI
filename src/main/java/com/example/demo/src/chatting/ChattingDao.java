@@ -40,7 +40,7 @@ public class ChattingDao {
 
     public GetFirstMessageRes getMessage(int chatRoomIdx) {
 
-        return jdbcTemplate.queryForObject("select message,date_format(createdAt,'%m월 %d일 %H:%i') as createAt from ChatMessage where chat_room_id = ? order by createdAt desc limit 1 ",
+        return jdbcTemplate.queryForObject("select message,date_format(createdAt,'%m월 %d일 %H:%i') as createdAt from ChatMessage where chat_room_id = ? order by createdAt desc limit 1 ",
                 (rs, rowNum) -> new GetFirstMessageRes(rs.getString("message"), rs.getString("createdAt")), chatRoomIdx);
 
     }
