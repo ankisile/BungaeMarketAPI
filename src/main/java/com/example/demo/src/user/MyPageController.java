@@ -18,7 +18,7 @@ import java.util.Objects;
 import static com.example.demo.config.BaseResponseStatus.*;
 
 @RestController
-@RequestMapping("/app/mypage")
+@RequestMapping("/app/mypages")
 @RequiredArgsConstructor
 public class MyPageController {
 

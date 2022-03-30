@@ -121,20 +121,19 @@ public class ProductController {
 
             productService.updateViewCount(id);
 
-            //이 부분 너무 더러움
             GetProductInfoRes getProductInfoRes = new GetProductInfoRes(id);
+
             getProductInfoRes.setProductInfo(productProvider.getProductInfos(userIdByJwt,id));
             getProductInfoRes.setProductTagList(productProvider.getProductTags(id));
             getProductInfoRes.setProductImgList(productProvider.getProductImages(id));
             getProductInfoRes.setStoreInfo(productProvider.getStoreInfos(id));
+
             int storeId=getProductInfoRes.getStoreInfo().getStoreId();
             getProductInfoRes.setSellProductList(productProvider.getSellProducts(storeId));
+
             int categoryId=getProductInfoRes.getProductInfo().getCategoryId();
             getProductInfoRes.setRelateProductList(productProvider.getRelateProducts(categoryId, id));
             getProductInfoRes.setReviewList(productProvider.getReviews(storeId));
-
-
-
 
 
             return new BaseResponse<>(getProductInfoRes);
@@ -172,7 +171,7 @@ public class ProductController {
      * @return BaseResponse<GetCategoryRes>
      */
     @ResponseBody
-    @GetMapping("/largeCategory")
+    @GetMapping("/largecategories")
     public BaseResponse<List<GetCategoryRes>> getLargeCategories() {
 
         try {
@@ -195,7 +194,7 @@ public class ProductController {
      * @return BaseResponse<GetCategoryRes>
      */
     @ResponseBody
-    @GetMapping("/middleCategory/{largecategoryId}")
+    @GetMapping("/middlecategories/{largecategoryId}")
     public BaseResponse<List<GetCategoryRes>> getMiddleCategories(@PathVariable(required = false) String largecategoryId) {
 
         try {
@@ -220,7 +219,7 @@ public class ProductController {
      * @return BaseResponse<GetCategoryRes>
      */
     @ResponseBody
-    @GetMapping("/smallCategory/{middlecategoryId}")
+    @GetMapping("/smallcategories/{middlecategoryId}")
     public BaseResponse<List<GetCategoryRes>> getSmallCategories(@PathVariable(required = false) String middlecategoryId) {
 
         try {
@@ -240,11 +239,11 @@ public class ProductController {
 
     /**
      * 특정 상품 화면 - 상품 문의 조회 API
-     * [GET] /products/smallCategory/:smallcategoryId
+     * [GET] /products/:productId/inquiries
      * @return BaseResponse<GetCategoryRes>
      */
     @ResponseBody
-    @GetMapping("/{productId}/inquiry")
+    @GetMapping("/{productId}/inquiries")
     public BaseResponse<List<GetInquiryRes>> getInquiries(@PathVariable(required = false) String productId) {
 
         try {
@@ -265,11 +264,11 @@ public class ProductController {
 
     /**
      * 특정 상품 화면 - 상품 문의 API
-     * [POST] /products/:productId/inquiry
+     * [POST] /products/:productId/inquiries
      * @return BaseResponse<GetCategoryRes>
      */
     @ResponseBody
-    @PostMapping("/{productId}/inquiry")
+    @PostMapping("/{productId}/inquiries")
     public BaseResponse<String> postInquiry(@PathVariable("productId") String productId, @RequestBody PostInquiryReq postInquiryReq){
 
         try {
@@ -288,43 +287,14 @@ public class ProductController {
         }
     }
 
-//
-//    /**
-//     * 특정 상품 화면 - 상품 답장 API
-//     * [POST] /products/:productId/inquiry/:inquiryId/call
-//     * @return BaseResponse<GetCategoryRes>
-//     */
-//    @ResponseBody
-//    @GetMapping("/{productId}/inquiry/{inquiryId}/call")
-//    public BaseResponse<String> postInquiry(@PathVariable("productId") String productId,@PathVariable("inquiryId") String inquiryId){
-//
-//        try {
-//            int userIdByJwt = jwtService.getUserIdx();
-//
-//            if (productProvider.checkUserStatusByUserId(userIdByJwt) == 0) {
-//                return new BaseResponse<>(DELETED_USER);
-//            }
-//            if(!isRegexInteger(productId)||!isRegexInteger(inquiryId)){
-//                return new BaseResponse<>(INVAILD_PATH_VARIABLE);
-//            }
-//
-//            int pId = Integer.parseInt(productId);
-//            int iId = Integer.parseInt(inquiryId);
-//
-//            return new BaseResponse<>(productProvider.getInquiryCall(pId, iId));
-//        } catch (BaseException exception) {
-//            return new BaseResponse<>((exception.getStatus()));
-//        }
-//    }
-
 
     /**
      * 특정 상품 화면 - 상품문의 삭제 API
-     * [DELETE] /products/:productId/inquiry/:inquiryId
+     * [DELETE] /products/:productId/inquiries/:inquiryId
      * @return BaseResponse<String>
      */
     @ResponseBody
-    @DeleteMapping("/{productId}/inquiry/{inquiryId}")
+    @DeleteMapping("/{productId}/inquiries/{inquiryId}")
     public BaseResponse<String> deleteInquiry(@PathVariable("productId") String productId,@PathVariable("inquiryId") String inquiryId){
 
         try {

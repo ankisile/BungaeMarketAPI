@@ -104,7 +104,7 @@ public class OrderController {
      * @return BaseResponse<GetCategoryRes>
      */
     @ResponseBody
-    @PostMapping("/cancel")
+    @PostMapping("/cancels")
     public BaseResponse<String> postCancel(@RequestBody PostCancelReq postCancelReq) {
 
         try {
@@ -130,7 +130,7 @@ public class OrderController {
      * @return BaseResponse<GetCategoryRes>
      */
     @ResponseBody
-    @PostMapping("/confirm")
+    @PostMapping("/confirms")
     public BaseResponse<String> postConfirm(@RequestBody PostConfirmReq postConfirmReq) {
 
         try {
