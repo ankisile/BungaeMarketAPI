@@ -90,6 +90,9 @@ public enum BaseResponseStatus {
     // [post] /orders
     INVALID_PURCHASE(false, 3031, "구매 불가 상품입니다"),
 
+    //  [GET] /users/orders
+    NOT_EXIST_ORDER_PURCHASE(false, 3050, "구매한 상품이 없습니다."),
+    NOT_EXIST_ORDER_SELL(false, 3051, "판매한 상품이 없습니다."),
     /**
      * 4000 : Database, Server 오류
      */

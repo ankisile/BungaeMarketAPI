@@ -304,4 +304,22 @@ public class UserDao {
                         rs.getString("secure_payment"),
                         rs.getString("createdAt")), userIdx);
     }
+
+    public int checkOrderPurchase(int userIdx) {
+        String checkUserStatusByUserIdQuery = "select exists(select *\n" +
+                "              from Orders\n" +
+                "                       inner join Products P on Orders.product_id = P.product_id\n" +
+                "                       inner join Users U on P.user_id = U.user_id\n" +
+                "              where Orders.user_id =?) as countOrderPurchase";
+        return this.jdbcTemplate.queryForObject(checkUserStatusByUserIdQuery, int.class, userIdx);
+    }
+
+    public int checkOrderSell(int userIdx) {
+        String checkUserStatusByUserIdQuery = "select exists(select *\n" +
+                "              from Orders\n" +
+                "                       inner join Products P on Orders.product_id = P.product_id\n" +
+                "                       inner join Users U on P.user_id = U.user_id\n" +
+                "              where U.user_id = ?) as countOrderSell";
+        return this.jdbcTemplate.queryForObject(checkUserStatusByUserIdQuery, int.class, userIdx);
+    }
 }

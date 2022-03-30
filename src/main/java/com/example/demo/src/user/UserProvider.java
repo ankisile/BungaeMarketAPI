@@ -180,4 +180,22 @@ public class UserProvider {
             throw new BaseException(DATABASE_ERROR);
         }
     }
+
+    public int checkOrderPurchase(int userIdx) throws BaseException {
+        try {
+
+            return userDao.checkOrderPurchase(userIdx);
+        } catch (Exception exception) {
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
+
+    public int checkOrderSell(int userIdx) throws BaseException {
+        try {
+
+            return userDao.checkOrderSell(userIdx);
+        } catch (Exception exception) {
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
 }

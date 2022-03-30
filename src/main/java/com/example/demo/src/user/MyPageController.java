@@ -100,7 +100,9 @@ public class MyPageController {
         try {
 
             int userIdx = jwtService.getUserIdx();
-
+            if (userProvider.checkOrderPurchase(userIdx) == 0) {
+                return new BaseResponse<>(NOT_EXIST_ORDER_PURCHASE);
+            }
             List<GetPurchaseRes> purchaseList = userProvider.getPurchaseList(userIdx);
             return new BaseResponse<>(purchaseList);
 
@@ -114,7 +116,9 @@ public class MyPageController {
         try {
 
             int userIdx = jwtService.getUserIdx();
-
+            if (userProvider.checkOrderSell(userIdx) == 0) {
+                return new BaseResponse<>(NOT_EXIST_ORDER_SELL);
+            }
             List<GetSellRes> sellList = userProvider.getSellList(userIdx);
             return new BaseResponse<>(sellList);
 
