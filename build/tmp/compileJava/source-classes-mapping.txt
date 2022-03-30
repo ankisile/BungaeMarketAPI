@@ -12,6 +12,8 @@ com/example/demo/src/address/model/GetDirectAddressRes.java
  com.example.demo.src.address.model.GetDirectAddressRes
 com/example/demo/src/event/EventController.java
  com.example.demo.src.event.EventController
+com/example/demo/src/user/model/GetPurchaseRes.java
+ com.example.demo.src.user.model.GetPurchaseRes
 com/example/demo/src/favorite/model/PostFavoriteReq.java
  com.example.demo.src.favorite.model.PostFavoriteReq
 com/example/demo/src/address/AddressController.java
@@ -202,6 +204,8 @@ com/example/demo/src/review/ReviewProvider.java
  com.example.demo.src.review.ReviewProvider
 com/example/demo/src/user/model/GetMyFollower.java
  com.example.demo.src.user.model.GetMyFollower
+com/example/demo/src/user/model/GetSellRes.java
+ com.example.demo.src.user.model.GetSellRes
 com/example/demo/src/order/OrderController.java
  com.example.demo.src.order.OrderController
 com/example/demo/src/user/model/User.java

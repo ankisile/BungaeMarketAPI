@@ -4,10 +4,7 @@ package com.example.demo.src.user;
 import com.example.demo.config.BaseException;
 import com.example.demo.config.BaseResponse;
 import com.example.demo.src.shop.model.GetShopRes;
-import com.example.demo.src.user.model.GetMyFollower;
-import com.example.demo.src.user.model.GetMyPageRes;
-import com.example.demo.src.user.model.GetMyProducts;
-import com.example.demo.src.user.model.GetMySellingProducts;
+import com.example.demo.src.user.model.*;
 import com.example.demo.utils.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -92,6 +89,34 @@ public class MyPageController {
 
             List<GetMyFollowing> followings = userProvider.getFollowings(userIdx);
             return new BaseResponse<>(followings);
+
+        } catch (BaseException exception) {
+            return new BaseResponse<>(exception.getStatus());
+        }
+    }
+
+    @GetMapping("/orders-purchase")
+    public BaseResponse<List<GetPurchaseRes>> getPurchaseList() {
+        try {
+
+            int userIdx = jwtService.getUserIdx();
+
+            List<GetPurchaseRes> purchaseList = userProvider.getPurchaseList(userIdx);
+            return new BaseResponse<>(purchaseList);
+
+        } catch (BaseException exception) {
+            return new BaseResponse<>(exception.getStatus());
+        }
+    }
+
+    @GetMapping("/orders-sell")
+    public BaseResponse<List<GetSellRes>> getSellList() {
+        try {
+
+            int userIdx = jwtService.getUserIdx();
+
+            List<GetSellRes> sellList = userProvider.getSellList(userIdx);
+            return new BaseResponse<>(sellList);
 
         } catch (BaseException exception) {
             return new BaseResponse<>(exception.getStatus());

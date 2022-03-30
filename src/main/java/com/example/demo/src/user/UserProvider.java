@@ -162,5 +162,22 @@ public class UserProvider {
             throw new BaseException(DATABASE_ERROR);
         }
     }
-}
 
+    public List<GetPurchaseRes> getPurchaseList(int userIdx) throws BaseException {
+        try {
+
+            return userDao.getPurchaseList(userIdx);
+        } catch (Exception exception) {
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
+
+    public List<GetSellRes> getSellList(int userIdx) throws BaseException {
+        try {
+
+            return userDao.getSellList(userIdx);
+        } catch (Exception exception) {
+            throw new BaseException(DATABASE_ERROR);
+        }
+    }
+}

@@ -255,4 +255,53 @@ public class UserDao {
                 rs.getInt("followerCount")), userIdx);
 
     }
+
+    public List<GetPurchaseRes> getPurchaseList(int userIdx) {
+        return jdbcTemplate.query("select order_id,\n" +
+                        "       (select product_image_url from ProductImages where P.product_id = ProductImages.product_id limit 1) as productImgUrl,\n" +
+                        "       order_status,\n" +
+                        "       product_title,\n" +
+                        "       price,\n" +
+                        "       shop_name,\n" +
+                        "       secure_payment,\n" +
+                        "       DATE_FORMAT(Orders.createdAt,'%Y.%m.%d (%p %h:%i)') as createdAt\n" +
+                        "from Orders\n" +
+                        "         inner join Products P on Orders.product_id = P.product_id\n" +
+                        "         inner join Users U on P.user_id = U.user_id\n" +
+                        "where Orders.user_id = ?",
+                (rs, rowNum) -> new GetPurchaseRes(
+                        rs.getInt("order_id"),
+                        rs.getString("productImgUrl"),
+                        rs.getString("order_status"),
+                        rs.getString("product_title"),
+                        rs.getInt("price"),
+                        rs.getString("shop_name"),
+                        rs.getString("secure_payment"),
+                        rs.getString("createdAt")), userIdx);
+    }
+
+    public List<GetSellRes> getSellList(int userIdx) {
+
+        return jdbcTemplate.query("select order_id,\n" +
+                        "       (select product_image_url from ProductImages where P.product_id = ProductImages.product_id limit 1) as productImgUrl,\n" +
+                        "       order_status,\n" +
+                        "       product_title,\n" +
+                        "       price,\n" +
+                        "       (select Users.shop_name from Users where Users.user_id=Orders.user_id) as shop_name,\n" +
+                        "       secure_payment,\n" +
+                        "       DATE_FORMAT(Orders.createdAt,'%Y.%m.%d (%p %h:%i)') as createdAt\n" +
+                        "from Orders\n" +
+                        "         inner join Products P on Orders.product_id = P.product_id\n" +
+                        "         inner join Users U on P.user_id = U.user_id\n" +
+                        "where U.user_id = ?",
+                (rs, rowNum) -> new GetSellRes(
+                        rs.getInt("order_id"),
+                        rs.getString("productImgUrl"),
+                        rs.getString("order_status"),
+                        rs.getString("product_title"),
+                        rs.getInt("price"),
+                        rs.getString("shop_name"),
+                        rs.getString("secure_payment"),
+                        rs.getString("createdAt")), userIdx);
+    }
 }
