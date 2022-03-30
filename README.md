@@ -66,3 +66,32 @@
 1. 주문 명세표 완료
 2. 채팅 제작중
 3. 주문 취소, 완료 완료
+
+## 2022-03-30
+1. API 수정 완료
+2. 예외처리 다른방식으로
+
+
+
+
+
+
+
+### == 낸시 ==
+#### @ControllerAdvice
+Controller에 적용하기 위해 고안된 어노테이션\
+모든 @Controller에 대한, 전역적으로 발생할 수 있는 예외를 잡아서 처리할 수 있다.
+#### @RestControllerAdvice
+@ControllerAdvice와 @ResponseBody를 합쳐놓은 어노테이션\
+@ControllerAdvice는 예외만 잡아서 처리하는 반면, 
+@RestControllerAdvice는 @ControllerAdvice 역할 뿐만 아니라, 
+@ResponseBody를 통해 JSON 형태로 객체를 전달할 수 있다.
+#### @ExceptionHandler
+어노테이션을 메서드에 선언하고 특정 예외 클래스를 지정해주면
+해당 예외가 발생했을 때 메서드에 정의한 로직으로 처리할 수 있다.  
+이 어노테이션은 @Controller나 @RestController에 사용해야 한다. 
+@Controller, @RestController가 적용된 Bean내에서 발생하는 예외를 잡아서 하나의 메서드에서 처리해주는 기능을 한다.
+
+https://jeong-pro.tistory.com/195  
+https://javachoi.tistory.com/253
+
