@@ -28,43 +28,43 @@ public class ProductService {
     }
 
     public int createProduct(int userId, PostProductReq postProductReq)  {
-            String address = productProvider.getMainDirectAddress(userId);
-            return productDao.createProduct(userId, address, postProductReq);
+        String address = productProvider.getMainDirectAddress(userId);
+        return productDao.createProduct(userId, address, postProductReq);
     }
 
 
     public void createProductImage(int productId, String productImageUrl)  {
-            productDao.createProductImage(productId, productImageUrl);
+        productDao.createProductImage(productId, productImageUrl);
 
     }
 
     public void createProductTag(int productId, String tagName)  {
-            productDao.createProductTag(productId, tagName);
+        productDao.createProductTag(productId, tagName);
 
     }
 
     public void createInquiry(int userId, int productId, PostInquiryReq postInquiryReq)  {
-            productDao.createInquiry(userId, productId, postInquiryReq);
+        productDao.createInquiry(userId, productId, postInquiryReq);
 
     }
 
     public void deleteInquiry(int userId, int inquiryId, int productId)  {
-            productDao.deleteInquiry(userId, inquiryId, productId);
+        productDao.deleteInquiry(userId, inquiryId, productId);
 
     }
 
     public void updateSellStatus(int userId, int productId, String status)  {
-            if(status.equals("SELLING"))
-                productDao.changeSellingStatus(userId, productId);
-            else if(status.equals("RESERVED"))
-                productDao.changeReservedStatus(userId, productId);
-            else if(status.equals("SOLDOUT"))
-                productDao.changeSoldoutStatus(userId, productId);
+        if(status.equals("SELLING"))
+            productDao.changeSellingStatus(userId, productId);
+        else if(status.equals("RESERVED"))
+            productDao.changeReservedStatus(userId, productId);
+        else if(status.equals("SOLDOUT"))
+            productDao.changeSoldoutStatus(userId, productId);
 
     }
 
     public void updateViewCount(int productId)  {
-            productDao.updateViewCount(productId);
+        productDao.updateViewCount(productId);
 
     }
 }

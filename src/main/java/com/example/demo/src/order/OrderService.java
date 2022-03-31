@@ -29,8 +29,8 @@ public class OrderService {
         this.jwtService = jwtService;
     }
 
-    public int createOrder(PostOrderReq postOrderReq, int userId)  {
-
+    public int createOrder(PostOrderReq postOrderReq, int userId) throws BaseException {
+        try {
 
             String address = null;
             String name = null;
@@ -59,9 +59,13 @@ public class OrderService {
             return orderId;
 
 
+        } catch (Exception exception) {
+            throw new BaseException(DATABASE_ERROR);
+        }
     }
 
-    public void changeCancelStatus(PostCancelReq postCancelReq, int userId)  {
+    public void changeCancelStatus(PostCancelReq postCancelReq, int userId) throws BaseException {
+        try {
             int buyerId = orderDao.getBuyerId(postCancelReq.getOrderId());
             int sellerId = orderDao.getSellerId(postCancelReq.getOrderId());
 
@@ -72,9 +76,13 @@ public class OrderService {
             }
 
 
+        } catch (Exception exception) {
+            throw new BaseException(DATABASE_ERROR);
+        }
     }
 
-    public void changeConfirmStatus(PostConfirmReq postConfirmReq, int userId)  {
+    public void changeConfirmStatus(PostConfirmReq postConfirmReq, int userId) throws BaseException {
+        try {
             int buyerId = orderDao.getBuyerId(postConfirmReq.getOrderId());
             int sellerId = orderDao.getSellerId(postConfirmReq.getOrderId());
 
@@ -85,5 +93,8 @@ public class OrderService {
             }
 
 
+        } catch (Exception exception) {
+            throw new BaseException(DATABASE_ERROR);
+        }
     }
 }

@@ -8,6 +8,8 @@ import com.example.demo.src.address.model.PostDirectAddressReq;
 import com.example.demo.utils.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import com.example.demo.common.exception.*;
+
 
 import javax.validation.Valid;
 import java.util.List;
@@ -113,7 +115,7 @@ public class AddressController {
             int userIdByJwt = jwtService.getUserIdx();
 
             if (addressProvider.checkUserStatusByUserId(userIdByJwt) == 0) {
-                return new BaseResponse<>(DELETED_USER);
+                throw new UnavailableUserException();
             }
 
             return new BaseResponse<>(addressProvider.getMainDirectAddress(userIdByJwt));

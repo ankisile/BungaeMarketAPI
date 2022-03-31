@@ -9,6 +9,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.security.web.firewall.RequestRejectedException;
 
 import com.example.demo.common.response.ExceptionResponse;
 import com.example.demo.common.exception.*;
@@ -56,6 +57,16 @@ public class ControllerAdvice {
     @ExceptionHandler(InvalidException.class)
     public ExceptionResponse InvalidException(InvalidException e) {
         return new ExceptionResponse(false, 2033, e.getMessage());
+    }
+
+    @ExceptionHandler(InvalidInquiryException.class)
+    public ExceptionResponse InvalidInquiryException(InvalidInquiryException e) {
+        return new ExceptionResponse(false, 3022, e.getMessage());
+    }
+
+    @ExceptionHandler(RequestRejectedException.class)
+    public ExceptionResponse RequestRejectedException(RequestRejectedException e) {
+        return new ExceptionResponse(false, 3000, "값을 불러오는데 실패했습니다");
     }
 
     @ExceptionHandler(value = {NoSuchPaddingException.class,

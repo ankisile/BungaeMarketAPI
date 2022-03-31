@@ -27,13 +27,13 @@ public class ProductProvider {
 
     public int checkUserStatusByUserId(int userId)  {
 
-            return productDao.checkUserStatusByUserId(userId);
+        return productDao.checkUserStatusByUserId(userId);
 
     }
 
 
     public int checkProductId(int productId)  {
-            return productDao.checkProductId(productId);
+        return productDao.checkProductId(productId);
 
     }
 
@@ -44,7 +44,7 @@ public class ProductProvider {
 
 
     public List<ProductImg> getProductImages(int productId)  {
-            return productDao.getProductImages(productId);
+        return productDao.getProductImages(productId);
 
     }
 
@@ -67,58 +67,47 @@ public class ProductProvider {
     }
 
     public List<SellProduct> getSellProducts(int storeId)  {
-            return productDao.getSellProducts(storeId);
+        return productDao.getSellProducts(storeId);
 
     }
 
     public List<RelateProduct> getRelateProducts(int categoryId, int productId)  {
-            return productDao.getRelateProducts(categoryId, productId);
-
+        return productDao.getRelateProducts(categoryId, productId);
     }
 
     public List<Review> getReviews(int storeId)  {
-            return productDao.getReviews(storeId);
-
+        return productDao.getReviews(storeId);
     }
 
     public List<GetCategoryRes> getLargeCategories()  {
-            return productDao.getLargeCategories();
-
+        return productDao.getLargeCategories();
     }
 
     public List<GetCategoryRes> getMiddleCategories(int categoryId)  {
-            return productDao.getMiddleCategories(categoryId);
-
+        return productDao.getMiddleCategories(categoryId);
     }
     public List<GetCategoryRes> getSmallCategories(int categoryId)  {
-            return productDao.getSmallCategories(categoryId);
-
+        return productDao.getSmallCategories(categoryId);
     }
 
     public List<GetInquiryRes> getInquiries(int productId)  {
-
-            return productDao.getInquiries(productId);
-
+        return productDao.getInquiries(productId);
     }
 
     public String getInquiryCall(int productId, int inquiryId)  {
-            return productDao.getInquiryCall(productId, inquiryId);
-
+        return productDao.getInquiryCall(productId, inquiryId);
     }
 
     public int checkInquiry(int userId, int inquiryId, int productId)  {
-            return productDao.checkInquiry(userId, inquiryId, productId);
-
+        return productDao.checkInquiry(userId, inquiryId, productId);
     }
 
     public int checkSellStatus(int userId, int productId)  {
-            return productDao.checkSellStatus(userId, productId);
+        return productDao.checkSellStatus(userId, productId);
     }
 
     public String getMainDirectAddress(int userId)  {
-
-            return productDao.getMainDirectAddress(userId);
-
+        return productDao.getMainDirectAddress(userId);
     }
 
 

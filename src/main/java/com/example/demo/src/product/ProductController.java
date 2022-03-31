@@ -140,14 +140,14 @@ public class ProductController {
     @GetMapping("/largecategories")
     public BaseResponse<List<GetCategoryRes>> getLargeCategories() {
 
-            int userIdByJwt = jwtService.getUserIdx();
+        int userIdByJwt = jwtService.getUserIdx();
 
-            if (productProvider.checkUserStatusByUserId(userIdByJwt) == 0) {
-                return new BaseResponse<>(DELETED_USER);
-            }
+        if (productProvider.checkUserStatusByUserId(userIdByJwt) == 0) {
+            throw new UnavailableUserException();
+        }
 
-            List<GetCategoryRes> largeCategories = productProvider.getLargeCategories();
-            return new BaseResponse<>(largeCategories);
+        List<GetCategoryRes> largeCategories = productProvider.getLargeCategories();
+        return new BaseResponse<>(largeCategories);
     }
 
     /**
@@ -157,17 +157,20 @@ public class ProductController {
      */
     @ResponseBody
     @GetMapping("/middlecategories/{largecategoryId}")
-    public BaseResponse<List<GetCategoryRes>> getMiddleCategories(@PathVariable(required = false) String largecategoryId) {
+    public BaseResponse<List<GetCategoryRes>> getMiddleCategories(@PathVariable(required = false)
+                                                                      @NotBlank
+                                                                      @Pattern(regexp="^[0-9]*$", message="Invalid한 path parameter 입니다")
+                                                                              String largecategoryId) {
 
-            int userIdByJwt = jwtService.getUserIdx();
+        int userIdByJwt = jwtService.getUserIdx();
 
-            if (productProvider.checkUserStatusByUserId(userIdByJwt) == 0) {
-                return new BaseResponse<>(DELETED_USER);
-            }
+        if (productProvider.checkUserStatusByUserId(userIdByJwt) == 0) {
+            throw new UnavailableUserException();
+        }
 
-            int categoryId = Integer.parseInt(largecategoryId);
-            List<GetCategoryRes> middleCategories = productProvider.getMiddleCategories(categoryId);
-            return new BaseResponse<>(middleCategories);
+        int categoryId = Integer.parseInt(largecategoryId);
+        List<GetCategoryRes> middleCategories = productProvider.getMiddleCategories(categoryId);
+        return new BaseResponse<>(middleCategories);
     }
 
 
@@ -178,17 +181,20 @@ public class ProductController {
      */
     @ResponseBody
     @GetMapping("/smallcategories/{middlecategoryId}")
-    public BaseResponse<List<GetCategoryRes>> getSmallCategories(@PathVariable(required = false) String middlecategoryId) {
+    public BaseResponse<List<GetCategoryRes>> getSmallCategories(@PathVariable(required = false)
+                                                                     @NotBlank
+                                                                     @Pattern(regexp="^[0-9]*$", message="Invalid한 path parameter 입니다")
+                                                                             String middlecategoryId) {
 
-            int userIdByJwt = jwtService.getUserIdx();
+        int userIdByJwt = jwtService.getUserIdx();
 
-            if (productProvider.checkUserStatusByUserId(userIdByJwt) == 0) {
-                return new BaseResponse<>(DELETED_USER);
-            }
+        if (productProvider.checkUserStatusByUserId(userIdByJwt) == 0) {
+            throw new UnavailableUserException();
+        }
 
-            int categoryId = Integer.parseInt(middlecategoryId);
-            List<GetCategoryRes> smallCategories = productProvider.getSmallCategories(categoryId);
-            return new BaseResponse<>(smallCategories);
+        int categoryId = Integer.parseInt(middlecategoryId);
+        List<GetCategoryRes> smallCategories = productProvider.getSmallCategories(categoryId);
+        return new BaseResponse<>(smallCategories);
     }
 
     /**
@@ -198,17 +204,20 @@ public class ProductController {
      */
     @ResponseBody
     @GetMapping("/{productId}/inquiries")
-    public BaseResponse<List<GetInquiryRes>> getInquiries(@PathVariable(required = false) String productId) {
+    public BaseResponse<List<GetInquiryRes>> getInquiries(@PathVariable(required = false)
+                                                              @NotBlank
+                                                              @Pattern(regexp="^[0-9]*$", message="Invalid한 path parameter 입니다")
+                                                                      String productId) {
 
-            int userIdByJwt = jwtService.getUserIdx();
+        int userIdByJwt = jwtService.getUserIdx();
 
-            if (productProvider.checkUserStatusByUserId(userIdByJwt) == 0) {
-                return new BaseResponse<>(DELETED_USER);
-            }
+        if (productProvider.checkUserStatusByUserId(userIdByJwt) == 0) {
+            throw new UnavailableUserException();
+        }
 
-            int id = Integer.parseInt(productId);
-            List<GetInquiryRes> inquiryResList = productProvider.getInquiries(id);
-            return new BaseResponse<>(inquiryResList);
+        int id = Integer.parseInt(productId);
+        List<GetInquiryRes> inquiryResList = productProvider.getInquiries(id);
+        return new BaseResponse<>(inquiryResList);
     }
 
 
@@ -219,18 +228,22 @@ public class ProductController {
      */
     @ResponseBody
     @PostMapping("/{productId}/inquiries")
-    public BaseResponse<String> postInquiry(@PathVariable("productId") String productId, @RequestBody @Valid PostInquiryReq postInquiryReq){
+    public BaseResponse<String> postInquiry(@PathVariable("productId")
+                                                @NotBlank
+                                                @Pattern(regexp="^[0-9]*$", message="Invalid한 path parameter 입니다")
+                                                        String productId,
+                                            @RequestBody @Valid PostInquiryReq postInquiryReq){
 
-            int userIdByJwt = jwtService.getUserIdx();
+        int userIdByJwt = jwtService.getUserIdx();
 
-            if (productProvider.checkUserStatusByUserId(userIdByJwt) == 0) {
-                return new BaseResponse<>(DELETED_USER);
-            }
+        if (productProvider.checkUserStatusByUserId(userIdByJwt) == 0) {
+            throw new UnavailableUserException();
+        }
 
-            int id = Integer.parseInt(productId);
+        int id = Integer.parseInt(productId);
 
-            productService.createInquiry(userIdByJwt, id, postInquiryReq);
-            return new BaseResponse<>("success");
+        productService.createInquiry(userIdByJwt, id, postInquiryReq);
+        return new BaseResponse<>("success");
     }
 
 
@@ -241,22 +254,27 @@ public class ProductController {
      */
     @ResponseBody
     @DeleteMapping("/{productId}/inquiries/{inquiryId}")
-    public BaseResponse<String> deleteInquiry(@PathVariable("productId") String productId,@PathVariable("inquiryId") String inquiryId){
+    public BaseResponse<String> deleteInquiry(@PathVariable("productId")
+                                                  @NotBlank
+                                                  @Pattern(regexp="^[0-9]*$", message="Invalid한 path parameter 입니다")
+                                                          String productId,
+                                              @PathVariable("inquiryId")
+                                              @NotBlank
+                                              @Pattern(regexp="^[0-9]*$", message="Invalid한 path parameter 입니다")
+                                                      String inquiryId){
 
         int userIdByJwt = jwtService.getUserIdx();
 
         if (productProvider.checkUserStatusByUserId(userIdByJwt) == 0) {
-            return new BaseResponse<>(DELETED_USER);
+            throw new UnavailableUserException();
         }
-        if(!isRegexInteger(productId)||!isRegexInteger(inquiryId)){
-            return new BaseResponse<>(INVAILD_PATH_VARIABLE);
-        }
+
 
         int pId = Integer.parseInt(productId);
         int iId = Integer.parseInt(inquiryId);
 
         if(productProvider.checkInquiry(userIdByJwt, iId, pId) == 0){
-            return new BaseResponse<>(INVALID_INQUIRY_ID);
+            throw new InvalidInquiryException();
         }
         productService.deleteInquiry(userIdByJwt, iId, pId);
         return new BaseResponse<>("success");
@@ -269,15 +287,16 @@ public class ProductController {
      */
     @ResponseBody
     @PatchMapping("/{productId}/sellStatus")
-    public BaseResponse<String> changeSellStatus(@PathVariable("productId") String productId,
+    public BaseResponse<String> changeSellStatus(@PathVariable("productId")
+                                                     @NotBlank
+                                                     @Pattern(regexp="^[0-9]*$", message="Invalid한 path parameter 입니다")
+                                                             String productId,
                                                  @RequestBody @Valid PatchSellReq patchSellReq)  {
-        if(!isRegexInteger(productId)){
-            return new BaseResponse<>(INVAILD_PATH_VARIABLE);
-        }
+
         // jwt 에서 userId 추출
         int userIdByJwt = jwtService.getUserIdx();
         if (productProvider.checkUserStatusByUserId(userIdByJwt) == 0) {
-            return new BaseResponse<>(DELETED_USER);
+            throw new UnavailableUserException();
         }
         int id = Integer.parseInt(productId);
 
