@@ -22,6 +22,7 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 
 @RestControllerAdvice
@@ -29,7 +30,6 @@ public class ControllerAdvice {
 
     @ExceptionHandler(SQLException.class)
     public ExceptionResponse sqlException(SQLException e) {
-
         return new ExceptionResponse(false, 4000, "데이터베이스 연결에 실패하였습니다.");
     }
 
@@ -58,6 +58,8 @@ public class ControllerAdvice {
         return new ExceptionResponse(false, 4011,"비밀번호 암호화,복호화에 실패하였습니다.");
     }
 
+
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity postValidation(MethodArgumentNotValidException e) {
         Map<String, String> errors = new HashMap<>();
@@ -66,6 +68,8 @@ public class ControllerAdvice {
                 .forEach(c -> errors.put(((FieldError) c).getField(), c.getDefaultMessage()));
         return ResponseEntity.badRequest().body(errors);
     }
+
+
 
 
 

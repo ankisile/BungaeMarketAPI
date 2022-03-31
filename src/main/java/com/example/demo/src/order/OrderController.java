@@ -14,6 +14,10 @@ import java.util.List;
 import static com.example.demo.config.BaseResponseStatus.*;
 import static com.example.demo.utils.ValidationRegex.isRegexInteger;
 
+import javax.validation.Valid;
+import javax.validation.constraints.Positive;
+
+
 @RestController
 @RequestMapping("/app/orders")
 public class OrderController {
@@ -37,7 +41,7 @@ public class OrderController {
      */
     @ResponseBody
     @PostMapping("")
-    public BaseResponse<String> postOrders(@RequestBody PostOrderReq postOrderReq) {
+    public BaseResponse<String> postOrders(@RequestBody @Valid PostOrderReq postOrderReq) {
 
 
             // jwt 에서 userId 추출.
@@ -99,7 +103,7 @@ public class OrderController {
      */
     @ResponseBody
     @PostMapping("/cancels")
-    public BaseResponse<String> postCancel(@RequestBody PostCancelReq postCancelReq) {
+    public BaseResponse<String> postCancel(@RequestBody @Valid PostCancelReq postCancelReq) {
 
 
             // jwt 에서 userId 추출.
@@ -123,7 +127,7 @@ public class OrderController {
      */
     @ResponseBody
     @PostMapping("/confirms")
-    public BaseResponse<String> postConfirm(@RequestBody PostConfirmReq postConfirmReq) {
+    public BaseResponse<String> postConfirm(@RequestBody @Valid PostConfirmReq postConfirmReq) {
 
 
             // jwt 에서 userId 추출.

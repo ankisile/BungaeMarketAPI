@@ -104,8 +104,6 @@ com/example/demo/src/chatting/ChattingDao.java
  com.example.demo.src.chatting.ChattingDao
 com/example/demo/src/user/UserController.java
  com.example.demo.src.user.UserController
-com/example/demo/config/AlreadyExistEmailException.java
- com.example.demo.config.AlreadyExistEmailException
 com/example/demo/src/product/model/PostProductReq.java
  com.example.demo.src.product.model.PostProductReq
 com/example/demo/common/advice/ControllerAdvice.java
