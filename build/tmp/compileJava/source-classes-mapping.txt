@@ -144,6 +144,8 @@ com/example/demo/src/review/ReviewController.java
  com.example.demo.src.review.ReviewController
 com/example/demo/src/category/CategoryProvider.java
  com.example.demo.src.category.CategoryProvider
+com/example/demo/config/ExceptionResponse.java
+ com.example.demo.config.ExceptionResponse
 com/example/demo/src/favorite/FavoriteProvider.java
  com.example.demo.src.favorite.FavoriteProvider
 com/example/demo/src/user/model/GetMySellingProducts.java

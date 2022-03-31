@@ -155,7 +155,7 @@ public class UserDao {
                         rs.getString("profile_Url"),
                         rs.getString("shop_name"),
                         rs.getInt("rate"),
-                        rs.getInt("favoriteCount"),
+                        rs.getInt("favoriteCoun"),
                         rs.getInt("reviewCount"),
                         rs.getInt("follwerCount"),
                         rs.getInt("followingCount")),

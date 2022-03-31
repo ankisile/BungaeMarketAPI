@@ -3,15 +3,16 @@ package com.example.demo.src.user;
 
 import com.example.demo.config.BaseException;
 import com.example.demo.config.BaseResponse;
+import com.example.demo.config.ExceptionResponse;
 import com.example.demo.src.shop.model.GetShopRes;
 import com.example.demo.src.user.model.*;
 import com.example.demo.utils.JwtService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Objects;
 
@@ -25,18 +26,26 @@ public class MyPageController {
     private final UserProvider userProvider;
     private final JwtService jwtService;
 
+    @ExceptionHandler(SQLException.class)
+    public ExceptionResponse sqlException(SQLException e) {
+        return new ExceptionResponse(false, e.getErrorCode(), e.getMessage());
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ExceptionResponse jwtException(RuntimeException e) {
+        return new ExceptionResponse(false, e.hashCode(),e.getMessage());
+    }
+
+
     @GetMapping("")
     public BaseResponse<GetMyPageRes> getMyPage() {
-        try {
+
 
             int userIdx = jwtService.getUserIdx();
 
             GetMyPageRes myPage = userProvider.getMyPage(userIdx);
             return new BaseResponse<>(myPage);
 
-        } catch (BaseException exception) {
-            return new BaseResponse<>(exception.getStatus());
-        }
     }
 
     @GetMapping("/products")
