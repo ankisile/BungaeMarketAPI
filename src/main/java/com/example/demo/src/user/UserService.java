@@ -2,6 +2,7 @@ package com.example.demo.src.user;
 
 
 
+import com.example.demo.config.AlreadyExistEmailException;
 import com.example.demo.config.BaseException;
 import com.example.demo.config.secret.Secret;
 import com.example.demo.src.user.model.*;
@@ -36,7 +37,7 @@ public class UserService {
     public PostUserRes createUser(PostUserReq postUserReq) throws BaseException {
         //중복
         if(userProvider.checkEmail(postUserReq.getEmail()) ==1){
-            throw new BaseException(POST_USERS_EXISTS_EMAIL);
+            throw new AlreadyExistEmailException();
         }
 
         String pwd;
@@ -47,14 +48,12 @@ public class UserService {
         } catch (Exception ignored) {
             throw new BaseException(PASSWORD_ENCRYPTION_ERROR);
         }
-        try{
+
             int userIdx = userDao.createUser(postUserReq);
             //jwt 발급.
             String jwt = jwtService.createJwt(userIdx);
             return new PostUserRes(jwt,userIdx);
-        } catch (Exception exception) {
-            throw new BaseException(DATABASE_ERROR);
-        }
+
     }
 
     public void modifyUserInfo(PatchUserReq patchUserReq,int userIdx)  {

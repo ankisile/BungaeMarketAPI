@@ -1,5 +1,6 @@
 package com.example.demo.common.advice;
 
+import com.example.demo.config.AlreadyExistEmailException;
 import com.fasterxml.jackson.core.JsonParseException;
 import io.jsonwebtoken.SignatureException;
 import org.springframework.http.ResponseEntity;
@@ -40,6 +41,11 @@ public class ControllerAdvice {
     @ExceptionHandler(IllegalArgumentException.class)
     public ExceptionResponse jwtException(IllegalArgumentException e) {
         return new ExceptionResponse(false, 2001,"JWT 토큰을 입력해주세요.");
+    }
+
+    @ExceptionHandler(AlreadyExistEmailException.class)
+    public ExceptionResponse jwtException(AlreadyExistEmailException e) {
+        return new ExceptionResponse(false, 2001, e.getMessage());
     }
 
     @ExceptionHandler(value = {NoSuchPaddingException.class,
