@@ -15,7 +15,7 @@ import java.util.List;
 import static com.example.demo.config.BaseResponseStatus.NOT_EXIST_SELLING_PRODUCT;
 
 @RestController
-@RequestMapping("/app/shop")
+@RequestMapping("/app/shops")
 @RequiredArgsConstructor
 public class ShopController {
 

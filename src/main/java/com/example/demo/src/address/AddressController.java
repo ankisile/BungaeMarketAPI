@@ -114,7 +114,7 @@ public class AddressController {
      * @return BaseResponse<String>
      */
     @ResponseBody
-    @GetMapping("/mainDirect")
+    @GetMapping("/main-direct")
     public BaseResponse<String> getMainDirectAddress() {
         try {
             // jwt 에서 userId 추출.
