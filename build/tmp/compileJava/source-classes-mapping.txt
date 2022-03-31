@@ -76,6 +76,8 @@ com/example/demo/src/event/model/GetEventRes.java
  com.example.demo.src.event.model.GetEventRes
 com/example/demo/src/user/model/PostLoginRes.java
  com.example.demo.src.user.model.PostLoginRes
+com/example/demo/common/response/ExceptionResponse.java
+ com.example.demo.common.response.ExceptionResponse
 com/example/demo/src/product/model/PostInquiryReq.java
  com.example.demo.src.product.model.PostInquiryReq
 com/example/demo/src/shop/ShopDao.java
@@ -106,6 +108,8 @@ com/example/demo/src/user/UserController.java
  com.example.demo.src.user.UserController
 com/example/demo/src/product/model/PostProductReq.java
  com.example.demo.src.product.model.PostProductReq
+com/example/demo/common/advice/ControllerAdvice.java
+ com.example.demo.common.advice.ControllerAdvice
 com/example/demo/src/category/model/GetMenuRes.java
  com.example.demo.src.category.model.GetMenuRes
 com/example/demo/src/shop/model/GetFollowerByShopRes.java
@@ -144,8 +148,6 @@ com/example/demo/src/review/ReviewController.java
  com.example.demo.src.review.ReviewController
 com/example/demo/src/category/CategoryProvider.java
  com.example.demo.src.category.CategoryProvider
-com/example/demo/config/ExceptionResponse.java
- com.example.demo.config.ExceptionResponse
 com/example/demo/src/favorite/FavoriteProvider.java
  com.example.demo.src.favorite.FavoriteProvider
 com/example/demo/src/user/model/GetMySellingProducts.java

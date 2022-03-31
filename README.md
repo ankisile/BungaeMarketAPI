@@ -92,6 +92,13 @@ Controller에 적용하기 위해 고안된 어노테이션\
 이 어노테이션은 @Controller나 @RestController에 사용해야 한다. 
 @Controller, @RestController가 적용된 Bean내에서 발생하는 예외를 잡아서 하나의 메서드에서 처리해주는 기능을 한다.
 
-https://jeong-pro.tistory.com/195  
-https://javachoi.tistory.com/253
+전역적으로 에러를 핸들링하는 클래스를 생성하고 @ExceptionHandler 어노테이션과 함께 에러 핸들링 메소드를 추가함으로써 에러 처리를 위임할 수 있다.
 
+
+
+https://jeong-pro.tistory.com/195  
+https://javachoi.tistory.com/253  
+https://mangkyu.tistory.com/205
+
+  
+https://mangkyu.tistory.com/174

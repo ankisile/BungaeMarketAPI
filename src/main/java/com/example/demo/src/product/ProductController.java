@@ -13,6 +13,11 @@ import java.util.List;
 import static com.example.demo.config.BaseResponseStatus.*;
 import static com.example.demo.utils.ValidationRegex.*;
 
+import javax.validation.Valid;
+import javax.validation.constraints.Positive;
+
+
+
 @RestController
 @RequestMapping("/app/products")
 public class ProductController {
@@ -36,7 +41,7 @@ public class ProductController {
      */
     @ResponseBody
     @PostMapping("")
-    public BaseResponse<String> postProducts(@RequestBody PostProductReq postProductReq) {
+    public BaseResponse<String> postProducts( @RequestBody @Valid PostProductReq postProductReq) {
 
         if(postProductReq.getProductImgList()==null){
             return new BaseResponse<>(POST_PRODUCTS_EMPTY_IMAGE);

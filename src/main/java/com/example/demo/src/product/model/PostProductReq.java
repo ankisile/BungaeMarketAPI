@@ -3,6 +3,7 @@ package com.example.demo.src.product.model;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import javax.validation.constraints.*;
 
 import java.util.List;
 
@@ -10,16 +11,17 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 public class PostProductReq {
-    private List<ProductImg> productImgList;
-    private String title;
+
+    @NotNull private List<ProductImg> productImgList;
+    @NotEmpty private String title;
     private int categoryLarge;
     private int categoryMiddle;
     private int categorySmall;
-    private Integer price;
-    private List<ProductTag> productTagList;
-    private String explanation;
+    @Min(100) private Integer price;
+    @NotEmpty private List<ProductTag> productTagList;
+    @NotEmpty private String explanation;
     private String shippingFee;
-    private int quantity;
+    @Min(1) private int quantity;
     private String productStatus;
     private String exchangePossible;
     private String securePayment;

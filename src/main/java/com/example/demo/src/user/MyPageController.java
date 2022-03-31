@@ -3,7 +3,7 @@ package com.example.demo.src.user;
 
 import com.example.demo.config.BaseException;
 import com.example.demo.config.BaseResponse;
-import com.example.demo.config.ExceptionResponse;
+import com.example.demo.common.response.ExceptionResponse;
 import com.example.demo.src.shop.model.GetShopRes;
 import com.example.demo.src.user.model.*;
 import com.example.demo.utils.JwtService;
@@ -25,16 +25,6 @@ public class MyPageController {
 
     private final UserProvider userProvider;
     private final JwtService jwtService;
-
-    @ExceptionHandler(SQLException.class)
-    public ExceptionResponse sqlException(SQLException e) {
-        return new ExceptionResponse(false, e.getErrorCode(), e.getMessage());
-    }
-
-    @ExceptionHandler(IllegalArgumentException.class)
-    public ExceptionResponse jwtException(RuntimeException e) {
-        return new ExceptionResponse(false, e.hashCode(),e.getMessage());
-    }
 
 
     @GetMapping("")
