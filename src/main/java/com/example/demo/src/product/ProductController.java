@@ -43,56 +43,26 @@ public class ProductController {
     @PostMapping("")
     public BaseResponse<String> postProducts( @RequestBody @Valid PostProductReq postProductReq) {
 
-        if(postProductReq.getProductImgList()==null){
-            return new BaseResponse<>(POST_PRODUCTS_EMPTY_IMAGE);
+        // jwt 에서 userId 추출.
+        int userIdByJwt = jwtService.getUserIdx();
+
+        if (productProvider.checkUserStatusByUserId(userIdByJwt) == 0) {
+            return new BaseResponse<>(DELETED_USER);
         }
 
-        if(postProductReq.getTitle()==null){
-            return new BaseResponse<>(POST_PRODUCTS_EMPTY_TITLE);
+        int productId = productService.createProduct(userIdByJwt, postProductReq);
+
+        List<ProductImg> productImgList = postProductReq.getProductImgList();
+        for(ProductImg productImg : productImgList){
+            productService.createProductImage(productId, productImg.getProductImgUrl());
         }
 
-        if(postProductReq.getProductTagList()==null){
-            return new BaseResponse<>(POST_PRODUCTS_EMPTY_TAG);
-
+        List<ProductTag> productTagList = postProductReq.getProductTagList();
+        for(ProductTag productTag : productTagList){
+            productService.createProductTag(productId, productTag.getTagName());
         }
 
-        if(postProductReq.getPrice()==null){
-            return new BaseResponse<>(POST_PRODUCTS_EMPTY_PRICE);
-
-        }
-
-        if(postProductReq.getExplanation()==null){
-            return new BaseResponse<>(POST_PRODUCTS_EMPTY_EXPLANATION);
-        }
-
-
-
-            // jwt 에서 userId 추출.
-            int userIdByJwt = jwtService.getUserIdx();
-
-            if (productProvider.checkUserStatusByUserId(userIdByJwt) == 0) {
-                return new BaseResponse<>(DELETED_USER);
-            }
-
-
-            int productId = productService.createProduct(userIdByJwt, postProductReq);
-
-            if(postProductReq.getProductImgList() != null){
-                List<ProductImg> productImgList = postProductReq.getProductImgList();
-                for(ProductImg productImg : productImgList){
-                    productService.createProductImage(productId, productImg.getProductImgUrl());
-                }
-            }
-
-            if(postProductReq.getProductTagList() != null){
-                List<ProductTag> productTagList = postProductReq.getProductTagList();
-                for(ProductTag productTag : productTagList){
-                    productService.createProductTag(productId, productTag.getTagName());
-                }
-            }
-
-
-            return new BaseResponse<>("success");
+        return new BaseResponse<>("success");
 
     }
 
@@ -107,38 +77,38 @@ public class ProductController {
         if(productId == null){
             return new BaseResponse<>(EMPTY_PATH_VARIABLE);
         }
-            int userIdByJwt = jwtService.getUserIdx();
+        int userIdByJwt = jwtService.getUserIdx();
 
-            if (productProvider.checkUserStatusByUserId(userIdByJwt) == 0) {
-                return new BaseResponse<>(DELETED_USER);
-            }
+        if (productProvider.checkUserStatusByUserId(userIdByJwt) == 0) {
+            return new BaseResponse<>(DELETED_USER);
+        }
 
-            if(!isRegexInteger(productId)){
-                return new BaseResponse<>(INVAILD_PATH_VARIABLE);
-            }
-            int id = Integer.parseInt(productId);
-            if(productProvider.checkProductId(id) == 0){
-                return new BaseResponse<>(INVALID_PRODUCT_ID);
-            }
+        if(!isRegexInteger(productId)){
+            return new BaseResponse<>(INVAILD_PATH_VARIABLE);
+        }
+        int id = Integer.parseInt(productId);
+        if(productProvider.checkProductId(id) == 0){
+            return new BaseResponse<>(INVALID_PRODUCT_ID);
+        }
 
-            productService.updateViewCount(id);
+        productService.updateViewCount(id);
 
-            GetProductInfoRes getProductInfoRes = new GetProductInfoRes(id);
+        GetProductInfoRes getProductInfoRes = new GetProductInfoRes(id);
 
-            getProductInfoRes.setProductInfo(productProvider.getProductInfos(userIdByJwt,id));
-            getProductInfoRes.setProductTagList(productProvider.getProductTags(id));
-            getProductInfoRes.setProductImgList(productProvider.getProductImages(id));
-            getProductInfoRes.setStoreInfo(productProvider.getStoreInfos(id));
+        getProductInfoRes.setProductInfo(productProvider.getProductInfos(userIdByJwt,id));
+        getProductInfoRes.setProductTagList(productProvider.getProductTags(id));
+        getProductInfoRes.setProductImgList(productProvider.getProductImages(id));
+        getProductInfoRes.setStoreInfo(productProvider.getStoreInfos(id));
 
-            int storeId=getProductInfoRes.getStoreInfo().getStoreId();
-            getProductInfoRes.setSellProductList(productProvider.getSellProducts(storeId));
+        int storeId=getProductInfoRes.getStoreInfo().getStoreId();
+        getProductInfoRes.setSellProductList(productProvider.getSellProducts(storeId));
 
-            int categoryId=getProductInfoRes.getProductInfo().getCategoryId();
-            getProductInfoRes.setRelateProductList(productProvider.getRelateProducts(categoryId, id));
-            getProductInfoRes.setReviewList(productProvider.getReviews(storeId));
+        int categoryId=getProductInfoRes.getProductInfo().getCategoryId();
+        getProductInfoRes.setRelateProductList(productProvider.getRelateProducts(categoryId, id));
+        getProductInfoRes.setReviewList(productProvider.getReviews(storeId));
 
 
-            return new BaseResponse<>(getProductInfoRes);
+        return new BaseResponse<>(getProductInfoRes);
     }
 
     /**
@@ -150,14 +120,14 @@ public class ProductController {
     @GetMapping("")
     public BaseResponse<List<GetProductRes>> getProduct() {
 
-            int userIdByJwt = jwtService.getUserIdx();
+        int userIdByJwt = jwtService.getUserIdx();
 
-            if (productProvider.checkUserStatusByUserId(userIdByJwt) == 0) {
-                return new BaseResponse<>(DELETED_USER);
-            }
+        if (productProvider.checkUserStatusByUserId(userIdByJwt) == 0) {
+            return new BaseResponse<>(DELETED_USER);
+        }
 
-            List<GetProductRes> products = productProvider.getProducts(userIdByJwt);
-            return new BaseResponse<>(products);
+        List<GetProductRes> products = productProvider.getProducts(userIdByJwt);
+        return new BaseResponse<>(products);
     }
 
     /**
@@ -248,7 +218,7 @@ public class ProductController {
      */
     @ResponseBody
     @PostMapping("/{productId}/inquiries")
-    public BaseResponse<String> postInquiry(@PathVariable("productId") String productId, @RequestBody PostInquiryReq postInquiryReq){
+    public BaseResponse<String> postInquiry(@PathVariable("productId") String productId, @RequestBody @Valid PostInquiryReq postInquiryReq){
 
             int userIdByJwt = jwtService.getUserIdx();
 
@@ -272,23 +242,23 @@ public class ProductController {
     @DeleteMapping("/{productId}/inquiries/{inquiryId}")
     public BaseResponse<String> deleteInquiry(@PathVariable("productId") String productId,@PathVariable("inquiryId") String inquiryId){
 
-            int userIdByJwt = jwtService.getUserIdx();
+        int userIdByJwt = jwtService.getUserIdx();
 
-            if (productProvider.checkUserStatusByUserId(userIdByJwt) == 0) {
-                return new BaseResponse<>(DELETED_USER);
-            }
-            if(!isRegexInteger(productId)||!isRegexInteger(inquiryId)){
-                return new BaseResponse<>(INVAILD_PATH_VARIABLE);
-            }
+        if (productProvider.checkUserStatusByUserId(userIdByJwt) == 0) {
+            return new BaseResponse<>(DELETED_USER);
+        }
+        if(!isRegexInteger(productId)||!isRegexInteger(inquiryId)){
+            return new BaseResponse<>(INVAILD_PATH_VARIABLE);
+        }
 
-            int pId = Integer.parseInt(productId);
-            int iId = Integer.parseInt(inquiryId);
+        int pId = Integer.parseInt(productId);
+        int iId = Integer.parseInt(inquiryId);
 
-            if(productProvider.checkInquiry(userIdByJwt, iId, pId) == 0){
-                return new BaseResponse<>(INVALID_INQUIRY_ID);
-            }
-            productService.deleteInquiry(userIdByJwt, iId, pId);
-            return new BaseResponse<>("success");
+        if(productProvider.checkInquiry(userIdByJwt, iId, pId) == 0){
+            return new BaseResponse<>(INVALID_INQUIRY_ID);
+        }
+        productService.deleteInquiry(userIdByJwt, iId, pId);
+        return new BaseResponse<>("success");
     }
 
     /**
@@ -298,20 +268,21 @@ public class ProductController {
      */
     @ResponseBody
     @PatchMapping("/{productId}/sellStatus")
-    public BaseResponse<String> changeSellStatus(@PathVariable("productId") String productId, @RequestBody PatchSellReq patchSellReq)  {
+    public BaseResponse<String> changeSellStatus(@PathVariable("productId") String productId,
+                                                 @RequestBody @Valid PatchSellReq patchSellReq)  {
         if(!isRegexInteger(productId)){
             return new BaseResponse<>(INVAILD_PATH_VARIABLE);
         }
-            // jwt 에서 userId 추출
-            int userIdByJwt = jwtService.getUserIdx();
-            if (productProvider.checkUserStatusByUserId(userIdByJwt) == 0) {
-                return new BaseResponse<>(DELETED_USER);
-            }
-            int id = Integer.parseInt(productId);
+        // jwt 에서 userId 추출
+        int userIdByJwt = jwtService.getUserIdx();
+        if (productProvider.checkUserStatusByUserId(userIdByJwt) == 0) {
+            return new BaseResponse<>(DELETED_USER);
+        }
+        int id = Integer.parseInt(productId);
 
-            if(productProvider.checkSellStatus(userIdByJwt, id) != 0)
-                productService.updateSellStatus(userIdByJwt, id, patchSellReq.getStatus());
-            return new BaseResponse<>("success");
+        if(productProvider.checkSellStatus(userIdByJwt, id) != 0)
+            productService.updateSellStatus(userIdByJwt, id, patchSellReq.getStatus());
+        return new BaseResponse<>("success");
     }
 
 
