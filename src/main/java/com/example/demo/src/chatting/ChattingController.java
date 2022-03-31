@@ -25,7 +25,6 @@ public class ChattingController {
 
     @GetMapping("")
     public BaseResponse<List<GetChattingRoomRes>> getChattingRooms() {
-        try {
 
             int userIdx = jwtService.getUserIdx();
 
@@ -36,8 +35,6 @@ public class ChattingController {
             List<GetChattingRoomRes> chattingRooms = chattingProvider.getChattingRooms(userIdx);
 
             return new BaseResponse<>(chattingRooms);
-        } catch (BaseException exception) {
-            return new BaseResponse<>((exception.getStatus()));
-        }
+
     }
 }

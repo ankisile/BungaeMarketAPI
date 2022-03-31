@@ -9,6 +9,7 @@ import com.example.demo.utils.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 
@@ -46,7 +47,7 @@ public class UserController {
     @ResponseBody
     @GetMapping("/users") // (GET) 127.0.0.1:9000/app/users
     public BaseResponse<List<GetUserRes>> getUsers(@RequestParam(required = false) String Email) {
-        try {
+
             if (Email == null) {
                 List<GetUserRes> getUsersRes = userProvider.getUsers();
                 return new BaseResponse<>(getUsersRes);
@@ -54,9 +55,7 @@ public class UserController {
             // Get Users
             List<GetUserRes> getUsersRes = userProvider.getUsersByEmail(Email);
             return new BaseResponse<>(getUsersRes);
-        } catch (BaseException exception) {
-            return new BaseResponse<>((exception.getStatus()));
-        }
+
     }
 
     /**
@@ -71,13 +70,11 @@ public class UserController {
     public BaseResponse<GetUserRes> getUser() {
         // Get Users
 
-        try {
+
             int userIdx = jwtService.getUserIdx();
             GetUserRes getUserRes = userProvider.getUser(userIdx);
             return new BaseResponse<>(getUserRes);
-        } catch (BaseException exception) {
-            return new BaseResponse<>((exception.getStatus()));
-        }
+
 
     }
 
@@ -90,7 +87,7 @@ public class UserController {
     // Body
     @ResponseBody
     @PostMapping("")
-    public BaseResponse<PostUserRes> createUser(@RequestBody PostUserReq postUserReq) {
+    public BaseResponse<PostUserRes> createUser(@Valid @RequestBody PostUserReq postUserReq) {
         // TODO: email 관련한 짧은 validation 예시입니다. 그 외 더 부가적으로 추가해주세요!
         if (postUserReq.getEmail() == null) {
             return new BaseResponse<>(POST_USERS_EMPTY_EMAIL);
@@ -117,7 +114,7 @@ public class UserController {
      */
     @ResponseBody
     @PostMapping("/logIn")
-    public BaseResponse<PostLoginRes> logIn(@RequestBody PostLoginReq postLoginReq) {
+    public BaseResponse<PostLoginRes> logIn(@Valid @RequestBody PostLoginReq postLoginReq) {
 
         if (!isRegexEmail(postLoginReq.getEmail())) {
             return new BaseResponse<>(POST_USERS_INVALID_EMAIL);
@@ -144,8 +141,8 @@ public class UserController {
      */
     @ResponseBody
     @PatchMapping("/{userIdx}")
-    public BaseResponse<String> modifyUserInfo(@PathVariable("userIdx") int userIdx, @RequestBody PatchUserReq patchUserReq) {
-        try {
+    public BaseResponse<String> modifyUserInfo(@PathVariable("userIdx") int userIdx,@Valid @RequestBody PatchUserReq patchUserReq) {
+
             //jwt에서 idx 추출.
             int userIdxByJwt = jwtService.getUserIdx();
             //userIdx와 접근한 유저가 같은지 확인
@@ -157,23 +154,19 @@ public class UserController {
 
             String result = "";
             return new BaseResponse<>(result);
-        } catch (BaseException exception) {
-            return new BaseResponse<>((exception.getStatus()));
-        }
+
     }
 
     @ResponseBody
     @PostMapping("/shopname")
-    public BaseResponse<String> modifyShopName(@RequestBody PatchShopNameReq patchShopNameReq) {
-        try {
+    public BaseResponse<String> modifyShopName(@Valid @RequestBody PatchShopNameReq patchShopNameReq) {
+
             int userIdx = jwtService.getUserIdx();
 
             //같다면 유저네임 변경
             userService.modifyShopName(patchShopNameReq, userIdx);
             String result = "상점이름이 변경되었습니다.";
             return new BaseResponse<>(result);
-        } catch (BaseException exception) {
-            return new BaseResponse<>((exception.getStatus()));
-        }
+
     }
 }

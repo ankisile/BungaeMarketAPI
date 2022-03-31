@@ -21,23 +21,19 @@ public class CategoryController {
     @GetMapping("/categories")
     public BaseResponse<List<GetMenuRes>> getMenu() {
 
-        try {
+
             List<GetMenuRes> menu = categoryProvider.getMenu();
             return new BaseResponse<>(menu);
-        } catch (BaseException exception) {
-            return new BaseResponse<>((exception.getStatus()));
-        }
+
     }
 
     @GetMapping("/homecategories")
     public BaseResponse<List<GetMenuRes>> getHomeCategories() {
 
-        try {
+
             List<GetMenuRes> homeMenu = categoryProvider.getHomeCategories();
             return new BaseResponse<>(homeMenu);
-        } catch (BaseException exception) {
-            return new BaseResponse<>((exception.getStatus()));
-        }
+
     }
 
 }

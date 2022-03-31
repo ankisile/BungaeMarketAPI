@@ -57,26 +57,16 @@ public class UserService {
         }
     }
 
-    public void modifyUserInfo(PatchUserReq patchUserReq,int userIdx) throws BaseException {
-        try{
-            int result = userDao.modifyUserInfo(patchUserReq, userIdx);
-            if(result == 0){
-                throw new BaseException(MODIFY_FAIL_USERNAME);
-            }
-        } catch(Exception exception){
-            throw new BaseException(DATABASE_ERROR);
-        }
+    public void modifyUserInfo(PatchUserReq patchUserReq,int userIdx)  {
+
+            userDao.modifyUserInfo(patchUserReq, userIdx);
+
     }
 
 
-    public void modifyShopName(PatchShopNameReq patchShopNameReq, int userIdx) throws BaseException {
-        try{
-            int result = userDao.modifyShopName(patchShopNameReq, userIdx);
-            if(result == 0){
-                throw new BaseException(MODIFY_FAIL_SHOP_NAME);
-            }
-        } catch(Exception exception){
-            throw new BaseException(DATABASE_ERROR);
-        }
+    public void modifyShopName(PatchShopNameReq patchShopNameReq, int userIdx)  {
+
+            userDao.modifyShopName(patchShopNameReq, userIdx);
+
     }
 }

@@ -15,8 +15,8 @@ public class ShopProvider {
 
     private final ShopDao shopDao;
 
-    public GetShopRes getShop(int userIdx,int shopIdx) throws BaseException {
-        try{
+    public GetShopRes getShop(int userIdx,int shopIdx)  {
+
             List<GetProductByShopRes> products = shopDao.getProducts(shopIdx, userIdx);
             List<GetReviewByShopRes> reviews = shopDao.getReviews(shopIdx);
             List<GetInquiryByShopRes> inquiries = shopDao.getInquiries(shopIdx);
@@ -25,41 +25,28 @@ public class ShopProvider {
             shop.setReviews(reviews);
             shop.setInquiries(inquiries);
             return shop;
-        }
-        catch (Exception exception) {
-            throw new BaseException(DATABASE_ERROR);
-        }
+
     }
 
-    public List<GetProductByShopRes> getProducts(int shopIdx,int userIdx) throws BaseException {
-        try{
+    public List<GetProductByShopRes> getProducts(int shopIdx,int userIdx)  {
+
             return shopDao.getProducts(shopIdx,userIdx);
-        }
-        catch (Exception exception) {
-            throw new BaseException(DATABASE_ERROR);
-        }
+
     }
 
-    public List<GetInquiryByShopRes> getInquiries(int shopIdx) throws BaseException {
-        try{
+    public List<GetInquiryByShopRes> getInquiries(int shopIdx)  {
+
             return shopDao.getInquiries(shopIdx);
-        }
-        catch (Exception exception) {
-            throw new BaseException(DATABASE_ERROR);
-        }
+
     }
 
-    public List<GetReviewByShopRes> getReviews(int shopIdx) throws BaseException {
-        try{
+    public List<GetReviewByShopRes> getReviews(int shopIdx)  {
+
             return shopDao.getReviews(shopIdx);
-        }
-        catch (Exception exception) {
-            throw new BaseException(DATABASE_ERROR);
-        }
+
     }
 
-    public List<GetFollowingByShopRes> getFollowings(int shopIdx,int userIdx) throws BaseException {
-        try{
+    public List<GetFollowingByShopRes> getFollowings(int shopIdx,int userIdx)  {
 
             List<GetFollowingByShopRes> followings = shopDao.getFollowings(shopIdx);
             for (GetFollowingByShopRes following : followings) {
@@ -67,27 +54,18 @@ public class ShopProvider {
                 following.setProducts(shopDao.getProducts(followingUserIdx,userIdx));
             }
             return followings;
-        }
-        catch (Exception exception) {
-            throw new BaseException(DATABASE_ERROR);
-        }
+
     }
 
-    public List<GetFollowerByShopRes> getFollowers(int shopIdx) throws BaseException {
-        try{
+    public List<GetFollowerByShopRes> getFollowers(int shopIdx)  {
+
             return shopDao.getFollowers(shopIdx);
-        }
-        catch (Exception exception) {
-            throw new BaseException(DATABASE_ERROR);
-        }
+
     }
 
-    public int checkProducts(int shopIdx) throws BaseException {
-        try{
+    public int checkProducts(int shopIdx)  {
+
             return shopDao.checkProducts(shopIdx);
-        }
-        catch (Exception exception) {
-            throw new BaseException(DATABASE_ERROR);
-        }
+
     }
 }

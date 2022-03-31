@@ -1,18 +1,13 @@
 package com.example.demo.src.user;
 
 
-import com.example.demo.config.BaseException;
 import com.example.demo.config.BaseResponse;
-import com.example.demo.common.response.ExceptionResponse;
-import com.example.demo.src.shop.model.GetShopRes;
 import com.example.demo.src.user.model.*;
 import com.example.demo.utils.JwtService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.SQLException;
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Objects;
 
@@ -39,10 +34,7 @@ public class MyPageController {
     }
 
     @GetMapping("/products")
-    public BaseResponse<GetMySellingProducts> getMyProducts(@RequestParam String status) {
-
-
-        try {
+    public BaseResponse<GetMySellingProducts> getMyProducts( @RequestParam String status) {
 
             int userIdx = jwtService.getUserIdx();
             int countProducts = userProvider.countProductByStatus(status, userIdx);
@@ -60,43 +52,32 @@ public class MyPageController {
             GetMySellingProducts myPage = userProvider.getMyProducts(userIdx, status);
             return new BaseResponse<>(myPage);
 
-        } catch (BaseException exception) {
-            return new BaseResponse<>(exception.getStatus());
-        }
     }
 
     @GetMapping("/followers")
     public BaseResponse<List<GetMyFollower>> getFollowers() {
-        try {
 
             int userIdx = jwtService.getUserIdx();
 
             List<GetMyFollower> followers = userProvider.getFollowers(userIdx);
             return new BaseResponse<>(followers);
 
-        } catch (BaseException exception) {
-            return new BaseResponse<>(exception.getStatus());
-        }
+
     }
 
     @GetMapping("/followings")
     public BaseResponse<List<GetMyFollowing>> getFollowings() {
 
-        try {
 
             int userIdx = jwtService.getUserIdx();
 
             List<GetMyFollowing> followings = userProvider.getFollowings(userIdx);
             return new BaseResponse<>(followings);
 
-        } catch (BaseException exception) {
-            return new BaseResponse<>(exception.getStatus());
-        }
     }
 
     @GetMapping("/orders-purchase")
     public BaseResponse<List<GetPurchaseRes>> getPurchaseList() {
-        try {
 
             int userIdx = jwtService.getUserIdx();
             if (userProvider.checkOrderPurchase(userIdx) == 0) {
@@ -105,14 +86,10 @@ public class MyPageController {
             List<GetPurchaseRes> purchaseList = userProvider.getPurchaseList(userIdx);
             return new BaseResponse<>(purchaseList);
 
-        } catch (BaseException exception) {
-            return new BaseResponse<>(exception.getStatus());
-        }
     }
 
     @GetMapping("/orders-sell")
     public BaseResponse<List<GetSellRes>> getSellList() {
-        try {
 
             int userIdx = jwtService.getUserIdx();
             if (userProvider.checkOrderSell(userIdx) == 0) {
@@ -121,8 +98,6 @@ public class MyPageController {
             List<GetSellRes> sellList = userProvider.getSellList(userIdx);
             return new BaseResponse<>(sellList);
 
-        } catch (BaseException exception) {
-            return new BaseResponse<>(exception.getStatus());
-        }
+
     }
 }

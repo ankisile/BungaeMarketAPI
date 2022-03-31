@@ -27,67 +27,51 @@ public class OrderProvider {
     }
 
 
-    public String getUserAddress(int userId) throws BaseException{
-        try {
+    public String getUserAddress(int userId) {
+
             return orderDao.getUserAddress(userId);
-        } catch (Exception exception) {
-            throw new BaseException(DATABASE_ERROR);
-        }
+
     }
 
-    public int getPoint(int userId) throws BaseException {
-        try {
-            int point = orderDao.getPoint(userId);
-            return point;
-        } catch (Exception exception) {
-            throw new BaseException(DATABASE_ERROR);
-        }
+    public int getPoint(int userId)  {
+
+        return orderDao.getPoint(userId);
+
     }
 
-    public int getProductPrice(int productId) throws BaseException {
-        try {
-            int price = orderDao.getProductPrice(productId);
-            return price;
-        } catch (Exception exception) {
-            throw new BaseException(DATABASE_ERROR);
-        }
+    public int getProductPrice(int productId)  {
+
+        return orderDao.getProductPrice(productId);
+
     }
 
 
-    public GetProductOrderRes getOrderView(int userId, int productId) throws BaseException {
-        try{
+    public GetProductOrderRes getOrderView(int userId, int productId)  {
+
             return orderDao.getOrderView(userId, productId);
 
-        } catch (Exception exception) {
-            throw new BaseException(DATABASE_ERROR);
-        }
+
     }
 
-    public String getSellStatus(int productId) throws BaseException {
-        try{
+    public String getSellStatus(int productId)  {
+
             return orderDao.getSellStatus(productId);
 
-        } catch (Exception exception) {
-            throw new BaseException(DATABASE_ERROR);
-        }
+
     }
 
-    public GetOrderDetailRes getOrderDetail(int orderId) throws BaseException {
-        try{
+    public GetOrderDetailRes getOrderDetail(int orderId)  {
+
             return orderDao.getOrderDetail(orderId);
 
-        } catch (Exception exception) {
-            throw new BaseException(DATABASE_ERROR);
-        }
+
     }
 
-    public String getOrderStatus(int orderId) throws BaseException {
-        try{
+    public String getOrderStatus(int orderId)  {
+
             return orderDao.getOrderStatus(orderId);
 
-        } catch (Exception exception) {
-            throw new BaseException(DATABASE_ERROR);
-        }
+
     }
 
 

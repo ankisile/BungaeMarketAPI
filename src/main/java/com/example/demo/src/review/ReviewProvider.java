@@ -25,65 +25,51 @@ public class ReviewProvider {
         this.jwtService = jwtService;
     }
 
-    public int checkUserStatusByUserId(int userId) throws BaseException {
-        try {
+    public int checkUserStatusByUserId(int userId)  {
+
             return reviewDao.checkUserStatusByUserId(userId);
-        } catch (Exception exception) {
-            throw new BaseException(DATABASE_ERROR);
-        }
+
     }
 
-    public int checkProductId(int productId) throws BaseException {
-        try {
+    public int checkProductId(int productId)  {
+
             return reviewDao.checkProductId(productId);
-        } catch (Exception exception) {
-            throw new BaseException(DATABASE_ERROR);
-        }
+
     }
 
-    public int checkExistReview(int userId, int productId) throws BaseException {
-        try {
+    public int checkExistReview(int userId, int productId)  {
+
             return reviewDao.checkExistReview(userId, productId);
-        } catch (Exception exception) {
-            throw new BaseException(DATABASE_ERROR);
-        }
+
     }
 
-    public int getStoreId( int productId) throws BaseException {
-        try {
+    public int getStoreId( int productId)  {
+
             return reviewDao.getStoreId(productId);
-        } catch (Exception exception) {
-            throw new BaseException(DATABASE_ERROR);
-        }
+
     }
 
 
-    public int checkReviewId(int userId) throws BaseException {
-        try {
+    public int checkReviewId(int userId)  {
+
             return reviewDao.checkReviewId(userId);
-        } catch (Exception exception) {
-            throw new BaseException(DATABASE_ERROR);
-        }
+
     }
 
 
 
 
-    public int checkReviewIdByReviewId(int userId, int reviewId) throws BaseException {
-        try {
+    public int checkReviewIdByReviewId(int userId, int reviewId)  {
+
             return reviewDao.checkReviewIdByReviewId(userId, reviewId);
-        } catch (Exception exception) {
-            throw new BaseException(DATABASE_ERROR);
-        }
+
     }
 
 
-    public int checkReviewImgByReviewId(int reviewId) throws BaseException {
-        try {
+    public int checkReviewImgByReviewId(int reviewId)  {
+
             return reviewDao.checkReviewImgByReviewId(reviewId);
-        } catch (Exception exception) {
-            throw new BaseException(DATABASE_ERROR);
-        }
+
     }
 
 

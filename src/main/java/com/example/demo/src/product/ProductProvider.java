@@ -25,156 +25,100 @@ public class ProductProvider {
         this.jwtService = jwtService;
     }
 
-    public int checkUserStatusByUserId(int userId) throws BaseException {
-        try {
+    public int checkUserStatusByUserId(int userId)  {
+
             return productDao.checkUserStatusByUserId(userId);
-        } catch (Exception exception) {
-            throw new BaseException(DATABASE_ERROR);
-        }
+
     }
 
 
-    public int checkProductId(int productId) throws BaseException {
-        try {
+    public int checkProductId(int productId)  {
             return productDao.checkProductId(productId);
-        } catch (Exception exception) {
-            throw new BaseException(DATABASE_ERROR);
-        }
+
     }
 
-    public ProductInfo getProductInfos(int userId, int productId) throws BaseException {
-        try{
-            ProductInfo productInfo = productDao.getProductInfos(userId, productId);
-            return productInfo;
-        } catch (Exception exception) {
-            throw new BaseException(DATABASE_ERROR);
-        }
+    public ProductInfo getProductInfos(int userId, int productId)  {
+        return productDao.getProductInfos(userId, productId);
+
     }
 
 
-    public List<ProductImg> getProductImages(int productId) throws BaseException {
-        try {
+    public List<ProductImg> getProductImages(int productId)  {
             return productDao.getProductImages(productId);
-        } catch (Exception exception) {
-            throw new BaseException(DATABASE_ERROR);
-        }
+
     }
 
-    public List<ProductTag> getProductTags( int productId) throws BaseException {
-        try {
-            List<ProductTag> productTagList = productDao.getProductTags(productId);
-            return productTagList;
-        } catch (Exception exception) {
-            throw new BaseException(DATABASE_ERROR);
-        }
+    public List<ProductTag> getProductTags( int productId)  {
+        return productDao.getProductTags(productId);
+
     }
 
 
-    public List<GetProductRes> getProducts(int userId) throws BaseException {
-        try {
-            List<GetProductRes> productResList = productDao.getProducts(userId);
-            return productResList;
-        } catch (Exception exception) {
-            throw new BaseException(DATABASE_ERROR);
-        }
+    public List<GetProductRes> getProducts(int userId)  {
+        return productDao.getProducts(userId);
+
     }
 
 
 
-    public StoreInfo getStoreInfos(int productId) throws BaseException {
-        try{
-            StoreInfo storeInfo = productDao.getStoreInfos(productId);
-            return storeInfo;
-        } catch (Exception exception) {
-            throw new BaseException(INVALID_PRODUCT_ID);
-        }
+    public StoreInfo getStoreInfos(int productId)  {
+        return productDao.getStoreInfos(productId);
+
     }
 
-    public List<SellProduct> getSellProducts(int storeId) throws BaseException {
-        try {
+    public List<SellProduct> getSellProducts(int storeId)  {
             return productDao.getSellProducts(storeId);
-        } catch (Exception exception) {
-            throw new BaseException(DATABASE_ERROR);
-        }
+
     }
 
-    public List<RelateProduct> getRelateProducts(int categoryId, int productId) throws BaseException {
-        try {
+    public List<RelateProduct> getRelateProducts(int categoryId, int productId)  {
             return productDao.getRelateProducts(categoryId, productId);
-        } catch (Exception exception) {
-            throw new BaseException(DATABASE_ERROR);
-        }
+
     }
 
-    public List<Review> getReviews(int storeId) throws BaseException {
-        try {
+    public List<Review> getReviews(int storeId)  {
             return productDao.getReviews(storeId);
-        } catch (Exception exception) {
-            throw new BaseException(DATABASE_ERROR);
-        }
+
     }
 
-    public List<GetCategoryRes> getLargeCategories() throws BaseException {
-        try {
+    public List<GetCategoryRes> getLargeCategories()  {
             return productDao.getLargeCategories();
-        } catch (Exception exception) {
-            throw new BaseException(DATABASE_ERROR);
-        }
+
     }
 
-    public List<GetCategoryRes> getMiddleCategories(int categoryId) throws BaseException {
-        try {
+    public List<GetCategoryRes> getMiddleCategories(int categoryId)  {
             return productDao.getMiddleCategories(categoryId);
-        } catch (Exception exception) {
-            throw new BaseException(DATABASE_ERROR);
-        }
+
     }
-    public List<GetCategoryRes> getSmallCategories(int categoryId) throws BaseException {
-        try {
+    public List<GetCategoryRes> getSmallCategories(int categoryId)  {
             return productDao.getSmallCategories(categoryId);
-        } catch (Exception exception) {
-            throw new BaseException(DATABASE_ERROR);
-        }
+
     }
 
-    public List<GetInquiryRes> getInquiries(int productId) throws BaseException {
-        try {
+    public List<GetInquiryRes> getInquiries(int productId)  {
+
             return productDao.getInquiries(productId);
-        } catch (Exception exception) {
-            throw new BaseException(DATABASE_ERROR);
-        }
+
     }
 
-    public String getInquiryCall(int productId, int inquiryId) throws BaseException {
-        try {
+    public String getInquiryCall(int productId, int inquiryId)  {
             return productDao.getInquiryCall(productId, inquiryId);
-        } catch (Exception exception) {
-            throw new BaseException(DATABASE_ERROR);
-        }
+
     }
 
-    public int checkInquiry(int userId, int inquiryId, int productId) throws BaseException {
-        try {
+    public int checkInquiry(int userId, int inquiryId, int productId)  {
             return productDao.checkInquiry(userId, inquiryId, productId);
-        } catch (Exception exception) {
-            throw new BaseException(DATABASE_ERROR);
-        }
+
     }
 
-    public int checkSellStatus(int userId, int productId) throws BaseException {
-        try {
+    public int checkSellStatus(int userId, int productId)  {
             return productDao.checkSellStatus(userId, productId);
-        } catch (Exception exception) {
-            throw new BaseException(DATABASE_ERROR);
-        }
     }
 
-    public String getMainDirectAddress(int userId) throws BaseException {
-        try {
+    public String getMainDirectAddress(int userId)  {
+
             return productDao.getMainDirectAddress(userId);
-        } catch (Exception exception) {
-            throw new BaseException(DATABASE_ERROR);
-        }
+
     }
 
 

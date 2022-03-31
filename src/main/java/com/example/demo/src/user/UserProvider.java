@@ -31,40 +31,29 @@ public class UserProvider {
         this.jwtService = jwtService;
     }
 
-    public List<GetUserRes> getUsers() throws BaseException {
-        try {
-            List<GetUserRes> getUserRes = userDao.getUsers();
-            return getUserRes;
-        } catch (Exception exception) {
-            throw new BaseException(DATABASE_ERROR);
-        }
+    public List<GetUserRes> getUsers()  {
+
+        return userDao.getUsers();
+
     }
 
-    public List<GetUserRes> getUsersByEmail(String email) throws BaseException {
-        try {
-            List<GetUserRes> getUsersRes = userDao.getUsersByEmail(email);
-            return getUsersRes;
-        } catch (Exception exception) {
-            throw new BaseException(DATABASE_ERROR);
-        }
+    public List<GetUserRes> getUsersByEmail(String email)  {
+
+        return userDao.getUsersByEmail(email);
+
     }
 
 
-    public GetUserRes getUser(int userIdx) throws BaseException {
-        try {
-            GetUserRes getUserRes = userDao.getUser(userIdx);
-            return getUserRes;
-        } catch (Exception exception) {
-            throw new BaseException(DATABASE_ERROR);
-        }
+    public GetUserRes getUser(int userIdx)  {
+
+        return userDao.getUser(userIdx);
+
     }
 
-    public int checkEmail(String email) throws BaseException {
-        try {
+    public int checkEmail(String email)  {
+
             return userDao.checkEmail(email);
-        } catch (Exception exception) {
-            throw new BaseException(DATABASE_ERROR);
-        }
+
     }
 
     public PostLoginRes logIn(PostLoginReq postLoginReq) throws BaseException {
@@ -118,25 +107,17 @@ public class UserProvider {
 
     }
 
-    public GetMySellingProducts getMyProducts(int userIdx, String status) throws BaseException {
-        try {
-
+    public GetMySellingProducts getMyProducts(int userIdx, String status)  {
             return userDao.getMyProducts(userIdx, status);
-        } catch (Exception exception) {
-            throw new BaseException(DATABASE_ERROR);
-        }
     }
 
-    public int countProductByStatus(String status, int userIdx) throws BaseException {
-        try {
+    public int countProductByStatus(String status, int userIdx)  {
+
             return userDao.countProductByStatus(status, userIdx);
-        } catch (Exception exception) {
-            throw new BaseException(DATABASE_ERROR);
-        }
+
     }
 
-    public List<GetMyFollowing> getFollowings(int userIdx) throws BaseException {
-        try {
+    public List<GetMyFollowing> getFollowings(int userIdx)  {
 
             List<GetMyFollowing> followings = userDao.getFollowings(userIdx);
             for (GetMyFollowing following : followings) {
@@ -145,55 +126,40 @@ public class UserProvider {
                 }
             }
             return followings;
-        } catch (Exception exception) {
-            throw new BaseException(DATABASE_ERROR);
-        }
+
+
 
 
     }
 
-    public List<GetMyFollower> getFollowers(int userIdx) throws BaseException {
-        try {
+    public List<GetMyFollower> getFollowers(int userIdx)  {
+
 
             return userDao.getFollowers(userIdx);
-        } catch (Exception exception) {
-            throw new BaseException(DATABASE_ERROR);
-        }
+
     }
 
-    public List<GetPurchaseRes> getPurchaseList(int userIdx) throws BaseException {
-        try {
+    public List<GetPurchaseRes> getPurchaseList(int userIdx)  {
 
             return userDao.getPurchaseList(userIdx);
-        } catch (Exception exception) {
-            throw new BaseException(DATABASE_ERROR);
-        }
+
     }
 
-    public List<GetSellRes> getSellList(int userIdx) throws BaseException {
-        try {
+    public List<GetSellRes> getSellList(int userIdx)  {
 
             return userDao.getSellList(userIdx);
-        } catch (Exception exception) {
-            throw new BaseException(DATABASE_ERROR);
-        }
+
     }
 
-    public int checkOrderPurchase(int userIdx) throws BaseException {
-        try {
+    public int checkOrderPurchase(int userIdx)  {
 
             return userDao.checkOrderPurchase(userIdx);
-        } catch (Exception exception) {
-            throw new BaseException(DATABASE_ERROR);
-        }
+
     }
 
-    public int checkOrderSell(int userIdx) throws BaseException {
-        try {
+    public int checkOrderSell(int userIdx)  {
 
             return userDao.checkOrderSell(userIdx);
-        } catch (Exception exception) {
-            throw new BaseException(DATABASE_ERROR);
-        }
+
     }
 }

@@ -27,21 +27,18 @@ public class ShopController {
     @GetMapping("/{shopIdx}")
     public BaseResponse<GetShopRes> getShop(@PathVariable int shopIdx) {
 
-        try {
 
             int userIdx = jwtService.getUserIdx();
 
             GetShopRes shop = shopProvider.getShop(userIdx,shopIdx);
             return new BaseResponse<>(shop);
 
-        } catch (BaseException exception) {
-            return new BaseResponse<>(exception.getStatus());
-        }
+
     }
 
     @GetMapping("/{shopIdx}/products")
     public BaseResponse<List<GetProductByShopRes>> getProducts(@PathVariable int shopIdx) {
-        try {
+
 
             if (shopProvider.checkProducts(shopIdx) == 0) {
                 return new BaseResponse<>(NOT_EXIST_SELLING_PRODUCT);
@@ -52,60 +49,48 @@ public class ShopController {
             List<GetProductByShopRes> products = shopProvider.getProducts(shopIdx, userIdx);
             return new BaseResponse<>(products);
 
-        } catch (BaseException exception) {
-            return new BaseResponse<>(exception.getStatus());
-        }
+
     }
 
     @GetMapping("/{shopIdx}/inquiries")
     public BaseResponse<List<GetInquiryByShopRes>> getInquiries(@PathVariable int shopIdx) {
-        try {
+
 
 
             List<GetInquiryByShopRes> products = shopProvider.getInquiries(shopIdx);
             return new BaseResponse<>(products);
 
-        } catch (BaseException exception) {
-            return new BaseResponse<>(exception.getStatus());
-        }
+
     }
 
     @GetMapping("/{shopIdx}/reviews")
     public BaseResponse<List<GetReviewByShopRes>> getReviews(@PathVariable int shopIdx) {
-        try {
+
 
 
             List<GetReviewByShopRes> reviews = shopProvider.getReviews(shopIdx);
             return new BaseResponse<>(reviews);
 
-        } catch (BaseException exception) {
-            return new BaseResponse<>(exception.getStatus());
-        }
+
     }
     @GetMapping("/{shopIdx}/followings")
     public BaseResponse<List<GetFollowingByShopRes>> getFollowings(@PathVariable int shopIdx) {
-        try {
+
 
             int userIdx = jwtService.getUserIdx();
             List<GetFollowingByShopRes> followings = shopProvider.getFollowings(shopIdx,userIdx);
             return new BaseResponse<>(followings);
 
-        } catch (BaseException exception) {
-            return new BaseResponse<>(exception.getStatus());
-        }
+
     }
 
     @GetMapping("/{shopIdx}/followers")
     public BaseResponse<List<GetFollowerByShopRes>> getFollowers(@PathVariable int shopIdx) {
-        try {
-
 
             List<GetFollowerByShopRes> followers = shopProvider.getFollowers(shopIdx);
             return new BaseResponse<>(followers);
 
-        } catch (BaseException exception) {
-            return new BaseResponse<>(exception.getStatus());
-        }
+
     }
 
 }

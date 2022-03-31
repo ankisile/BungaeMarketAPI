@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 import static com.example.demo.config.BaseResponseStatus.*;
@@ -37,7 +38,7 @@ public class ReviewController {
      */
     @ResponseBody
     @PostMapping("")
-    public BaseResponse<String> postReviews(@RequestBody PostReviewReq postReviewReq) {
+    public BaseResponse<String> postReviews(@Valid @RequestBody PostReviewReq postReviewReq) {
         if(postReviewReq.getProductId() == null){
             return new BaseResponse<>(POST_REVIEWS_EMPTY_PRODUCT_ID);
         }
@@ -46,7 +47,7 @@ public class ReviewController {
             return new BaseResponse<>(POST_REVIEWS_INVALID_SCORE);
         }
 
-        try {
+
             // jwt 에서 userId 추출.
             int userIdByJwt = jwtService.getUserIdx();
 
@@ -74,9 +75,7 @@ public class ReviewController {
             }
 
             return new BaseResponse<>("success");
-        } catch (BaseException exception) {
-            return new BaseResponse<>((exception.getStatus()));
-        }
+
     }
 
 
@@ -88,7 +87,7 @@ public class ReviewController {
     @ResponseBody
     @DeleteMapping("/{reviewId}")
     public BaseResponse<String> deleteReview(@PathVariable(required = false) String reviewId) {
-        try {
+
             // jwt 에서 userId 추출.
             int userIdByJwt = jwtService.getUserIdx();
 
@@ -112,9 +111,7 @@ public class ReviewController {
             }
             reviewService.deleteReview(userIdByJwt, id);
             return new BaseResponse<>("success");
-        } catch (BaseException exception) {
-            return new BaseResponse<>((exception.getStatus()));
-        }
+
     }
 
 

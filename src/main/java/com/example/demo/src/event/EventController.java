@@ -23,25 +23,19 @@ public class EventController {
     @GetMapping("")
     public BaseResponse<List<GetEventRes>> getEvents() {
 
-        try {
+
             List<GetEventRes> events = eventProvider.getEvents();
 
             return new BaseResponse<>(events);
-        } catch (BaseException exception) {
 
-            return new BaseResponse<>((exception.getStatus()));
-        }
     }
 
     @GetMapping("{eventIdx}")
     public BaseResponse<GetEventRes> getEvent(@PathVariable int eventIdx) {
-        try {
+
             GetEventRes events = eventProvider.getEvent(eventIdx);
 
             return new BaseResponse<>(events);
-        } catch (BaseException exception) {
 
-            return new BaseResponse<>((exception.getStatus()));
-        }
     }
 }

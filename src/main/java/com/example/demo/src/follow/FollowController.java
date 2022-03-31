@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 import static com.example.demo.config.BaseResponseStatus.*;
@@ -37,7 +38,7 @@ public class FollowController {
      */
     @ResponseBody
     @PostMapping("")
-    public BaseResponse<String> pushFollow(@RequestBody PostFollowReq postFollowReq) throws BaseException {
+    public BaseResponse<String> pushFollow(@Valid @RequestBody PostFollowReq postFollowReq)  {
 
         if(postFollowReq.getStoreId() == null){
             return new BaseResponse<>(POST_FOLLOW_EMPTY_STORE_ID);
@@ -45,8 +46,7 @@ public class FollowController {
         if(followProvider.checkStore(postFollowReq.getStoreId()) == 0){
             return new BaseResponse<>(INVALID_STORE_ID);
         }
-        try{
-            // jwt 에서 userId 추출
+//        jwt 에서 userId 추출
             int userIdByJwt = jwtService.getUserIdx();
 
             if(followProvider.checkFollow(userIdByJwt, postFollowReq.getStoreId()) == 0) {
@@ -58,9 +58,7 @@ public class FollowController {
 
             }
             return new BaseResponse<>("success");
-        } catch(BaseException exception){
-            return new BaseResponse<>((exception.getStatus()));
-        }
+
     }
 
 

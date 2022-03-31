@@ -66,7 +66,7 @@ public class ProductController {
         }
 
 
-        try {
+
             // jwt 에서 userId 추출.
             int userIdByJwt = jwtService.getUserIdx();
 
@@ -93,9 +93,7 @@ public class ProductController {
 
 
             return new BaseResponse<>("success");
-        } catch (BaseException exception) {
-            return new BaseResponse<>((exception.getStatus()));
-        }
+
     }
 
     /**
@@ -109,7 +107,6 @@ public class ProductController {
         if(productId == null){
             return new BaseResponse<>(EMPTY_PATH_VARIABLE);
         }
-        try {
             int userIdByJwt = jwtService.getUserIdx();
 
             if (productProvider.checkUserStatusByUserId(userIdByJwt) == 0) {
@@ -142,9 +139,6 @@ public class ProductController {
 
 
             return new BaseResponse<>(getProductInfoRes);
-        } catch (BaseException exception) {
-            return new BaseResponse<>((exception.getStatus()));
-        }
     }
 
     /**
@@ -156,7 +150,6 @@ public class ProductController {
     @GetMapping("")
     public BaseResponse<List<GetProductRes>> getProduct() {
 
-        try {
             int userIdByJwt = jwtService.getUserIdx();
 
             if (productProvider.checkUserStatusByUserId(userIdByJwt) == 0) {
@@ -165,9 +158,6 @@ public class ProductController {
 
             List<GetProductRes> products = productProvider.getProducts(userIdByJwt);
             return new BaseResponse<>(products);
-        } catch (BaseException exception) {
-            return new BaseResponse<>((exception.getStatus()));
-        }
     }
 
     /**
@@ -179,7 +169,6 @@ public class ProductController {
     @GetMapping("/largecategories")
     public BaseResponse<List<GetCategoryRes>> getLargeCategories() {
 
-        try {
             int userIdByJwt = jwtService.getUserIdx();
 
             if (productProvider.checkUserStatusByUserId(userIdByJwt) == 0) {
@@ -188,9 +177,6 @@ public class ProductController {
 
             List<GetCategoryRes> largeCategories = productProvider.getLargeCategories();
             return new BaseResponse<>(largeCategories);
-        } catch (BaseException exception) {
-            return new BaseResponse<>((exception.getStatus()));
-        }
     }
 
     /**
@@ -202,7 +188,6 @@ public class ProductController {
     @GetMapping("/middlecategories/{largecategoryId}")
     public BaseResponse<List<GetCategoryRes>> getMiddleCategories(@PathVariable(required = false) String largecategoryId) {
 
-        try {
             int userIdByJwt = jwtService.getUserIdx();
 
             if (productProvider.checkUserStatusByUserId(userIdByJwt) == 0) {
@@ -212,9 +197,6 @@ public class ProductController {
             int categoryId = Integer.parseInt(largecategoryId);
             List<GetCategoryRes> middleCategories = productProvider.getMiddleCategories(categoryId);
             return new BaseResponse<>(middleCategories);
-        } catch (BaseException exception) {
-            return new BaseResponse<>((exception.getStatus()));
-        }
     }
 
 
@@ -227,7 +209,6 @@ public class ProductController {
     @GetMapping("/smallcategories/{middlecategoryId}")
     public BaseResponse<List<GetCategoryRes>> getSmallCategories(@PathVariable(required = false) String middlecategoryId) {
 
-        try {
             int userIdByJwt = jwtService.getUserIdx();
 
             if (productProvider.checkUserStatusByUserId(userIdByJwt) == 0) {
@@ -237,9 +218,6 @@ public class ProductController {
             int categoryId = Integer.parseInt(middlecategoryId);
             List<GetCategoryRes> smallCategories = productProvider.getSmallCategories(categoryId);
             return new BaseResponse<>(smallCategories);
-        } catch (BaseException exception) {
-            return new BaseResponse<>((exception.getStatus()));
-        }
     }
 
     /**
@@ -251,7 +229,6 @@ public class ProductController {
     @GetMapping("/{productId}/inquiries")
     public BaseResponse<List<GetInquiryRes>> getInquiries(@PathVariable(required = false) String productId) {
 
-        try {
             int userIdByJwt = jwtService.getUserIdx();
 
             if (productProvider.checkUserStatusByUserId(userIdByJwt) == 0) {
@@ -261,9 +238,6 @@ public class ProductController {
             int id = Integer.parseInt(productId);
             List<GetInquiryRes> inquiryResList = productProvider.getInquiries(id);
             return new BaseResponse<>(inquiryResList);
-        } catch (BaseException exception) {
-            return new BaseResponse<>((exception.getStatus()));
-        }
     }
 
 
@@ -276,7 +250,6 @@ public class ProductController {
     @PostMapping("/{productId}/inquiries")
     public BaseResponse<String> postInquiry(@PathVariable("productId") String productId, @RequestBody PostInquiryReq postInquiryReq){
 
-        try {
             int userIdByJwt = jwtService.getUserIdx();
 
             if (productProvider.checkUserStatusByUserId(userIdByJwt) == 0) {
@@ -287,9 +260,6 @@ public class ProductController {
 
             productService.createInquiry(userIdByJwt, id, postInquiryReq);
             return new BaseResponse<>("success");
-        } catch (BaseException exception) {
-            return new BaseResponse<>((exception.getStatus()));
-        }
     }
 
 
@@ -302,7 +272,6 @@ public class ProductController {
     @DeleteMapping("/{productId}/inquiries/{inquiryId}")
     public BaseResponse<String> deleteInquiry(@PathVariable("productId") String productId,@PathVariable("inquiryId") String inquiryId){
 
-        try {
             int userIdByJwt = jwtService.getUserIdx();
 
             if (productProvider.checkUserStatusByUserId(userIdByJwt) == 0) {
@@ -320,9 +289,6 @@ public class ProductController {
             }
             productService.deleteInquiry(userIdByJwt, iId, pId);
             return new BaseResponse<>("success");
-        } catch (BaseException exception) {
-            return new BaseResponse<>((exception.getStatus()));
-        }
     }
 
     /**
@@ -332,11 +298,10 @@ public class ProductController {
      */
     @ResponseBody
     @PatchMapping("/{productId}/sellStatus")
-    public BaseResponse<String> changeSellStatus(@PathVariable("productId") String productId, @RequestBody PatchSellReq patchSellReq) throws BaseException {
+    public BaseResponse<String> changeSellStatus(@PathVariable("productId") String productId, @RequestBody PatchSellReq patchSellReq)  {
         if(!isRegexInteger(productId)){
             return new BaseResponse<>(INVAILD_PATH_VARIABLE);
         }
-        try{
             // jwt 에서 userId 추출
             int userIdByJwt = jwtService.getUserIdx();
             if (productProvider.checkUserStatusByUserId(userIdByJwt) == 0) {
@@ -347,9 +312,6 @@ public class ProductController {
             if(productProvider.checkSellStatus(userIdByJwt, id) != 0)
                 productService.updateSellStatus(userIdByJwt, id, patchSellReq.getStatus());
             return new BaseResponse<>("success");
-        } catch(BaseException exception){
-            return new BaseResponse<>((exception.getStatus()));
-        }
     }
 
 

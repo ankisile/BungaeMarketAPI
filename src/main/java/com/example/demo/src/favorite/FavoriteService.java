@@ -15,8 +15,8 @@ public class FavoriteService {
     private final FavoriteDao favoriteDao;
     private final FavoriteProvider favoriteProvider;
 
-    public String exchangeFavorite(int productIdx, int userIdx) throws BaseException {
-        try {
+    public String exchangeFavorite(int productIdx, int userIdx) {
+
 
             int favorite = favoriteProvider.checkIsFavorite(productIdx, userIdx);
 
@@ -32,8 +32,6 @@ public class FavoriteService {
                 return "찜목록에서 삭제했습니다.";
             }
             return "";
-        } catch (Exception exception) {
-            throw new BaseException(DATABASE_ERROR);
-        }
+
     }
 }

@@ -18,30 +18,21 @@ public class FavoriteProvider {
     private final FavoriteDao favoriteDao;
 
 
-    public int checkIsFavorite(int productIdx, int userIdx) throws BaseException {
-        try{
+    public int checkIsFavorite(int productIdx, int userIdx)  {
+
             return favoriteDao.checkIsFavorite(productIdx, userIdx);
-        }
-        catch (Exception exception) {
-            throw new BaseException(DATABASE_ERROR);
-        }
+
     }
 
-    public int checkDeletedFavorite(int productIdx, int userIdx) throws BaseException {
-        try{
+    public int checkDeletedFavorite(int productIdx, int userIdx)  {
+
             return favoriteDao.checkDeletedFavorite(productIdx, userIdx);
-        }
-        catch (Exception exception) {
-            throw new BaseException(DATABASE_ERROR);
-        }
+
     }
 
-    public List<GetFavoriteRes> getFavorites(int userIdx) throws BaseException {
-        try{
+    public List<GetFavoriteRes> getFavorites(int userIdx)  {
+
             return favoriteDao.getFavorites(userIdx);
-        }
-        catch (Exception exception) {
-            throw new BaseException(DATABASE_ERROR);
-        }
+
     }
 }

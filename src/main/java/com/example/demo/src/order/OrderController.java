@@ -39,7 +39,7 @@ public class OrderController {
     @PostMapping("")
     public BaseResponse<String> postOrders(@RequestBody PostOrderReq postOrderReq) {
 
-        try {
+
             // jwt 에서 userId 추출.
             int userIdByJwt = jwtService.getUserIdx();
 
@@ -50,9 +50,7 @@ public class OrderController {
                 return new BaseResponse<>(INVALID_PURCHASE);
 
             return new BaseResponse<>("success");
-        } catch (BaseException exception) {
-            return new BaseResponse<>((exception.getStatus()));
-        }
+
     }
 
 
@@ -66,15 +64,13 @@ public class OrderController {
     @GetMapping("/{productId}")
     public BaseResponse<GetProductOrderRes> getOrderView(@PathVariable(required = false) String productId) {
 
-        try {
+
             int userIdByJwt = jwtService.getUserIdx();
 
             int id = Integer.parseInt(productId);
             GetProductOrderRes getProductOrderRes = orderProvider.getOrderView(userIdByJwt, id);
             return new BaseResponse<>(getProductOrderRes);
-        } catch (BaseException exception) {
-            return new BaseResponse<>((exception.getStatus()));
-        }
+
     }
 
     /**
@@ -86,16 +82,14 @@ public class OrderController {
     @GetMapping("/details/{orderId}")
     public BaseResponse<GetOrderDetailRes> getOrderDetail(@PathVariable(required = false) String orderId) {
 
-        try {
+
             int userIdByJwt = jwtService.getUserIdx();
 
             int id = Integer.parseInt(orderId);
             GetOrderDetailRes getOrderDetailRes = orderProvider.getOrderDetail(id);
 
             return new BaseResponse<>(getOrderDetailRes);
-        } catch (BaseException exception) {
-            return new BaseResponse<>((exception.getStatus()));
-        }
+
     }
 
     /**
@@ -107,7 +101,7 @@ public class OrderController {
     @PostMapping("/cancels")
     public BaseResponse<String> postCancel(@RequestBody PostCancelReq postCancelReq) {
 
-        try {
+
             // jwt 에서 userId 추출.
             int userIdByJwt = jwtService.getUserIdx();
 
@@ -118,9 +112,7 @@ public class OrderController {
                 return new BaseResponse<>(INVALID_PURCHASE);
 
             return new BaseResponse<>("success");
-        } catch (BaseException exception) {
-            return new BaseResponse<>((exception.getStatus()));
-        }
+
     }
 
 
@@ -133,7 +125,7 @@ public class OrderController {
     @PostMapping("/confirms")
     public BaseResponse<String> postConfirm(@RequestBody PostConfirmReq postConfirmReq) {
 
-        try {
+
             // jwt 에서 userId 추출.
             int userIdByJwt = jwtService.getUserIdx();
 
@@ -144,8 +136,6 @@ public class OrderController {
                 return new BaseResponse<>(INVALID_PURCHASE);
 
             return new BaseResponse<>("success");
-        } catch (BaseException exception) {
-            return new BaseResponse<>((exception.getStatus()));
-        }
+
     }
 }

@@ -17,23 +17,15 @@ public class CategoryProvider {
 
     private final CategoryDao categoryDao;
 
-    public List<GetMenuRes> getMenu() throws BaseException {
-        try{
-            List<GetMenuRes> getMenu = categoryDao.getUsers();
-            return getMenu;
-        }
-        catch (Exception exception) {
-            throw new BaseException(DATABASE_ERROR);
-        }
+    public List<GetMenuRes> getMenu()  {
+
+        return categoryDao.getUsers();
+
     }
 
-    public List<GetMenuRes> getHomeCategories() throws BaseException {
-        try{
-            List<GetMenuRes> homeMenu = categoryDao.getHomeCategories();
-            return homeMenu;
-        }
-        catch (Exception exception) {
-            throw new BaseException(DATABASE_ERROR);
-        }
+    public List<GetMenuRes> getHomeCategories()  {
+
+        return categoryDao.getHomeCategories();
+
     }
 }

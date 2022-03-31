@@ -17,9 +17,9 @@ public class ChattingProvider {
 
     private final ChattingDao chattingDao;
 
-    public List<GetChattingRoomRes> getChattingRooms(int userIdx) throws BaseException {
+    public List<GetChattingRoomRes> getChattingRooms(int userIdx)  {
 
-        try {
+
 
             List<GetChattingRoomRes> chattingRooms = chattingDao.getChattingRooms(userIdx);
             for (GetChattingRoomRes chattingRoom : chattingRooms) {
@@ -29,16 +29,12 @@ public class ChattingProvider {
                 chattingRoom.setRecentMessage(message.getFirstMessage());
             }
             return chattingRooms;
-        } catch (Exception exception) {
-            throw new BaseException(DATABASE_ERROR);
-        }
+
     }
 
-    public int checkChattingRooms(int userIdx) throws BaseException {
-        try {
+    public int checkChattingRooms(int userIdx)  {
+
             return chattingDao.checkChattingRooms(userIdx);
-        } catch (Exception e) {
-            throw new BaseException(DATABASE_ERROR);
-        }
+
     }
 }

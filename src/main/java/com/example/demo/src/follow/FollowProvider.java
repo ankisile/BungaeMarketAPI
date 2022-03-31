@@ -25,29 +25,23 @@ public class FollowProvider {
         this.jwtService = jwtService;
     }
 
-    public int checkStore(int storeId) throws BaseException {
-        try {
+    public int checkStore(int storeId)  {
+
             return followDao.checkStore(storeId);
-        } catch (Exception exception) {
-            throw new BaseException(DATABASE_ERROR);
-        }
+
     }
 
-    public int checkFollow(int userId, int storeId) throws BaseException {
-        try {
+    public int checkFollow(int userId, int storeId)  {
+
             return followDao.checkFollow(userId, storeId);
-        } catch (Exception exception) {
-            throw new BaseException(DATABASE_ERROR);
-        }
+
     }
 
 
-    public String checkFollowStatus(int userId, int storeId) throws BaseException {
-        try {
+    public String checkFollowStatus(int userId, int storeId)  {
+
             return followDao.checkFollowStatus(userId, storeId);
-        } catch (Exception exception) {
-            throw new BaseException(DATABASE_ERROR);
-        }
+
     }
 
 }

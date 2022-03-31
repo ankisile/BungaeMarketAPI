@@ -1,19 +1,19 @@
 package com.example.demo.src.address;
 
 
-import com.example.demo.config.BaseException;
 import com.example.demo.config.BaseResponse;
 import com.example.demo.src.address.model.GetDirectAddressRes;
 import com.example.demo.src.address.model.PostAddressReq;
 import com.example.demo.src.address.model.PostDirectAddressReq;
-import com.example.demo.src.user.model.PostUserRes;
 import com.example.demo.utils.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
-import static com.example.demo.config.BaseResponseStatus.*;
+import static com.example.demo.config.BaseResponseStatus.DELETED_USER;
+import static com.example.demo.config.BaseResponseStatus.POST_ADDRESS_EMPTY_DIRECT_ADDRESS;
 
 @RestController
 @RequestMapping("/app/addresses")
@@ -25,55 +25,51 @@ public class AddressController {
     private final JwtService jwtService;
 
     @PostMapping("/delivery")
-    public BaseResponse<String> createAddress(@RequestBody PostAddressReq postAddressReq) {
+    public BaseResponse<String> createAddress(@Valid @RequestBody PostAddressReq postAddressReq) {
 
-        if (postAddressReq.getName() == null) {
-            return new BaseResponse<>(POST_ADDRESS_EMPTY_NAME);
-        }
-        if (postAddressReq.getPhone() == null) {
-            return new BaseResponse<>(POST_ADDRESS_EMPTY_PHONE);
-        }
-        if (postAddressReq.getAddress() == null) {
-            return new BaseResponse<>(POST_ADDRESS_EMPTY_ADDRESS);
-        }
-        if (postAddressReq.getDetailAddress() == null) {
-            return new BaseResponse<>(POST_ADDRESS_EMPTY_DETAIL_ADDRESS);
-        }
+//        if (postAddressReq.getName() == null) {
+//            return new BaseResponse<>(POST_ADDRESS_EMPTY_NAME);
+//        }
+//        if (postAddressReq.getPhone() == null) {
+//            return new BaseResponse<>(POST_ADDRESS_EMPTY_PHONE);
+//        }
+//        if (postAddressReq.getAddress() == null) {
+//            return new BaseResponse<>(POST_ADDRESS_EMPTY_ADDRESS);
+//        }
+//        if (postAddressReq.getDetailAddress() == null) {
+//            return new BaseResponse<>(POST_ADDRESS_EMPTY_DETAIL_ADDRESS);
+//        }
 
-        try {
-            int userIdx = jwtService.getUserIdx();
-            //userIdx와 접근한 유저가 같은지 확인
 
-            addressService.createAddress(postAddressReq, userIdx);
+        int userIdx = jwtService.getUserIdx();
+        //userIdx와 접근한 유저가 같은지 확인
 
-            return new BaseResponse<>("주소가 추가되었습니다.");
-        } catch (BaseException exception) {
-            return new BaseResponse<>((exception.getStatus()));
-        }
+        addressService.createAddress(postAddressReq, userIdx);
+
+        return new BaseResponse<>("주소가 추가되었습니다.");
+
     }
 
     @PostMapping("/direct")
-    public BaseResponse<String> createDirectAddress(@RequestBody PostDirectAddressReq postDirectAddressReq) {
+    public BaseResponse<String> createDirectAddress(@Valid @RequestBody PostDirectAddressReq postDirectAddressReq) {
 
         if (postDirectAddressReq.getDirectAddress() == null) {
             return new BaseResponse<>(POST_ADDRESS_EMPTY_DIRECT_ADDRESS);
         }
 
-        try {
+
             int userIdx = jwtService.getUserIdx();
 //            userIdx와 접근한 유저가 같은지 확인
 
             addressService.createDirectAddress(postDirectAddressReq, userIdx);
 
             return new BaseResponse<>("직거래 주소가 추가되었습니다.");
-        } catch (BaseException exception) {
-            return new BaseResponse<>((exception.getStatus()));
-        }
+
     }
 
     @PostMapping("/clean")
     public BaseResponse<String> cleanDirectAddress() {
-        try{
+
             int userIdx = jwtService.getUserIdx();
 
             if (addressProvider.checkUserStatusByUserId(userIdx) == 0) {
@@ -83,15 +79,13 @@ public class AddressController {
 
             return new BaseResponse<>("지역설정안함");
 
-        }catch (BaseException exception) {
-            return new BaseResponse<>((exception.getStatus()));
-        }
+
 
     }
 
     @GetMapping("/direct")
     public BaseResponse<List<GetDirectAddressRes>> getDirectAddresses() {
-        try{
+
             int userIdx = jwtService.getUserIdx();
 
             if (addressProvider.checkUserStatusByUserId(userIdx) == 0) {
@@ -102,9 +96,7 @@ public class AddressController {
 
             return new BaseResponse<>(directAddresses);
 
-        }catch (BaseException exception) {
-            return new BaseResponse<>((exception.getStatus()));
-        }
+
     }
 
     /**
@@ -116,7 +108,7 @@ public class AddressController {
     @ResponseBody
     @GetMapping("/main-direct")
     public BaseResponse<String> getMainDirectAddress() {
-        try {
+
             // jwt 에서 userId 추출.
             int userIdByJwt = jwtService.getUserIdx();
 
@@ -125,8 +117,6 @@ public class AddressController {
             }
 
             return new BaseResponse<>(addressProvider.getMainDirectAddress(userIdByJwt));
-        } catch (BaseException exception) {
-            return new BaseResponse<>((exception.getStatus()));
-        }
+
     }
 }

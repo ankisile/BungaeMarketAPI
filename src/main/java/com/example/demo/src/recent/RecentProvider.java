@@ -17,12 +17,9 @@ public class RecentProvider {
     private final RecentDao recentDao;
 
 
-    public List<GetRecentRes> getRecents(int userIdx) throws BaseException {
-        try{
+    public List<GetRecentRes> getRecents(int userIdx) {
+
             return recentDao.getRecents(userIdx);
-        }
-        catch (Exception exception) {
-            throw new BaseException(DATABASE_ERROR);
-        }
+
     }
 }

@@ -23,12 +23,10 @@ public class RecentController {
 
     @GetMapping("")
     public BaseResponse<List<GetRecentRes>> getRecents() {
-        try {
+
             int userIdx = jwtService.getUserIdx();
             List<GetRecentRes> recents = recentProvider.getRecents(userIdx);
             return new BaseResponse<>(recents);
-        } catch (BaseException exception) {
-            return new BaseResponse<>((exception.getStatus()));
-        }
+
     }
 }

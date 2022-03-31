@@ -27,51 +27,34 @@ public class ProductService {
         this.jwtService = jwtService;
     }
 
-    public int createProduct(int userId, PostProductReq postProductReq) throws BaseException {
-        try {
+    public int createProduct(int userId, PostProductReq postProductReq)  {
             String address = productProvider.getMainDirectAddress(userId);
             return productDao.createProduct(userId, address, postProductReq);
-        } catch (Exception exception) {
-            throw new BaseException(DATABASE_ERROR);
-        }
+
     }
 
 
-    public void createProductImage(int productId, String productImageUrl) throws BaseException {
-        try {
+    public void createProductImage(int productId, String productImageUrl)  {
             productDao.createProductImage(productId, productImageUrl);
-        } catch (Exception exception) {
-            throw new BaseException(DATABASE_ERROR);
-        }
+
     }
 
-    public void createProductTag(int productId, String tagName) throws BaseException {
-        try {
+    public void createProductTag(int productId, String tagName)  {
             productDao.createProductTag(productId, tagName);
-        } catch (Exception exception) {
-            throw new BaseException(DATABASE_ERROR);
-        }
+
     }
 
-    public void createInquiry(int userId, int productId, PostInquiryReq postInquiryReq) throws BaseException {
-        try {
+    public void createInquiry(int userId, int productId, PostInquiryReq postInquiryReq)  {
             productDao.createInquiry(userId, productId, postInquiryReq);
-        } catch (Exception exception) {
-            throw new BaseException(DATABASE_ERROR);
-        }
+
     }
 
-    public void deleteInquiry(int userId, int inquiryId, int productId) throws BaseException {
-        try{
+    public void deleteInquiry(int userId, int inquiryId, int productId)  {
             productDao.deleteInquiry(userId, inquiryId, productId);
 
-        }catch (Exception exception) {
-            throw new BaseException(DATABASE_ERROR);
-        }
     }
 
-    public void updateSellStatus(int userId, int productId, String status) throws BaseException {
-        try {
+    public void updateSellStatus(int userId, int productId, String status)  {
             if(status.equals("SELLING"))
                 productDao.changeSellingStatus(userId, productId);
             else if(status.equals("RESERVED"))
@@ -79,17 +62,10 @@ public class ProductService {
             else if(status.equals("SOLDOUT"))
                 productDao.changeSoldoutStatus(userId, productId);
 
-
-        } catch (Exception exception) {
-            throw new BaseException(DATABASE_ERROR);
-        }
     }
 
-    public void updateViewCount(int productId) throws BaseException {
-        try {
+    public void updateViewCount(int productId)  {
             productDao.updateViewCount(productId);
-        } catch (Exception exception) {
-            throw new BaseException(DATABASE_ERROR);
-        }
+
     }
 }

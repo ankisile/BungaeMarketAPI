@@ -27,33 +27,27 @@ public class ReviewService {
         this.jwtService = jwtService;
     }
 
-    public int createReview(int storeId, int userId, PostReviewReq postReviewReq) throws BaseException {
-        try {
+    public int createReview(int storeId, int userId, PostReviewReq postReviewReq)  {
+
             return reviewDao.createReview(storeId, userId, postReviewReq);
-        } catch (Exception exception) {
-            throw new BaseException(DATABASE_ERROR);
-        }
+
     }
 
 
-    public void createReviewImage(int reviewId, String reviewImageUrl) throws BaseException {
-        try {
+    public void createReviewImage(int reviewId, String reviewImageUrl)  {
+
             reviewDao.createReviewImage(reviewId, reviewImageUrl);
-        } catch (Exception exception) {
-            throw new BaseException(DATABASE_ERROR);
-        }
+
     }
 
-    public void deleteReview(int userId, int reviewId) throws BaseException {
-        try{
+    public void deleteReview(int userId, int reviewId)  {
+
             reviewDao.deleteReviewImgByReviewId(reviewId);
 
             if(reviewProvider.checkReviewImgByReviewId(reviewId)==0){
                 reviewDao.deleteReview(reviewId);
             }
-        }catch (Exception exception) {
-            throw new BaseException(DATABASE_ERROR);
-        }
+
     }
 
 

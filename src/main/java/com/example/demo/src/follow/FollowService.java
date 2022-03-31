@@ -26,24 +26,20 @@ public class FollowService {
         this.jwtService = jwtService;
     }
 
-    public void createFollow(int userId, int storeId) throws BaseException {
-        try {
+    public void createFollow(int userId, int storeId)  {
+
             followDao.createFollow(userId, storeId);
-        } catch (Exception exception) {
-            throw new BaseException(DATABASE_ERROR);
-        }
+
     }
 
-    public void updateFollowStatus(int userId, int storeId) throws BaseException {
-        try {
+    public void updateFollowStatus(int userId, int storeId)  {
+
             if((followProvider.checkFollowStatus(userId, storeId)).equals("UNFOLLOWING")){
                 followDao.activeFollowStatus(userId, storeId);
             }
             else if((followProvider.checkFollowStatus(userId, storeId)).equals("FOLLOWING")){
                 followDao.inactiveFollowStatus(userId, storeId);
             }
-        } catch (Exception exception) {
-            throw new BaseException(DATABASE_ERROR);
-        }
+
     }
 }

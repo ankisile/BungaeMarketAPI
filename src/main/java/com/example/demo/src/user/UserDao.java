@@ -33,7 +33,6 @@ public class UserDao {
 
     public List<GetUserRes> getUsersByEmail(String email){
         String getUsersByEmailQuery = "select * from Users where email =?";
-        String getUsersByEmailParams = email;
         return this.jdbcTemplate.query(getUsersByEmailQuery,
                 (rs, rowNum) -> new GetUserRes(
                         rs.getInt("user_id"),
@@ -41,12 +40,11 @@ public class UserDao {
                         rs.getString("shop_name"),
                         rs.getString("email"),
                         rs.getString("phone")),
-                getUsersByEmailParams);
+                email);
     }
 
     public GetUserRes getUser(int userIdx){
         String getUserQuery = "select * from Users where user_id = ?";
-        int getUserParams = userIdx;
         return this.jdbcTemplate.queryForObject(getUserQuery,
                 (rs, rowNum) -> new GetUserRes(
                         rs.getInt("user_id"),
@@ -54,7 +52,7 @@ public class UserDao {
                         rs.getString("shop_name"),
                         rs.getString("email"),
                         rs.getString("phone")),
-                getUserParams);
+                userIdx);
     }
     
 
@@ -72,10 +70,9 @@ public class UserDao {
 
     public int checkEmail(String email){
         String checkEmailQuery = "select exists(select email from Users where email = ?)";
-        String checkEmailParams = email;
         return this.jdbcTemplate.queryForObject(checkEmailQuery,
                 int.class,
-                checkEmailParams);
+                email);
     }
 
     public int modifyUserInfo(PatchUserReq patchUserReq,int userIdx){
@@ -113,15 +110,13 @@ public class UserDao {
 
     public int checkUserStatusByUserId(int userId) {
         String checkUserStatusByUserIdQuery = "select exists(select * from Users where user_id = ? and status = 'ACTIVE')";
-        int checkUserStatusByUserIdParams = userId;
-        return this.jdbcTemplate.queryForObject(checkUserStatusByUserIdQuery, int.class, checkUserStatusByUserIdParams);
+        return this.jdbcTemplate.queryForObject(checkUserStatusByUserIdQuery, int.class, userId);
     }
 
 
     public int checkUserStatusByEmail(String email) {
         String checkUserStatusByEmailQuery = "select exists(select * from Users where email = ? and status = 'WITHDRAWAL')";
-        String checkUserStatusByEmailParams = email;
-        return this.jdbcTemplate.queryForObject(checkUserStatusByEmailQuery, int.class, checkUserStatusByEmailParams);
+        return this.jdbcTemplate.queryForObject(checkUserStatusByEmailQuery, int.class, email);
     }
 
 
@@ -155,7 +150,7 @@ public class UserDao {
                         rs.getString("profile_Url"),
                         rs.getString("shop_name"),
                         rs.getInt("rate"),
-                        rs.getInt("favoriteCoun"),
+                        rs.getInt("favoriteCount"),
                         rs.getInt("reviewCount"),
                         rs.getInt("follwerCount"),
                         rs.getInt("followingCount")),
