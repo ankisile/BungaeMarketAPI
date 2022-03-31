@@ -7,6 +7,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.validation.annotation.Validated;
+import com.example.demo.common.exception.*;
 
 import java.util.List;
 
@@ -14,10 +16,10 @@ import static com.example.demo.config.BaseResponseStatus.*;
 import static com.example.demo.utils.ValidationRegex.*;
 
 import javax.validation.Valid;
-import javax.validation.constraints.Positive;
+import javax.validation.constraints.*;
 
 
-
+@Validated
 @RestController
 @RequestMapping("/app/products")
 public class ProductController {
@@ -47,7 +49,7 @@ public class ProductController {
         int userIdByJwt = jwtService.getUserIdx();
 
         if (productProvider.checkUserStatusByUserId(userIdByJwt) == 0) {
-            return new BaseResponse<>(DELETED_USER);
+            throw new UnavailableUserException();
         }
 
         int productId = productService.createProduct(userIdByJwt, postProductReq);
@@ -73,22 +75,21 @@ public class ProductController {
      */
     @ResponseBody
     @GetMapping("/{productId}")
-    public BaseResponse<GetProductInfoRes> getProductInfo(@PathVariable(required = false) String productId) {
-        if(productId == null){
-            return new BaseResponse<>(EMPTY_PATH_VARIABLE);
-        }
+    public BaseResponse<GetProductInfoRes> getProductInfo(@PathVariable(required = false)
+                                                              @NotBlank
+                                                              @Pattern(regexp="^[0-9]*$", message="Invalid한 path parameter 입니다")
+                                                                      String productId) {
+
+
         int userIdByJwt = jwtService.getUserIdx();
 
         if (productProvider.checkUserStatusByUserId(userIdByJwt) == 0) {
-            return new BaseResponse<>(DELETED_USER);
+            throw new UnavailableUserException();
         }
 
-        if(!isRegexInteger(productId)){
-            return new BaseResponse<>(INVAILD_PATH_VARIABLE);
-        }
         int id = Integer.parseInt(productId);
         if(productProvider.checkProductId(id) == 0){
-            return new BaseResponse<>(INVALID_PRODUCT_ID);
+            throw new InvalidException();
         }
 
         productService.updateViewCount(id);
@@ -123,7 +124,7 @@ public class ProductController {
         int userIdByJwt = jwtService.getUserIdx();
 
         if (productProvider.checkUserStatusByUserId(userIdByJwt) == 0) {
-            return new BaseResponse<>(DELETED_USER);
+            throw new UnavailableUserException();
         }
 
         List<GetProductRes> products = productProvider.getProducts(userIdByJwt);

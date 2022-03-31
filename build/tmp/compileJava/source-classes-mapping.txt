@@ -70,6 +70,8 @@ com/example/demo/src/event/EventDao.java
  com.example.demo.src.event.EventDao
 com/example/demo/src/favorite/FavoriteController.java
  com.example.demo.src.favorite.FavoriteController
+com/example/demo/common/exception/InvalidException.java
+ com.example.demo.common.exception.InvalidException
 com/example/demo/src/event/model/GetEventRes.java
  com.example.demo.src.event.model.GetEventRes
 com/example/demo/src/user/model/PostLoginRes.java
@@ -104,6 +106,8 @@ com/example/demo/src/chatting/ChattingDao.java
  com.example.demo.src.chatting.ChattingDao
 com/example/demo/src/user/UserController.java
  com.example.demo.src.user.UserController
+com/example/demo/config/AlreadyExistEmailException.java
+ com.example.demo.config.AlreadyExistEmailException
 com/example/demo/src/product/model/PostProductReq.java
  com.example.demo.src.product.model.PostProductReq
 com/example/demo/common/advice/ControllerAdvice.java
@@ -196,6 +200,8 @@ com/example/demo/src/WebSecurityConfig.java
  com.example.demo.src.WebSecurityConfig
 com/example/demo/src/order/OrderProvider.java
  com.example.demo.src.order.OrderProvider
+com/example/demo/common/exception/UnavailableUserException.java
+ com.example.demo.common.exception.UnavailableUserException
 com/example/demo/src/product/model/SellProduct.java
  com.example.demo.src.product.model.SellProduct
 com/example/demo/src/favorite/FavoriteDao.java

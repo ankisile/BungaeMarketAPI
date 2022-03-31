@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.example.demo.common.response.ExceptionResponse;
+import com.example.demo.common.exception.*;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
@@ -45,7 +46,16 @@ public class ControllerAdvice {
 
     @ExceptionHandler(AlreadyExistEmailException.class)
     public ExceptionResponse jwtException(AlreadyExistEmailException e) {
-        return new ExceptionResponse(false, 2001, e.getMessage());
+        return new ExceptionResponse(false, 2017, e.getMessage());
+    }
+
+    @ExceptionHandler(UnavailableUserException.class)
+    public ExceptionResponse UnavaiableUserException(UnavailableUserException e) {
+        return new ExceptionResponse(false, 3015, e.getMessage());
+    }
+    @ExceptionHandler(InvalidException.class)
+    public ExceptionResponse InvalidException(InvalidException e) {
+        return new ExceptionResponse(false, 2033, e.getMessage());
     }
 
     @ExceptionHandler(value = {NoSuchPaddingException.class,

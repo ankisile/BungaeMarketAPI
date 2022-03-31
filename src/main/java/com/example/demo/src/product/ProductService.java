@@ -30,7 +30,6 @@ public class ProductService {
     public int createProduct(int userId, PostProductReq postProductReq)  {
             String address = productProvider.getMainDirectAddress(userId);
             return productDao.createProduct(userId, address, postProductReq);
-
     }
 
 
