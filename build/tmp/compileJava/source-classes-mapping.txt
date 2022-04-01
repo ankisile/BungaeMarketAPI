@@ -1,9 +1,13 @@
+com/example/demo/src/review/model/PostReviewReq.java
+ com.example.demo.src.review.model.PostReviewReq
 com/example/demo/src/category/CategoryController.java
  com.example.demo.src.category.CategoryController
 com/example/demo/src/shop/ShopController.java
  com.example.demo.src.shop.ShopController
 com/example/demo/src/favorite/model/GetFavoriteRes.java
  com.example.demo.src.favorite.model.GetFavoriteRes
+com/example/demo/src/review/ReviewDao.java
+ com.example.demo.src.review.ReviewDao
 com/example/demo/src/address/model/GetDirectAddressRes.java
  com.example.demo.src.address.model.GetDirectAddressRes
 com/example/demo/src/event/EventController.java
@@ -38,8 +42,6 @@ com/example/demo/src/product/model/ProductInfo.java
  com.example.demo.src.product.model.ProductInfo
 com/example/demo/src/address/model/PostDirectAddressReq.java
  com.example.demo.src.address.model.PostDirectAddressReq
-com/example/demo/src/product/review/ReviewDao.java
- com.example.demo.src.review.ReviewDao
 com/example/demo/src/favorite/FavoriteService.java
  com.example.demo.src.favorite.FavoriteService
 com/example/demo/src/shop/ShopProvider.java
@@ -86,8 +88,6 @@ com/example/demo/src/user/UserDao.java
  com.example.demo.src.user.UserDao
 com/example/demo/src/follow/FollowDao.java
  com.example.demo.src.follow.FollowDao
-com/example/demo/src/product/review/ReviewService.java
- com.example.demo.src.review.ReviewService
 com/example/demo/src/recent/model/GetRecentRes.java
  com.example.demo.src.recent.model.GetRecentRes
 com/example/demo/src/order/model/GetProductOrderRes.java
@@ -100,8 +100,8 @@ com/example/demo/src/test/TestController.java
  com.example.demo.src.test.TestController
 com/example/demo/src/address/model/PostAddressReq.java
  com.example.demo.src.address.model.PostAddressReq
-com/example/demo/src/product/review/model/PostReviewReq.java
- com.example.demo.src.review.model.PostReviewReq
+com/example/demo/src/review/model/ReviewImg.java
+ com.example.demo.src.review.model.ReviewImg
 com/example/demo/src/chatting/ChattingDao.java
  com.example.demo.src.chatting.ChattingDao
 com/example/demo/src/user/UserController.java
@@ -122,6 +122,8 @@ com/example/demo/utils/JwtService.java
  com.example.demo.utils.JwtService
 com/example/demo/src/user/UserProvider.java
  com.example.demo.src.user.UserProvider
+com/example/demo/src/review/ReviewService.java
+ com.example.demo.src.review.ReviewService
 com/example/demo/config/Constant.java
  com.example.demo.config.Constant
 com/example/demo/src/product/ProductService.java
@@ -144,6 +146,8 @@ com/example/demo/src/follow/FollowService.java
  com.example.demo.src.follow.FollowService
 com/example/demo/src/user/model/GetMyProducts.java
  com.example.demo.src.user.model.GetMyProducts
+com/example/demo/src/review/ReviewController.java
+ com.example.demo.src.review.ReviewController
 com/example/demo/src/category/CategoryProvider.java
  com.example.demo.src.category.CategoryProvider
 com/example/demo/src/favorite/FavoriteProvider.java
@@ -180,8 +184,6 @@ com/example/demo/src/category/model/Category.java
  com.example.demo.src.category.model.Category
 com/example/demo/src/shop/model/GetFollowingByShopRes.java
  com.example.demo.src.shop.model.GetFollowingByShopRes
-com/example/demo/src/product/review/model/ReviewImg.java
- com.example.demo.src.review.model.ReviewImg
 com/example/demo/src/user/model/GetMyPageRes.java
  com.example.demo.src.user.model.GetMyPageRes
 com/example/demo/src/product/model/PatchSellReq.java
@@ -194,8 +196,6 @@ com/example/demo/src/shop/model/GetReviewByShopRes.java
  com.example.demo.src.shop.model.GetReviewByShopRes
 com/example/demo/utils/AES128.java
  com.example.demo.utils.AES128
-com/example/demo/src/product/review/ReviewController.java
- com.example.demo.src.review.ReviewController
 com/example/demo/src/event/EventProvider.java
  com.example.demo.src.event.EventProvider
 com/example/demo/src/WebSecurityConfig.java
@@ -204,8 +204,6 @@ com/example/demo/src/order/OrderProvider.java
  com.example.demo.src.order.OrderProvider
 com/example/demo/common/exception/UnavailableUserException.java
  com.example.demo.common.exception.UnavailableUserException
-com/example/demo/src/product/review/ReviewProvider.java
- com.example.demo.src.review.ReviewProvider
 com/example/demo/src/product/model/SellProduct.java
  com.example.demo.src.product.model.SellProduct
 com/example/demo/src/favorite/FavoriteDao.java
@@ -214,6 +212,8 @@ com/example/demo/src/product/model/GetCategoryRes.java
  com.example.demo.src.product.model.GetCategoryRes
 com/example/demo/src/user/model/PostLoginReq.java
  com.example.demo.src.user.model.PostLoginReq
+com/example/demo/src/review/ReviewProvider.java
+ com.example.demo.src.review.ReviewProvider
 com/example/demo/src/user/model/GetMyFollower.java
  com.example.demo.src.user.model.GetMyFollower
 com/example/demo/src/user/model/GetSellRes.java
