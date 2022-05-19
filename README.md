@@ -1,4 +1,9 @@
 # 번개장터 REST API
+###구글 시트 링크
+https://docs.google.com/spreadsheets/d/1QYZCyx8P5LWf_gQILggqD42_pHPkoZfg/edit?usp=sharing&ouid=100934178736454734095&rtpof=true&sd=true
+###ERD 설계
+<img src="/src/main/resources/KakaoTalk_20220401_012711250.png"  width="700" height="370">
+
 
 
 ## 2022-03-19 
@@ -73,7 +78,6 @@
 
 ## 2022-03-31
 1. try-catch 절 삭제
-2. 
 
   
 #  
